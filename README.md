@@ -30,3 +30,4 @@ npm run start
 
 ## Netlify
 
+[Ссылка на сборку Netlify](https://subtle-kangaroo-2f4700.netlify.app)
