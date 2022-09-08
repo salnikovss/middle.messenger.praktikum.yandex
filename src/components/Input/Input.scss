@@ -22,6 +22,14 @@
         line-height: 13px;
 
         color: #E2E2E4;
+
+        ::placeholder {
+            color: #9898B0;
+        }
+
+        &_lighter {
+            background: #343A4F;
+        }
     }
 
     &__hint {

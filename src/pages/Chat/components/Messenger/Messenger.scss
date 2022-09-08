@@ -1,0 +1,23 @@
+.messenger {
+    width: 100%;
+    height: 100%;
+
+    &__alert {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 12px;
+        text-align: center;
+        color: #FFFFFF;
+        margin-bottom: 0;
+    }
+
+    &__inner {
+        display: flex;
+
+        &_centered {
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}

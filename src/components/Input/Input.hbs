@@ -3,7 +3,7 @@
     <label for='field-{{name}}' class='form-group__label'>{{label}}</label>
   {{/if}}
   <input
-    class='form-group__input'
+    class='form-group__input {{#if style}}form-group__input_{{style}}{{/if}}'
     type='{{#if type}}{{type}}{{else}}text{{/if}}'
     id='field-{{name}}'
     name='{{name}}'

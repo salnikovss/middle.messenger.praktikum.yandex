@@ -64,3 +64,33 @@ aside {
 .mt-2 {
     margin-top: 1rem;
 }
+
+
+:root {
+    --scrollbarBgColor: #343A4F;
+    --scrollbarThumbColor: #149A80;
+    --scrollbarWidth: 6px;
+    --scrollbarBorder: 0 solid var(--scrollbarBgColor);
+    --scrollbarBorderRadius: calc(var(--scrollbarWidth) / 4);
+}
+
+.custom-scrollbar {
+    scrollbar-width: var(--scrollbarWidth);
+    scrollbar-color: var(--scrollbarThumbColor) var(--scrollbarBgColor);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: var(--scrollbarWidth);
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: var(--scrollbarBgColor);
+    border-radius: var(--scrollbarBorderRadius);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbarThumbColor);
+    border-radius: var(--scrollbarBorderRadius);
+    border: var(--scrollbarBorder);
+    background-image: var(--scrollbarThumbColor)
+}
