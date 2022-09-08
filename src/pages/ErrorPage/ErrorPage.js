@@ -1,12 +1,12 @@
-import template from './error.hbs';
-import './error.scss';
+import template from './ErrorPage.hbs';
+import './ErrorPage.scss';
 
 const errorText = {
   404: 'Страница не найдена',
   500: 'Что-то пошло не так',
 };
 
-export const pageError = (code) => {
+export const ErrorPage = (code) => {
   let text = errorText[code] ?? '';
   return template({ code, text });
 };

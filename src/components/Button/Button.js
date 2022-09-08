@@ -1,5 +1,5 @@
-import template from './button.hbs';
 import Handlebars from 'handlebars';
-import './button.scss';
+import template from './Button.hbs';
+import './Button.scss';
 
 Handlebars.registerPartial('button', template);

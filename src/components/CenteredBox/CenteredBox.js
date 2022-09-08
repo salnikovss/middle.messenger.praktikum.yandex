@@ -1,5 +1,5 @@
 import Handlebars from 'handlebars';
-import template from './centeredBox.hbs';
-import './centeredBox.scss';
+import template from './CenteredBox.hbs';
+import './CenteredBox.scss';
 
 Handlebars.registerPartial('centeredBox', template);
