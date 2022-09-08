@@ -4,9 +4,9 @@
   "description": "### Откройте pull request в ветку main из ветки, где вы разрабатывали проект, и добавьте ссылку на этот pr в README.md в ветке main.  ### ВАЖНО: pull request должен называться “Sprint i” (i — номер спринта).",
   "source": "src/index.hbs",
   "scripts": {
-    "dev": "npx parcel src/index.html --port 3000",
+    "dev": "npx parcel static/index.html --port 3000",
     "prebuild": "rm -rf dist",
-    "build": "npx parcel build src/index.html",
+    "build": "npx parcel build static/index.html",
     "start": "node server.js"
   },
   "repository": {
