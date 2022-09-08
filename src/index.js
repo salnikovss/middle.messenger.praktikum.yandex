@@ -1,4 +1,4 @@
-import { routeConsts, routes } from './config/routes';
+import { routeConsts, routes } from '../config/routes';
 import Handlebars from 'handlebars';
 import './index.scss';
 
