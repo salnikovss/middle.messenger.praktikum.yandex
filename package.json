@@ -4,9 +4,9 @@
   "description": "### Откройте pull request в ветку main из ветки, где вы разрабатывали проект, и добавьте ссылку на этот pr в README.md в ветке main.  ### ВАЖНО: pull request должен называться “Sprint i” (i — номер спринта).",
   "source": "src/index.hbs",
   "scripts": {
-    "dev": "npx parcel src/index.hbs --port 3000",
+    "dev": "npx parcel src/index.html --port 3000",
     "prebuild": "rm -rf dist",
-    "build": "npx parcel build src/index.hbs",
+    "build": "npx parcel build src/index.html",
     "start": "node server.js"
   },
   "repository": {
@@ -17,10 +17,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@anikin/parcel-transformer-handlebars": "^1.0.9",
     "@parcel/transformer-sass": "^2.7.0",
     "express": "^4.18.1",
-    "parcel": "^2.7.0"
+    "parcel": "^2.7.0",
+    "parcel-transformer-hbs": "^1.0.4",
+    "prettier": "^2.7.1",
+    "sass": "^1.54.9"
   },
   "engines": {
     "node": ">=12"

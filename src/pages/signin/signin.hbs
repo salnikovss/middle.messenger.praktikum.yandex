@@ -1,0 +1,8 @@
+{{#>centeredBox title='Авторизация'}}
+    <form>
+        {{> input label='Имя пользователя' name='login'}}
+        {{> input label='Пароль' type='password' name='password' }}
+        {{#>button}}Войти{{/button}}
+    </form>
+    <a class="text-center d-block mt-1" href='{{routes "SIGNUP"}}'>Регистрация</a>
+{{/centeredBox}}

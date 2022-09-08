@@ -1,0 +1,16 @@
+.btn {
+    border-radius: 8px;
+    width: 100%;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 13px;
+    text-align: center;
+    padding: 12px;
+    border: none;
+
+    &_primary {
+        background: #149A80;
+        color: #E2E2E4;
+    }
+}

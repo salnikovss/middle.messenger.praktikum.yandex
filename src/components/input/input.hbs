@@ -1,0 +1,14 @@
+<div class='form-group'>
+  {{#if label}}
+    <label for='field-{{name}}' class='form-group__label'>{{label}}</label>
+  {{/if}}
+  <input
+    class='form-group__input'
+    type='{{#if type}}{{type}}{{else}}text{{/if}}'
+    id='field-{{name}}'
+    name='{{name}}'
+    value='{{value}}'
+    {{#if placeholder}}placeholder='{{placeholder}}'{{/if}}
+  />
+  <p class='form-group__help-box'></p>
+</div>

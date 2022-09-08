@@ -3,7 +3,13 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
-app.use(express.static(`${__dirname}/dist/`));
+const distDir = `${__dirname}/dist/`
+
+app.use(express.static(distDir));
+
+app.get('/*', function (req, res) {
+    res.sendFile(`${distDir}/index.html`)
+})
 
 app.listen(PORT, function () {
     console.log(`Listening on port ${PORT}!`);
