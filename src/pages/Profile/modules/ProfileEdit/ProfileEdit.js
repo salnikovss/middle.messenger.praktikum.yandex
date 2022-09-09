@@ -1,11 +1,13 @@
-import BackButtonWrapper from '../../components/BackButtonWrapper';
-import Avatar from './components/Avatar';
-import template from './Profile.hbs';
-import './Profile.scss';
+import BackButtonWrapper from '../../../../components/BackButtonWrapper';
+import Button from '../../../../components/Button';
+import Avatar from '../../components/Avatar';
+import template from './ProfileEdit.hbs';
+import '../../Profile.scss';
 
-export const Profile = () => {
+export const ProfileEdit = () => {
   Avatar();
   BackButtonWrapper();
+  Button();
 
   const data = {
     user: {

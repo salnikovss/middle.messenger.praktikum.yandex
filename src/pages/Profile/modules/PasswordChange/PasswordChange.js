@@ -1,9 +1,9 @@
-import BackButtonWrapper from '../../components/BackButtonWrapper';
-import Avatar from './components/Avatar';
-import template from './Profile.hbs';
-import './Profile.scss';
+import BackButtonWrapper from '../../../../components/BackButtonWrapper';
+import Avatar from '../../components/Avatar';
+import template from './PasswordChange.hbs';
+import '../../Profile.scss';
 
-export const Profile = () => {
+export const PasswordChange = () => {
   Avatar();
   BackButtonWrapper();
 

@@ -1,0 +1,30 @@
+.profile {
+    margin: auto;
+    max-width: 510px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__avatar {
+        margin-bottom: 21px;
+    }
+
+    &__display_name {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 16px;
+        text-align: center;
+        color: #E2E2E4;
+        margin-bottom: 20px;
+    }
+
+    &__rows-block-details {
+        margin-top: 60px;
+    }
+
+
+    &__rows-block-profile-nav {
+        margin-top: 60px;
+    }
+}

@@ -33,19 +33,10 @@
             <span class="data__row-param">Телефон</span>
             <span class="data__row-value">{{user.phone}}</span>
         </div>
-    </div>
 
-    <div class="data__rows-block profile__rows-block-profile-nav">
-        <div class="data__rows-row">
-            <a class="data__rows-row-link" href='{{routes "PROFILE_EDIT"}}'>Изменить данные</a>
-        </div>
-        <div class="data__rows-row">
-            <a class="data__rows-row-link" href='{{routes "PROFILE_PASSWORD_CHANGE"}}'>Сменить пароль</a>
-        </div>
-        <div class="data__rows-row">
-            <a class="data__rows-row-link data__rows-row-link_color-red" href='{{routes "LOGOUT"}}'>Выйти</a>
+        <div class="data__rows-row data__rows-row_centered">
+        {{#>button}}Сохранить{{/button}}
         </div>
     </div>
-
 </div>
 {{/backButtonWrapper}}

@@ -1,0 +1,17 @@
+.avatar {
+    &_filled {
+        .avatar {
+            &__inner {
+                background-size: cover;
+            }
+        }
+    }
+
+    &__inner {
+        border-radius: 50%;
+        background: no-repeat url(../../../../../static/images/blank-avatar.svg) #252838 50% 50%;
+        display: block;
+        width: 130px;
+        height: 130px;
+    }
+}
