@@ -1,10 +1,7 @@
 import { routeConsts, routes } from '../config/routes';
-import Handlebars from 'handlebars';
 import './index.scss';
-
-Handlebars.registerHelper('routes', function (key) {
-  return routeConsts[key] ?? '';
-});
+import './helpers/getTime';
+import './helpers/routes';
 
 const renderPage = (page) => {
   const rootElement = document.getElementById('app');

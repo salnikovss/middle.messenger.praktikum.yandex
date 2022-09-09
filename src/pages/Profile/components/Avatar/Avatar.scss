@@ -1,4 +1,12 @@
 .avatar {
+    &:hover {
+        .avatar {
+            &__hover {
+                opacity: 1;
+            }
+        }
+    }
+
     &_filled {
         .avatar {
             &__inner {
@@ -7,11 +15,32 @@
         }
     }
 
+    &__hover {
+        transition: opacity 0.2s ease-in-out;
+        width: 130px;
+        height: 130px;
+        opacity: 0;
+        pointer-events: none;
+        position: absolute;
+        border-radius: 50%;
+        background: rgba($color: #000, $alpha: .75);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 14px;
+        color: #E2E2E4;
+    }
+
     &__inner {
         border-radius: 50%;
         background: no-repeat url(../../../../../static/images/blank-avatar.svg) #252838 50% 50%;
         display: block;
         width: 130px;
         height: 130px;
+        transition: opacity 0.2s ease-in-out;
     }
 }

@@ -3,11 +3,13 @@ import Button from '../../../../components/Button';
 import Avatar from '../../components/Avatar';
 import template from './ProfileEdit.hbs';
 import '../../Profile.scss';
+import Input from '../../../../components/Input';
 
 export const ProfileEdit = () => {
   Avatar();
   BackButtonWrapper();
   Button();
+  Input();
 
   const data = {
     user: {

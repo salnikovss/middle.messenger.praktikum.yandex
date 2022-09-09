@@ -1,0 +1,13 @@
+<div class='message message_{{type}} message_{{#if fromMe}}from-me{{else}}from-others{{/if}}'>
+  <div class='message__body'>
+    {{#if image}}
+      <img src='{{image}}' alt='' />
+    {{else}}
+      {{body}}
+    {{/if}}
+  </div>
+  <div class='message__meta'>
+    <span class='message__time'>{{getTime dateTime}}</span>
+    {{#if status}}<span class='message__status message__status-{{status}}'></span>{{/if}}
+  </div>
+</div>

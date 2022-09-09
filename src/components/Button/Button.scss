@@ -1,4 +1,5 @@
 .btn {
+    vertical-align: middle;
     border-radius: 8px;
     width: 100%;
     font-style: normal;
@@ -8,9 +9,27 @@
     text-align: center;
     padding: 12px;
     border: none;
+    cursor: pointer;
+    background: transparent;
+    transition: background-color 0.2s ease-in-out;
+
+    &_icon {
+        border-radius: 50%;
+        background: transparent;
+        width: 28px;
+        height: 28px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
     &_primary {
         background: #149A80;
         color: #E2E2E4;
+
+        &:hover {
+            background: darken(#149A80, 5%);
+        }
     }
 }

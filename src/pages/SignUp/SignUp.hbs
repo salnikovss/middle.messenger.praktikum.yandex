@@ -1,5 +1,5 @@
 {{#>centeredBox title='Регистрация'}}
-    <form method="post">
+    <form method='post'>
         {{> input label='Имя' name='first_name'}}
         {{> input label='Фамилия' name='second_name'}}
         {{> input label='Имя пользователя' name='login'}}
@@ -8,5 +8,5 @@
         {{> input label='Номер телефона' type='tel' name='phone'}}
         {{#>button}}Зарегистрироваться{{/button}}
     </form>
-    <a class="text-center d-block mt-1" href='{{routes "SIGNIN"}}'>Уже зарегистрированы?</a>
+    <a class='text-center d-block mt-1' href='{{routes 'SIGNIN'}}'>Уже зарегистрированы?</a>
 {{/centeredBox}}

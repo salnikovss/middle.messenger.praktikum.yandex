@@ -1,0 +1,16 @@
+<form class='message-form'>
+    <div class='message-form__attachments-button'>
+        {{#>button type='button' style='icon'}}
+            <i class='icon message-form__attachments-button-icon'></i>
+        {{/button}}
+    </div>  
+     <div class='message-form__input-container'>
+        <textarea class='message-form__input' name='message' 
+            placeholder='Сообщение...' oninput='{{textareaAutogrow}}'></textarea>
+     </div>
+     <div class='message-form__send-button'>
+        {{#>button style='icon btn_primary'}}
+            <i class='icon message-form__send-button-icon'></i>
+        {{/button}}
+    </div>
+</form>

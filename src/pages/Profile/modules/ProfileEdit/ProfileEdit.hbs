@@ -1,42 +1,38 @@
 {{#>backButtonWrapper route='CHAT'}}
-<div class="profile">
-    <div class="profile__avatar">
+<div class='profile'>
+    <div class='profile__avatar'>
         {{>avatar}}
     </div>
-    <div class="profile__display_name">
-        {{user.display_name}}
-    </div>
 
-
-    <div class="data__rows-block profile__rows-block-details">
-        <div class="data__rows-row">
-            <span class="data__row-param">Email</span>
-            <span class="data__row-value">{{user.email}}</span>
+    <form class='data__rows-block profile__rows-block-details'>
+        <div class='data__rows-row'>
+            <label for='email' class='data__row-param'>Email</label>
+            <input type='email' id='email' name='email' value={{user.email}} class='data__row-form-control'>
         </div>
-        <div class="data__rows-row">
-            <span class="data__row-param">Имя пользователя</span>
-            <span class="data__row-value">{{user.login}}</span>
+        <div class='data__rows-row'>
+            <label for='login' class='data__row-param'>Имя пользователя</label>
+            <input type='text' id='login' name='login' value={{user.login}} class='data__row-form-control'>
         </div>
-        <div class="data__rows-row">
-            <span class="data__row-param">Имя</span>
-            <span class="data__row-value">{{user.first_name}}</span>
+        <div class='data__rows-row'>
+            <label for='first_name' class='data__row-param'>Имя</label>
+            <input type='text' id='first_name' name='first_name' value={{user.first_name}} class='data__row-form-control'>
         </div>
-        <div class="data__rows-row">
-            <span class="data__row-param">Фамилия</span>
-            <span class="data__row-value">{{user.second_name}}</span>
+        <div class='data__rows-row'>
+            <label for='second_name' class='data__row-param'>Фамилия</label>
+            <input type='text' id='second_name' name='second_name' value={{user.second_name}} class='data__row-form-control'>
         </div>
-        <div class="data__rows-row">
-            <span class="data__row-param">Отображаемое имя</span>
-            <span class="data__row-value">{{user.display_name}}</span>
+        <div class='data__rows-row'>
+            <label for='display_name' class='data__row-param'>Отображаемое имя</label>
+            <input type='text' id='display_name' name='display_name' value={{user.display_name}} class='data__row-form-control'>
         </div>
-        <div class="data__rows-row">
-            <span class="data__row-param">Телефон</span>
-            <span class="data__row-value">{{user.phone}}</span>
+        <div class='data__rows-row'>
+            <label for='phone' class='data__row-param'>Телефон</label>
+            <input type='text' id='phone' name='phone' value={{user.phone}} class='data__row-form-control'>
         </div>
 
-        <div class="data__rows-row data__rows-row_centered">
+        <div class='data__rows-row data__rows-row-button'>
         {{#>button}}Сохранить{{/button}}
         </div>
-    </div>
+    </form>
 </div>
 {{/backButtonWrapper}}

@@ -16,6 +16,10 @@ body {
 a {
     color: #149A80;
     text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 p {
@@ -65,9 +69,18 @@ aside {
     margin-top: 1rem;
 }
 
+.icon {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    display: inline-block;
+    content: '';
+    vertical-align: center;
+}
+
 
 :root {
-    --scrollbarBgColor: #343A4F;
+    --scrollbarBgColor: #252838;
     --scrollbarThumbColor: #149A80;
     --scrollbarWidth: 6px;
     --scrollbarBorder: 0 solid var(--scrollbarBgColor);
@@ -96,48 +109,25 @@ aside {
 }
 
 
-.data {
-    &__rows-block {
-        width: 100%;
+.legend {
+    display: none;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    padding: 5px;
+    background: #252838;
+    font-size: 12px;
+
+    &__list {
+        padding: 0;
+        margin: 0;
     }
 
-    &__rows-row {
-        &_centered {
-            justify-content: center;
-        }
-
-        font-style: normal;
-        font-weight: 500;
-        font-size: 13px;
-        line-height: 13px;
-        display: flex;
-        margin-bottom: 10px;
-
-        border-bottom: 1px solid #4C546F;
-
-        &:last-child {
-            border: none;
-        }
+    &__list-item {
+        list-style: none;
     }
 
-    &__row-param {
-        flex: 1;
-        color: #9898B0;
-        margin-bottom: 10px;
-    }
-
-    &__row-value {
-        text-align: right;
-        color: #E2E2E4;
-        margin-bottom: 10px;
-    }
-
-    &__rows-row-link {
-        display: block;
-        margin-bottom: 10px;
-
-        &_color-red {
-            color: #F44D4D
-        }
+    &__title {
+        margin-bottom: 5px;
     }
 }
