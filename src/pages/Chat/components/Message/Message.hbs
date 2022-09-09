@@ -1,9 +1,14 @@
-<div class='message message_{{type}} message_{{#if fromMe}}from-me{{else}}from-others{{/if}}'>
+<div class='message message_type-{{type}} message_{{#if fromMe}}from-me{{else}}from-others{{/if}}'>
   <div class='message__body'>
     {{#if image}}
       <img src='{{image}}' alt='' />
     {{else}}
-      {{body}}
+      {{#unless fromMe}}
+        {{#if author}}
+        <p class='message__author'>{{author.name}}</p>
+        {{/if}}
+      {{/unless}}
+      {{{nl2br body}}}
     {{/if}}
   </div>
   <div class='message__meta'>

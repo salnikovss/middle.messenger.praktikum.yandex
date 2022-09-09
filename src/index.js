@@ -1,7 +1,6 @@
 import { routeConsts, routes } from '../config/routes';
 import './index.scss';
-import './helpers/getTime';
-import './helpers/routes';
+import './helpers/handlebar-helpers';
 
 const renderPage = (page) => {
   const rootElement = document.getElementById('app');

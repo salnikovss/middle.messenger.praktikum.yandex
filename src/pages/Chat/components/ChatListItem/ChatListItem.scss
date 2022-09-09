@@ -1,12 +1,18 @@
-.user-list-item {
+.chat-list-item {
     padding: 12px 10px;
     display: flex;
     width: 100%;
+    cursor: pointer;
+
+    &:hover {
+        background: darken(#252838, 2%);
+    }
 
     &_selected {
+        pointer-events: none;
         background: #149A80;
 
-        .user-list-item {
+        .chat-list-item {
 
             &__name,
             &__alt,

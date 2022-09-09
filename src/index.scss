@@ -69,6 +69,12 @@ aside {
     margin-top: 1rem;
 }
 
+img {
+    max-width: 100%;
+    vertical-align: middle;
+    height: auto;
+}
+
 .icon {
     background-size: contain;
     background-repeat: no-repeat;
@@ -108,9 +114,7 @@ aside {
     background-image: var(--scrollbarThumbColor)
 }
 
-
 .legend {
-    display: none;
     position: absolute;
     right: 10px;
     top: 5px;

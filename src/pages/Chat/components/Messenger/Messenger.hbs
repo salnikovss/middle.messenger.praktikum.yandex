@@ -16,9 +16,11 @@
     </div>
     <div class='messenger__body custom-scrollbar'>
       <div class='messenger__inner'>
-        {{#each messages}}
-          {{>message this}}
-        {{/each}}
+        <div class='messenger__message-list'>
+          {{#each messages}}
+            {{>message this}}
+          {{/each}}
+        </div>
       </div>
     </div>
     <div class='messenger__footer'>

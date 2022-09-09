@@ -2,7 +2,8 @@ import Handlebars from 'handlebars';
 
 Handlebars.registerHelper('getTime', function (date) {
   try {
-    return [date.getHour(), date.getMinutes()].join(':');
+    const dateObj = new Date(date);
+    return [dateObj.getHours(), dateObj.getMinutes()].join(':');
   } catch {
     return '';
   }
