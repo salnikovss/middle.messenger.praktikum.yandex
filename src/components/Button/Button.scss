@@ -25,11 +25,11 @@
     }
 
     &_primary {
-        background: #149A80;
-        color: #E2E2E4;
+        background: var(--secondaryColor);
+        color: var(--lightColor);
 
         &:hover {
-            background: darken(#149A80, 5%);
+            background: var(--secondaryColorDarken);
         }
     }
 }

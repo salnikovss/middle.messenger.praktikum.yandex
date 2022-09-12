@@ -10,14 +10,14 @@
         justify-content: center;
         width: $blockPadding;
         flex-shrink: 0;
-        background-color: #252838;
+        background-color: var(--primaryColor);
         transition: background-color 0.2s ease-in-out;
 
         &:hover {
-            background-color: lighten(#252838, 2%);
+            background-color: var(--primaryColorDarken);
 
             .back-button-wrapper__link-inner {
-                background-color: lighten(#149A80, 2%);
+                background-color: var(--secondaryColorDarken);
             }
         }
     }
@@ -26,7 +26,7 @@
         border-radius: 50%;
         width: 28px;
         height: 28px;
-        background: #149A80 url(../../../static/images/back-arrow.svg) no-repeat 50% 50%;
+        background: var(--secondaryColor) url(../../../static/images/back-arrow.svg) no-repeat 50% 50%;
         transition: background-color 0.2s ease-in-out;
 
     }

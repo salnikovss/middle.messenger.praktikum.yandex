@@ -40,7 +40,7 @@
             background: #353A51;
 
             .dot {
-                background: #149A80;
+                background: var(--secondaryColor);
             }
         }
 
@@ -62,7 +62,7 @@
         font-weight: 600;
         font-size: 13px;
         line-height: 13px;
-        color: #E2E2E4;
+        color: var(--lightColor);
     }
 
     &__chat-avatar {
@@ -94,7 +94,7 @@
 
     &__header,
     &__footer {
-        background: #252838;
+        background: var(--primaryColor);
         flex-shrink: 0;
 
         padding-left: 20px;

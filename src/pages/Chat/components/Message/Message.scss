@@ -9,7 +9,7 @@
     font-weight: 500;
     font-size: 12px;
     line-height: 15px;
-    color: #E2E2E4;
+    color: var(--lightColor);
     position: relative;
 
     &_type- {
@@ -83,7 +83,7 @@
     }
 
     &_from-me {
-        background: #252838;
+        background: var(--primaryColor);
         align-self: flex-end;
         border-radius: 12px 12px 0 12px;
     }

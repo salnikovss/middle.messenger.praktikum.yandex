@@ -1,5 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
+:root {
+    --primaryColor: #252838;
+    --primaryColorLighten: #292c3e;
+    --primaryColorDarken: #212432;
+    
+    --secondaryColor: #149A80;
+    --secondaryColorDarken: #11836d;
+
+    --lightColor: #E2E2E4;
+
+    --scrollbarBgColor: var(--primaryColor);
+    --scrollbarThumbColor: var(--secondaryColor);
+    --scrollbarWidth: 6px;
+    --scrollbarBorder: 0 solid var(--scrollbarBgColor);
+    --scrollbarBorderRadius: calc(var(--scrollbarWidth) / 4);
+}
+
 html,
 body {
     height: 100%;
@@ -9,12 +26,12 @@ body {
 
 body {
     font-family: 'Roboto', sans-serif;
-    background: #252838;
-    color: #E2E2E4;
+    background: var(--primaryColor);
+    color: var(--lightColor);
 }
 
 a {
-    color: #149A80;
+    color: var(--secondaryColor);
     text-decoration: none;
 
     &:hover {
@@ -85,14 +102,7 @@ img {
 }
 
 
-:root {
-    --scrollbarBgColor: #252838;
-    --scrollbarThumbColor: #149A80;
-    --scrollbarWidth: 6px;
-    --scrollbarBorder: 0 solid var(--scrollbarBgColor);
-    --scrollbarBorderRadius: calc(var(--scrollbarWidth) / 4);
-}
-
+// Scrollbar appearence
 .custom-scrollbar {
     scrollbar-width: var(--scrollbarWidth);
     scrollbar-color: var(--scrollbarThumbColor) var(--scrollbarBgColor);
@@ -119,7 +129,7 @@ img {
     right: 10px;
     top: 5px;
     padding: 5px;
-    background: #252838;
+    background: var(--primaryColor);
     font-size: 12px;
 
     &__list {

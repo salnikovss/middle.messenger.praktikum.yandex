@@ -32,12 +32,12 @@
         font-weight: 500;
         font-size: 13px;
         line-height: 14px;
-        color: #E2E2E4;
+        color: var(--lightColor);
     }
 
     &__inner {
         border-radius: 50%;
-        background: no-repeat url(../../../../../static/images/blank-avatar.svg) #252838 50% 50%;
+        background: no-repeat url(../../../../../static/images/blank-avatar.svg) var(--primaryColor) 50% 50%;
         display: block;
         width: 130px;
         height: 130px;

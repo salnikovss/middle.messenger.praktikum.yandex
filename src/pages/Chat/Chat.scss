@@ -6,7 +6,7 @@
 
     &__left-pane {
         flex: 0 0 310px;
-        background-color: #252838;
+        background-color: var(--primaryColor);
         border-right: 1px solid #343A4F;
 
         display: flex;
