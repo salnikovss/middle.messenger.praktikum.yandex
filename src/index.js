@@ -4,7 +4,7 @@ import './helpers/handlebar-helpers';
 
 const renderPage = (page) => {
   const rootElement = document.getElementById('app');
-  rootElement.textContent = page();
+  rootElement.innerHTML = page();
 };
 
 const handleRoute = () => {
