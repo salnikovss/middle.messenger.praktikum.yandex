@@ -7,7 +7,8 @@
     "dev": "npx parcel static/index.html --no-cache",
     "prebuild": "rm -rf dist",
     "build": "npx parcel build static/index.html",
-    "start": "node server.js"
+    "prestart": "rm -rf dist",
+    "start": "npx parcel build static/index.html && node server.js"
   },
   "repository": {
     "type": "git",
