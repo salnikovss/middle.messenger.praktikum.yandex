@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+:root {
+    --primaryColor: #252838;
+    --primaryColorLighten: #292c3e;
+    --primaryColorDarken: #212432;
+    
+    --secondaryColor: #149A80;
+    --secondaryColorDarken: #11836d;
+
+    --lightColor: #E2E2E4;
+
+    --scrollbarBgColor: var(--primaryColor);
+    --scrollbarThumbColor: var(--secondaryColor);
+    --scrollbarWidth: 6px;
+    --scrollbarBorder: 0 solid var(--scrollbarBgColor);
+    --scrollbarBorderRadius: calc(var(--scrollbarWidth) / 4);
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: var(--primaryColor);
+    color: var(--lightColor);
+}
+
+a {
+    color: var(--secondaryColor);
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+p {
+    margin-top: 0;
+}
+
+:focus,
+:active {
+    outline: none;
+}
+
+a:focus,
+a:active {
+    outline: none
+}
+
+nav,
+footer,
+header,
+aside {
+    display: block
+}
+
+* {
+    box-sizing: border-box;
+}
+
+
+#app {
+    width: 100%;
+    height: 100%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.d-block {
+    display: block;
+}
+
+.mt-1 {
+    margin-top: .75rem;
+}
+
+.mt-2 {
+    margin-top: 1rem;
+}
+
+img {
+    max-width: 100%;
+    vertical-align: middle;
+    height: auto;
+}
+
+.icon {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    display: inline-block;
+    content: '';
+    vertical-align: center;
+}
+
+
+// Scrollbar appearence
+.custom-scrollbar {
+    scrollbar-width: var(--scrollbarWidth);
+    scrollbar-color: var(--scrollbarThumbColor) var(--scrollbarBgColor);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: var(--scrollbarWidth);
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: var(--scrollbarBgColor);
+    border-radius: var(--scrollbarBorderRadius);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbarThumbColor);
+    border-radius: var(--scrollbarBorderRadius);
+    border: var(--scrollbarBorder);
+    background-image: var(--scrollbarThumbColor)
+}
+
+.legend {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    padding: 5px;
+    background: var(--primaryColor);
+    font-size: 12px;
+
+    &__list {
+        padding: 0;
+        margin: 0;
+    }
+
+    &__list-item {
+        list-style: none;
+    }
+
+    &__title {
+        margin-bottom: 5px;
+    }
+}

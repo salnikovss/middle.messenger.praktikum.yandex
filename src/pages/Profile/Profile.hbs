@@ -1,0 +1,51 @@
+{{#>backButtonWrapper route='CHAT'}}
+<div class='profile'>
+    <div class='profile__avatar'>
+        {{>avatar}}
+    </div>
+    <div class='profile__display_name'>
+        {{user.display_name}}
+    </div>
+
+
+    <div class='data__rows-block profile__rows-block-details'>
+        <div class='data__rows-row'>
+            <span class='data__row-param'>Email</span>
+            <span class='data__row-value'>{{user.email}}</span>
+        </div>
+        <div class='data__rows-row'>
+            <span class='data__row-param'>Имя пользователя</span>
+            <span class='data__row-value'>{{user.login}}</span>
+        </div>
+        <div class='data__rows-row'>
+            <span class='data__row-param'>Имя</span>
+            <span class='data__row-value'>{{user.first_name}}</span>
+        </div>
+        <div class='data__rows-row'>
+            <span class='data__row-param'>Фамилия</span>
+            <span class='data__row-value'>{{user.second_name}}</span>
+        </div>
+        <div class='data__rows-row'>
+            <span class='data__row-param'>Отображаемое имя</span>
+            <span class='data__row-value'>{{user.display_name}}</span>
+        </div>
+        <div class='data__rows-row'>
+            <span class='data__row-param'>Телефон</span>
+            <span class='data__row-value'>{{user.phone}}</span>
+        </div>
+    </div>
+
+    <div class='data__rows-block profile__rows-block-profile-nav'>
+        <div class='data__rows-row'>
+            <a class='data__rows-row-link' href='{{routes 'PROFILE_EDIT'}}'>Изменить данные</a>
+        </div>
+        <div class='data__rows-row'>
+            <a class='data__rows-row-link' href='{{routes 'PROFILE_PASSWORD_CHANGE'}}'>Сменить пароль</a>
+        </div>
+        <div class='data__rows-row'>
+            <a class='data__rows-row-link data__rows-row-link_color-red' href='{{routes 'LOGOUT'}}'>Выйти</a>
+        </div>
+    </div>
+
+</div>
+{{/backButtonWrapper}}

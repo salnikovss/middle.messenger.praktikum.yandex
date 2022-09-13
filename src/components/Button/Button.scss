@@ -1,0 +1,35 @@
+.btn {
+    vertical-align: middle;
+    border-radius: 8px;
+    width: 100%;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 13px;
+    text-align: center;
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    transition: background-color 0.2s ease-in-out;
+
+    &_icon {
+        border-radius: 50%;
+        background: transparent;
+        width: 28px;
+        height: 28px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &_primary {
+        background: var(--secondaryColor);
+        color: var(--lightColor);
+
+        &:hover {
+            background: var(--secondaryColorDarken);
+        }
+    }
+}

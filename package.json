@@ -1,0 +1,29 @@
+{
+  "name": "middle.messenger.praktikum.yandex",
+  "version": "1.0.0",
+  "description": "### Откройте pull request в ветку main из ветки, где вы разрабатывали проект, и добавьте ссылку на этот pr в README.md в ветке main.  ### ВАЖНО: pull request должен называться “Sprint i” (i — номер спринта).",
+  "source": "src/index.hbs",
+  "scripts": {
+    "dev": "npx parcel static/index.html --no-cache",
+    "prebuild": "rm -rf dist",
+    "build": "npx parcel build static/index.html",
+    "prestart": "rm -rf dist",
+    "start": "npx parcel build static/index.html && node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@study:salnikovss/middle.messenger.praktikum.yandex.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@parcel/transformer-sass": "2.7.0",
+    "eslint": "^8.23.1",
+    "express": "4.18.1",
+    "parcel": "2.7.0",
+    "parcel-transformer-hbs": "1.0.4",
+    "prettier": "2.7.1",
+    "sass": "1.54.9"
+  }
+}
