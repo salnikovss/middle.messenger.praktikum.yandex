@@ -1,4 +1,4 @@
-export default function nl2br(str, isXhtml) {
+export default function nl2br(str: string, isXhtml: boolean) {
   //  discuss at: https://locutus.io/php/nl2br/
   // original by: Kevin van Zonneveld (https://kvz.io)
   // improved by: Philip Peterson
@@ -23,7 +23,6 @@ export default function nl2br(str, isXhtml) {
     return '';
   }
   // Adjust comment to avoid issue on locutus.io display
-  const breakTag =
-    isXhtml || typeof isXhtml === 'undefined' ? '<br ' + '/>' : '<br>';
+  const breakTag = isXhtml || typeof isXhtml === 'undefined' ? '<br ' + '/>' : '<br>';
   return (str + '').replace(/(\r\n|\n\r|\r|\n)/g, breakTag + '$1');
 }

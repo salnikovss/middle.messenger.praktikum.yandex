@@ -26,6 +26,6 @@ export const routes = {
   [routeConsts.PROFILE_PASSWORD_CHANGE]: PasswordChange,
   [routeConsts.SIGNIN]: SignIn,
   [routeConsts.SIGNUP]: SignUp,
-  [routeConsts.ERROR404]: ErrorPage.bind(ErrorPage, 404),
-  [routeConsts.ERROR500]: ErrorPage.bind(ErrorPage, 500),
+  [routeConsts.ERROR404]: () => new ErrorPage({ code: 404 }),
+  [routeConsts.ERROR500]: () => new ErrorPage({ code: 500 }),
 };

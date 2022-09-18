@@ -6,6 +6,6 @@ export const SignUp = () => {
   Button();
   CenteredBox();
   Input();
-  
+
   return template();
 };

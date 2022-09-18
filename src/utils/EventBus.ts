@@ -1,43 +1,48 @@
-class EventBus {
-  private listeners: Record<string, Array<() => void>> = {};
-  private static instance?: EventBus = undefined;
+type Listeners = {
+  [key: string]: Array<() => void>;
+};
 
-  public static getInstance(): EventBus {
-    if (this.instance === undefined) {
-      this.instance = new EventBus();
-    }
+export interface IEventBus {
+  _listeners: Listeners;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  on(event: string, callback: (...args: any) => void): void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  off(event: string, callback: (...args: any) => void): void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  emit(event: string, ...args: any): void;
+}
 
-    return this.instance;
-  }
+class EventBus implements IEventBus {
+  _listeners: Listeners = {};
 
   // constructor() {}
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: string, callback: (...args: any) => void): void {
-    if (!this.listeners[event]) {
-      this.listeners[event] = [];
+    if (!this._listeners[event]) {
+      this._listeners[event] = [];
     }
 
-    this.listeners[event].push(callback);
+    this._listeners[event].push(callback);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  off(event: string, callback: (...args: any) => void) {
-    if (!this.listeners[event]) {
+  off(event: string, callback: (...args: any) => void): void {
+    if (!this._listeners[event]) {
       return;
     }
 
-    this.listeners[event] = this.listeners[event].filter((listener) => listener !== callback);
+    this._listeners[event] = this._listeners[event].filter((listener) => listener !== callback);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  emit(event: string, ...args: any) {
-    if (!this.listeners[event] || this.listeners[event].length === 0) {
+  emit(event: string, ...args: any): void {
+    if (!this._listeners[event] || this._listeners[event].length === 0) {
       return;
     }
 
-    this.listeners[event].forEach((listener) => {
-      listener(...args);
+    this._listeners[event].forEach((listener) => {
+      listener.apply(listener, args);
     });
   }
 }

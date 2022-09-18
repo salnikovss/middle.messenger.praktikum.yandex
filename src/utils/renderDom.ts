@@ -1,8 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const renderDom = (page: any) => {
-  const rootElement = document.getElementById('app');
+export const renderDom = (html: string, elementId = 'app') => {
+  const rootElement = document.getElementById(elementId);
   if (rootElement) {
-    rootElement.innerHTML = page();
+    rootElement.innerHTML = html;
   }
 };
 
