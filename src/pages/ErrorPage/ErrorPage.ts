@@ -18,18 +18,13 @@ interface ErrorPageProps extends IComponentProps {
 }
 export default class ErrorPage extends Component<ErrorPageProps> {
   constructor(props: ErrorPageProps) {
-    // Создаём враппер DOM-элемент button
-    super('button', props);
+    Object.assign(props, {
+      text: errorCodesText[props.code] ?? '',
+    });
+    super('template', props);
   }
 
   render() {
     return this.compile(template, { ...this.props });
-
-    const data = {
-      code: this.props.code,
-      text: errorCodesText[this.props.code] ?? '',
-    };
-
-    return template(data);
   }
 }

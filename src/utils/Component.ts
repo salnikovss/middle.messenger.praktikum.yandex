@@ -92,15 +92,14 @@ class Component<T extends IComponentProps = IComponentProps> {
     // Используйте шаблонизатор из npm или напишите свой безопасный
     // Нужно компилировать не в строку (или делать это правильно),
     // либо сразу превращать в DOM-элементы и возвращать из compile DOM-ноду
-    
+
     if (this._element) {
       // this._removeEvents();
       this._element.replaceWith(newElement);
     }
-    
+
     this._element = newElement;
     // this._addEvents();
-
   }
 
   // Переопределяется пользователем. Необходимо вернуть разметку
@@ -108,9 +107,9 @@ class Component<T extends IComponentProps = IComponentProps> {
     return new DocumentFragment();
   }
 
-  compile(template: any, context: any) {
+  compile(template: any, context: Record<string, unknown>) {
     const fragment = this._createDocumentElement('template') as HTMLTemplateElement;
-    const htmlString = '123';
+    const htmlString = template(context);
 
     fragment.innerHTML = htmlString;
 
