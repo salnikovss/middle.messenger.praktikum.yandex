@@ -1,16 +1,13 @@
-import { routeConsts, routes } from '../config/routes';
 import './index.scss';
 import './helpers/handlebar-helpers';
 
-const renderPage = (page) => {
-  const rootElement = document.getElementById('app');
-  rootElement.innerHTML = page();
-};
+import { routeConsts, routes } from '../config/routes';
+import renderDom from './utils/renderDom';
 
 const handleRoute = () => {
   const { pathname } = document.location;
   const page = routes[pathname] ?? routes[routeConsts.ERROR404];
-  renderPage(page);
+  renderDom(page);
 };
 
 window.addEventListener('load', handleRoute);

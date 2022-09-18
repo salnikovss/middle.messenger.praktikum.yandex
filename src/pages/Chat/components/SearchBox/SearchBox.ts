@@ -1,6 +1,7 @@
+import './SearchBox.scss';
+
 import Input from '../../../../components/Input';
 import template from './SearchBox.hbs';
-import './SearchBox.scss';
 
 export const SearchBox = () => {
   Input();

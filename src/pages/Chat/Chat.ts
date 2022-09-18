@@ -1,10 +1,20 @@
-import Messenger from './components/Messenger';
-import SearchBox from './components/SearchBox';
-import ChatList from './components/ChatList';
-import template from './Chat.hbs';
 import './Chat.scss';
 
-const chatList = [
+import template from './Chat.hbs';
+import ChatList from './components/ChatList';
+import Messenger from './components/Messenger';
+import SearchBox from './components/SearchBox';
+
+export type Chat = {
+  id: string;
+  name: string;
+  alt: string;
+  lastMessageTime: string;
+  unreadMessages: number;
+  avatar: string | null;
+};
+
+const chatList: Chat[] = [
   {
     id: 'chat1',
     name: 'Андрей',

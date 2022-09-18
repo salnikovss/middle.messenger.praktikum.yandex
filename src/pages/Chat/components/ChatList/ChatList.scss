@@ -4,6 +4,6 @@
 
     &__item:not(:last-child) {
         list-style: none;
-        border-bottom: 1px solid #343A4F;
+        border-bottom: 1px solid var(--darkColor);
     }
 }

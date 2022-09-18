@@ -7,7 +7,7 @@
     &__left-pane {
         flex: 0 0 310px;
         background-color: var(--primaryColor);
-        border-right: 1px solid #343A4F;
+        border-right: 1px solid var(--darkColor);
 
         display: flex;
         flex-direction: column;
@@ -15,7 +15,7 @@
 
     &__right-pane {
         flex-grow: 1;
-        background-color: #343A4F;
+        background-color: var(--darkColor);
     }
 
     &__profile-link {
@@ -51,6 +51,6 @@
     &__chat-list {
         overflow-y: auto;
         flex-grow: 1;
-        border-top: 1px solid #343A4F;
+        border-top: 1px solid var(--darkColor);
     }
 }

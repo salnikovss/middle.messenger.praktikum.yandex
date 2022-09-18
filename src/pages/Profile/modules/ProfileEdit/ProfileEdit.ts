@@ -1,13 +1,16 @@
-import BackButtonWrapper from '../../../../components/BackButtonWrapper';
-import Avatar from '../../components/Avatar';
-import template from './PasswordChange.hbs';
 import '../../Profile.scss';
-import Button from '../../../../components/Button';
 
-export const PasswordChange = () => {
+import BackButtonWrapper from '../../../../components/BackButtonWrapper';
+import Button from '../../../../components/Button';
+import Input from '../../../../components/Input';
+import Avatar from '../../components/Avatar';
+import template from './ProfileEdit.hbs';
+
+export const ProfileEdit = () => {
   Avatar();
   BackButtonWrapper();
   Button();
+  Input();
 
   const data = {
     user: {

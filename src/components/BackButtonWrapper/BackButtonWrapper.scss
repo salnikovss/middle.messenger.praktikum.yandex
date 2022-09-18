@@ -34,7 +34,7 @@
     &__content {
         padding: $blockPadding;
         padding-right: $blockPadding * 2;
-        background-color: #343A4F;
+        background-color: var(--darkColor);
         flex: 1;
         overflow: auto;
     }
