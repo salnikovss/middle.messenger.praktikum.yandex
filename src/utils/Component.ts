@@ -85,19 +85,36 @@ class Component<T extends IComponentProps = IComponentProps> {
   }
 
   _render() {
-    const block = this.render();
+    const fragment = this.render();
+    const newElement = fragment.firstElementChild as HTMLElement;
+
     // Это небезопасный метод для упрощения логики
     // Используйте шаблонизатор из npm или напишите свой безопасный
     // Нужно компилировать не в строку (или делать это правильно),
     // либо сразу превращать в DOM-элементы и возвращать из compile DOM-ноду
+    
     if (this._element) {
-      this._element.innerHTML = block;
+      // this._removeEvents();
+      this._element.replaceWith(newElement);
     }
+    
+    this._element = newElement;
+    // this._addEvents();
+
   }
 
   // Переопределяется пользователем. Необходимо вернуть разметку
-  render() {
-    return '';
+  render(): DocumentFragment {
+    return new DocumentFragment();
+  }
+
+  compile(template: any, context: any) {
+    const fragment = this._createDocumentElement('template') as HTMLTemplateElement;
+    const htmlString = '123';
+
+    fragment.innerHTML = htmlString;
+
+    return fragment.content;
   }
 
   getContent() {

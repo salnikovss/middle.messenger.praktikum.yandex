@@ -23,6 +23,8 @@ export default class ErrorPage extends Component<ErrorPageProps> {
   }
 
   render() {
+    return this.compile(template, { ...this.props });
+
     const data = {
       code: this.props.code,
       text: errorCodesText[this.props.code] ?? '',

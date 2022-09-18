@@ -9,7 +9,7 @@ const handleRoute = () => {
   const page = routes[pathname] ?? routes[routeConsts.ERROR404];
 
   const html = page();
-  renderDom(typeof html === 'string' ? html : html.render());
+  renderDom(html);
 };
 
 window.addEventListener('load', handleRoute);
