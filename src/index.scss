@@ -126,11 +126,12 @@ img {
 }
 
 .legend {
-    position: absolute;
+    position: fixed;
     right: 10px;
     top: 5px;
     padding: 5px;
     background: var(--primaryColor);
+    border: 1px solid var(--lightColor);
     font-size: 12px;
 
     &__list {
