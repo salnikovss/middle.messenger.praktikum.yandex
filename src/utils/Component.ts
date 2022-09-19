@@ -1,7 +1,8 @@
 import { ComponentEvents, ComponentMeta, IComponentProps } from './Component.types';
 import EventBus, { IEventBus } from './EventBus';
 
-class Component<T extends IComponentProps> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+class Component<T extends IComponentProps = any> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -84,8 +85,7 @@ class Component<T extends IComponentProps> {
   }
 
   _removeEvents() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const events: ComponentEvents | undefined = (this.props as any).events;
+    const events: ComponentEvents | undefined = (this.props as IComponentProps).events;
 
     if (events) {
       Object.entries(events).forEach(([event, listener]) => {
@@ -95,8 +95,7 @@ class Component<T extends IComponentProps> {
   }
 
   _addEvents() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const events: ComponentEvents | undefined = (this.props as any).events;
+    const events: ComponentEvents | undefined = (this.props as IComponentProps).events;
 
     if (events) {
       Object.entries(events).forEach(([event, listener]) => {

@@ -1,8 +1,12 @@
 {
-  "extends": "stylelint-config-standard",
+  "extends": ["stylelint-config-standard-scss", "stylelint-config-prettier-scss"],
   "rules": {
     "color-hex-case": "lower",
-    "custom-property-pattern": "^[a-z][a-zA-Z0-9]+$"
+    "selector-class-pattern": "^([a-z][a-z0-9_]*)(-[a-z0-9_]+)*$",
+    "custom-property-pattern": "^[a-z][a-zA-Z0-9]+$",
+    "scss/dollar-variable-pattern": "^[a-z][a-zA-Z0-9]+$",
+    "string-quotes": "single",
+    "function-url-quotes": null
   },
   "plugins": ["stylelint-scss"],
   "ignoreFiles": ["build/*"]

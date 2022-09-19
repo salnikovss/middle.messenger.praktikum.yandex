@@ -1,112 +1,111 @@
 .chat-list-item {
-    padding: 12px 10px;
+  padding: 12px 10px;
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--primaryColorDarken);
+  }
+
+  &__avatar {
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
+
+  &__avatar-image {
+    display: block;
+    border-radius: 50%;
+    background-color: var(--darkColor);
+    background-position: 50% 50%;
+    background-size: cover;
+    width: 47px;
+    height: 47px;
+  }
+
+  &__data {
+    flex: 1;
     display: flex;
-    width: 100%;
-    cursor: pointer;
+    flex-direction: column;
+  }
 
-    &:hover {
-        background: var(--primary-color-darken);
+  &__row {
+    display: flex;
+    justify-content: space-between;
+
+    &_full-height {
+      flex-grow: 1;
     }
+  }
 
-    &_selected {
-        pointer-events: none;
-        background: var(--secondary-color);
+  &__name {
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 13px;
+    color: var(--lightColor);
+    margin-bottom: 4px;
+  }
 
-        .chat-list-item {
+  &__date {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 9px;
+    line-height: 13px;
+    text-align: right;
+    margin: 0;
+    margin-bottom: 4px;
+    color: #717790;
+    align-self: flex-start;
+  }
 
-            &__name,
-            &__alt,
-            &__date,
-            &__data {
-                color: #fff;
-            }
+  &__alt {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #9898b0;
+    margin-bottom: 0;
+  }
 
-            &__unread-count span {
-                background-color: var(--dark-color);
-                color: #fff;
-            }
-        }
+  &__unread-count {
+    flex: 0 1 auto;
+    min-width: 40px;
+    text-align: right;
+    align-self: flex-end;
+    margin: 0;
+
+    span {
+      display: inline-block;
+      margin-left: auto;
+      padding: 0 3px;
+      line-height: 20px;
+      height: 20px;
+      min-width: 20px;
+      border-radius: 50%;
+      background: var(--secondaryColor);
+      font-weight: 500;
+      font-size: 11px;
+      text-align: center;
+      color: #fff;
     }
+  }
 
-    &__avatar {
-        margin-right: 10px;
-        flex-shrink: 0;
+  &_selected {
+    pointer-events: none;
+    background: var(--secondaryColor);
+
+    .chat-list-item {
+      &__name,
+      &__alt,
+      &__date,
+      &__data {
+        color: #fff;
+      }
+
+      &__unread-count span {
+        background-color: var(--darkColor);
+        color: #fff;
+      }
     }
-
-    &__avatar-image {
-        display: block;
-        border-radius: 50%;
-        background-color: var(--dark-color);
-        background-position: 50% 50%;
-        background-size: cover;
-        width: 47px;
-        height: 47px;
-    }
-
-    &__data {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-    }
-
-    &__row {
-        display: flex;
-        justify-content: space-between;
-
-        &_full-height {
-            flex-grow: 1;
-        }
-    }
-
-    &__name {
-        font-weight: 600;
-        font-size: 13px;
-        line-height: 13px;
-        color: var(--light-color);
-        margin-bottom: 4px;
-    }
-
-    &__date {
-        font-style: normal;
-        margin-bottom: 4px;
-        font-weight: 500;
-        font-size: 9px;
-        line-height: 13px;
-        text-align: right;
-        margin: 0;
-        color: #717790;
-        align-self: flex-start;
-    }
-
-    &__alt {
-        font-style: normal;
-        font-weight: 500;
-        font-size: 12px;
-        line-height: 15px;
-        color: #9898B0;
-        margin-bottom: 0;
-    }
-
-    &__unread-count {
-        flex: 0 1 auto;
-        min-width: 40px;
-        text-align: right;
-        align-self: flex-end;
-        margin: 0;
-
-        span {
-            display: inline-block;
-            margin-left: auto;
-            padding: 0 3px;
-            line-height: 20px;
-            height: 20px;
-            min-width: 20px;
-            border-radius: 50%;
-            background: var(--secondary-color);
-            font-weight: 500;
-            font-size: 11px;
-            text-align: center;
-            color: #fff;
-        }
-    }
+  }
 }

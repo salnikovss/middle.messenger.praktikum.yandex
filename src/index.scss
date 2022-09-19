@@ -1,4 +1,4 @@
-@import "https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap";
+@import 'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap';
 
 :root {
   --primaryColor: #252838;
@@ -94,7 +94,7 @@ img {
   background-repeat: no-repeat;
   background-position: 50% 50%;
   display: inline-block;
-  content: "";
+  content: '';
   vertical-align: center;
 }
 
