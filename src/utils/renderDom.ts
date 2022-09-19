@@ -1,13 +1,16 @@
 import Component from './Component';
 
-export const renderDom = (content: Component | string, elementId = 'app') => {
+export const renderDom = (component: Component | string, elementId = 'app') => {
   const rootElement = document.getElementById(elementId);
   if (rootElement) {
-    if (content instanceof Component) {
-      rootElement.appendChild(content.render());
-      content.dispatchComponentDidMount();
+    if (component instanceof Component) {
+      const content = component.getContent();
+      if (content) {
+        rootElement.appendChild(content);
+        component.dispatchComponentDidMount();
+      }
     } else {
-      rootElement.innerHTML = content;
+      rootElement.innerHTML = component;
     }
   }
 };

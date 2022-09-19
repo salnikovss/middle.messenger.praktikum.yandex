@@ -1,15 +1,7 @@
+import { ComponentEvents, ComponentMeta, IComponentProps } from './Component.types';
 import EventBus, { IEventBus } from './EventBus';
 
-export interface IComponentProps {
-  [key: string]: unknown;
-}
-
-type ComponentMeta = {
-  tagName: string;
-  props: IComponentProps;
-};
-
-class Component<T extends IComponentProps = IComponentProps> {
+class Component<T extends IComponentProps> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -17,15 +9,14 @@ class Component<T extends IComponentProps = IComponentProps> {
   };
 
   _element: HTMLElement | null = null;
-  _meta: ComponentMeta;
+  _meta: ComponentMeta<T>;
   _eventBus: IEventBus;
   props;
 
-  constructor(public tagName = 'div', props: T = {} as T) {
+  constructor(props: T) {
     this._eventBus = new EventBus();
 
     this._meta = {
-      tagName,
       props,
     };
 
@@ -41,13 +32,7 @@ class Component<T extends IComponentProps = IComponentProps> {
     eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  _createResources() {
-    const { tagName } = this._meta;
-    this._element = this._createDocumentElement(tagName);
-  }
-
   init() {
-    this._createResources();
     this._eventBus.emit(Component.EVENTS.FLOW_RENDER);
   }
 
@@ -88,18 +73,37 @@ class Component<T extends IComponentProps = IComponentProps> {
     const fragment = this.render();
     const newElement = fragment.firstElementChild as HTMLElement;
 
-    // Это небезопасный метод для упрощения логики
-    // Используйте шаблонизатор из npm или напишите свой безопасный
-    // Нужно компилировать не в строку (или делать это правильно),
-    // либо сразу превращать в DOM-элементы и возвращать из compile DOM-ноду
-
     if (this._element) {
-      // this._removeEvents();
+      this._removeEvents();
       this._element.replaceWith(newElement);
     }
 
     this._element = newElement;
-    // this._addEvents();
+
+    this._addEvents();
+  }
+
+  _removeEvents() {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const events: ComponentEvents | undefined = (this.props as any).events;
+
+    if (events) {
+      Object.entries(events).forEach(([event, listener]) => {
+        this._element?.removeEventListener(event, listener);
+      });
+    }
+  }
+
+  _addEvents() {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const events: ComponentEvents | undefined = (this.props as any).events;
+
+    if (events) {
+      Object.entries(events).forEach(([event, listener]) => {
+        this._element?.addEventListener(event, listener);
+        // console.log(event, listener, this._element);
+      });
+    }
   }
 
   // Переопределяется пользователем. Необходимо вернуть разметку
@@ -107,10 +111,9 @@ class Component<T extends IComponentProps = IComponentProps> {
     return new DocumentFragment();
   }
 
-  compile(template: any, context: Record<string, unknown>) {
+  compile(template: (context: Record<string, unknown>) => string, context: Record<string, unknown>) {
     const fragment = this._createDocumentElement('template') as HTMLTemplateElement;
     const htmlString = template(context);
-
     fragment.innerHTML = htmlString;
 
     return fragment.content;
@@ -121,11 +124,21 @@ class Component<T extends IComponentProps = IComponentProps> {
   }
 
   _makePropsProxy(props: T) {
-    // Ещё один способ передачи this, но он больше не применяется с приходом ES6+
-    // const self = this;
+    return new Proxy(props as unknown as object, {
+      get: (target: IComponentProps, prop: string) => {
+        const value = target[prop];
+        return typeof value === 'function' ? value.bind(target) : value;
+      },
+      set: (target: IComponentProps, prop: string, value: unknown) => {
+        target[prop] = value;
 
-    // Здесь вам предстоит реализовать метод
-    return props;
+        this._eventBus.emit(Component.EVENTS.FLOW_CDM, { ...target }, target);
+        return true;
+      },
+      deleteProperty: () => {
+        throw new Error('Permission denied');
+      },
+    });
   }
 
   _createDocumentElement(tagName: string) {
@@ -147,11 +160,5 @@ class Component<T extends IComponentProps = IComponentProps> {
     }
   }
 }
-
-// interface IPageProps extends IComponentProps {
-//   test: number;
-// }
-
-// const page = new Component<IPageProps>('test', { test: 2 });
 
 export default Component;
