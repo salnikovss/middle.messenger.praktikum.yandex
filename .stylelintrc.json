@@ -1,0 +1,9 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "color-hex-case": "lower",
+    "custom-property-pattern": "^[a-z][a-zA-Z0-9]+$"
+  },
+  "plugins": ["stylelint-scss"],
+  "ignoreFiles": ["build/*"]
+}

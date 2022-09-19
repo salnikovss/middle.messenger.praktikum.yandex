@@ -13,7 +13,7 @@ class Component<T extends IComponentProps> {
   _eventBus: IEventBus;
   props;
 
-  constructor(props: T) {
+  constructor(props: T = {} as T) {
     this._eventBus = new EventBus();
 
     this._meta = {

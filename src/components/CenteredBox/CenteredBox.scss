@@ -13,7 +13,7 @@
     &__inner {
         width: 100%;
         max-width: 340px;
-        background: var(--darkColor);
+        background: var(--dark-color);
         box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
         border-radius: 12px;
         padding: 30px;
@@ -29,7 +29,7 @@
         font-size: 20px;
         line-height: 20px;
         text-align: center;
-        color: var(--lightColor);
+        color: var(--light-color);
         margin-bottom: 30px;
     }
 }

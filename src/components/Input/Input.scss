@@ -14,21 +14,21 @@
     &__input {
         width: 100%;
         border-radius: 5px;
-        border: 1px solid var(--primaryColor);
-        background-color: var(--primaryColor);
+        border: 1px solid var(--primary-color);
+        background-color: var(--primary-color);
         padding: 10px 16px;
         font-weight: 500;
         font-size: 13px;
         line-height: 13px;
 
-        color: var(--lightColor);
+        color: var(--light-color);
 
         ::placeholder {
             color: #9898B0;
         }
 
         &_lighter {
-            background: var(--darkColor);
+            background: var(--dark-color);
         }
     }
 

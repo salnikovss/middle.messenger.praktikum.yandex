@@ -40,7 +40,7 @@
             background: #353A51;
 
             .dot {
-                background: var(--secondaryColor);
+                background: var(--secondary-color);
             }
         }
 
@@ -62,7 +62,7 @@
         font-weight: 600;
         font-size: 13px;
         line-height: 13px;
-        color: var(--lightColor);
+        color: var(--light-color);
     }
 
     &__chat-avatar {
@@ -70,7 +70,7 @@
         height: 34px;
         flex-shrink: 0;
         margin-right: 10px;
-        background: var(--darkColor) no-repeat 50% 50%;
+        background: var(--dark-color) no-repeat 50% 50%;
         background-size: cover;
         border-radius: 50%;
     }
@@ -94,7 +94,7 @@
 
     &__header,
     &__footer {
-        background: var(--primaryColor);
+        background: var(--primary-color);
         flex-shrink: 0;
 
         padding-left: 20px;

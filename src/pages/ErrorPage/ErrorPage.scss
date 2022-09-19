@@ -20,7 +20,7 @@
         font-weight: 500;
         font-size: 40px;
         line-height: 40px;
-        color: var(--lightColor);
+        color: var(--light-color);
         margin-bottom: 23px;
     }
 
@@ -28,7 +28,7 @@
         font-weight: 500;
         font-size: 20px;
         line-height: 20px;
-        color: var(--lightColor);
+        color: var(--light-color);
     }
 
     &__link {
@@ -36,6 +36,6 @@
         font-weight: 500;
         font-size: 11px;
         line-height: 11px;
-        color: var(--secondaryColor);
+        color: var(--secondary-color);
     }
 }

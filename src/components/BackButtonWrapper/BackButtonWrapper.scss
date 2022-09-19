@@ -10,14 +10,14 @@
         justify-content: center;
         width: $blockPadding;
         flex-shrink: 0;
-        background-color: var(--primaryColor);
+        background-color: var(--primary-color);
         transition: background-color 0.2s ease-in-out;
 
         &:hover {
-            background-color: var(--primaryColorDarken);
+            background-color: var(--primary-color-darken);
 
             .back-button-wrapper__link-inner {
-                background-color: var(--secondaryColorDarken);
+                background-color: var(--secondary-color-darken);
             }
         }
     }
@@ -26,7 +26,7 @@
         border-radius: 50%;
         width: 28px;
         height: 28px;
-        background: var(--secondaryColor) url(../../../static/images/back-arrow.svg) no-repeat 50% 50%;
+        background: var(--secondary-color) url(../../../static/images/back-arrow.svg) no-repeat 50% 50%;
         transition: background-color 0.2s ease-in-out;
 
     }
@@ -34,7 +34,7 @@
     &__content {
         padding: $blockPadding;
         padding-right: $blockPadding * 2;
-        background-color: var(--darkColor);
+        background-color: var(--dark-color);
         flex: 1;
         overflow: auto;
     }

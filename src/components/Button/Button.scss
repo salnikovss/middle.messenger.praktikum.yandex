@@ -25,11 +25,11 @@
     }
 
     &_primary {
-        background: var(--secondaryColor);
-        color: var(--lightColor);
+        background: var(--secondary-color);
+        color: var(--light-color);
 
         &:hover {
-            background: var(--secondaryColorDarken);
+            background: var(--secondary-color-darken);
         }
     }
 }
