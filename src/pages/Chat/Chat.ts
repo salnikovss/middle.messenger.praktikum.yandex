@@ -113,9 +113,9 @@ export class Chat extends Component {
 
     const data = {
       searchBox: new SearchBox(),
-      chatList: ChatList({ chats: chatList, activeChatId }),
-      messenger: Messenger({
-        chat: activeChat,
+      chatList: new ChatList({ chats: chatList, activeChatId }),
+      messenger: new Messenger({
+        chat: activeChat as ChatModel,
       }),
     };
 

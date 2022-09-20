@@ -1,13 +1,14 @@
 import './MessageForm.scss';
 
-import Handlebars from 'handlebars';
-
 import Button from '../../../../components/Button';
 import Input from '../../../../components/Input';
+import Component from '../../../../utils/Component';
 import template from './MessageForm.hbs';
 
-export const MessageForm = () => {
-  Button();
-  Input();
-  Handlebars.registerPartial('message-form', template);
-};
+export class MessageForm extends Component {
+  render(): DocumentFragment {
+    Button();
+    Input();
+    return this.compile(template, {});
+  }
+}

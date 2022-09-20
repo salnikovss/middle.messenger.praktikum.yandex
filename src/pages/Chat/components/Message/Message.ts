@@ -1,9 +1,10 @@
 import './Message.scss';
 
-import Handlebars from 'handlebars';
-
+import Component from '../../../../utils/Component';
 import template from './Message.hbs';
 
-export const Message = () => {
-  Handlebars.registerPartial('message', template);
-};
+export class Message extends Component {
+  render(): DocumentFragment {
+    return this.compile(template, this.props);
+  }
+}

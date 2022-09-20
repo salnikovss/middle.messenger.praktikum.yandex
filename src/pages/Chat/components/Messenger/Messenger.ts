@@ -2,7 +2,8 @@ import './Messenger.scss';
 
 import image from '../../../../../static/images/camera-image.jpg';
 import Button from '../../../../components/Button';
-import { ChatModel } from '../../Chat';
+import Component from '../../../../utils/Component';
+import { ChatModel } from '../../';
 import Message from '../Message';
 import MessageForm from '../MessageForm';
 import template from './Messenger.hbs';
@@ -50,17 +51,24 @@ const messages = [
   },
 ];
 
-export const Messenger = ({ chat }: { chat: ChatModel }) => {
-  Button();
-  MessageForm();
-  Message();
+export class Messenger extends Component {
+  constructor({ chat }: { chat: ChatModel }) {
+    super({
+      chat,
+      messages: messages.map((message) => new Message(message)),
+      messageForm: new MessageForm(),
+    });
+  }
 
-  // TODO: Trigger after render
-  setTimeout(() => {
-    const objDiv = document.getElementsByClassName('messenger__body');
-    objDiv[0].scrollTop = objDiv[0].scrollHeight;
-  }, 200);
+  render(): DocumentFragment {
+    Button();
 
-  const data = { chat, messages };
-  return template(data);
-};
+    // TODO: Trigger after render
+    setTimeout(() => {
+      const objDiv = document.getElementsByClassName('messenger__body');
+      objDiv[0].scrollTop = objDiv[0].scrollHeight;
+    }, 200);
+
+    return this.compile(template, this.props);
+  }
+}

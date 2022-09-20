@@ -11,7 +11,7 @@ const errorCodesText: Record<number, string> = {
 type ErrorPageProps = {
   code: number;
 };
-export default class ErrorPage extends Component<ErrorPageProps> {
+export default class ErrorPage extends Component {
   constructor(props: ErrorPageProps) {
     Object.assign(props, {
       text: errorCodesText[props.code] ?? '',
