@@ -8,7 +8,7 @@ export const renderDom = (component: Component | string, elementId: string) => {
       const content = component.getContent();
       if (content) {
         rootElement.appendChild(content);
-        component.dispatchComponentDidMount();
+        // component.dispatchComponentDidMount();
       }
     } else {
       rootElement.innerHTML = component;

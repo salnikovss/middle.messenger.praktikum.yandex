@@ -8,6 +8,7 @@ class Component {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
+    FLOW_CDU: 'flow:component-did-update',
     FLOW_RENDER: 'flow:render',
   };
 
@@ -38,12 +39,13 @@ class Component {
 
   _registerEvents(eventBus: IEventBus) {
     eventBus.on(Component.EVENTS.INIT, this.init.bind(this));
+    eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
   init() {
-    this._eventBus.emit(Component.EVENTS.FLOW_RENDER);
+    this._eventBus.emit(Component.EVENTS.FLOW_RENDER, this.props);
   }
 
   _componentDidMount() {
@@ -54,16 +56,20 @@ class Component {
     console.log('componentDidMount', oldProps);
   }
 
-  dispatchComponentDidMount() {
-    this._eventBus.emit(Component.EVENTS.FLOW_CDM);
-  }
-
   _componentDidUpdate(oldProps: IComponentProps, newProps: IComponentProps) {
-    console.log('_componentDidUpdate', oldProps, newProps);
+    const response = this.componentDidUpdate(oldProps, newProps);
+    if (!response) {
+      return;
+    }
+    this._render();
   }
 
   componentDidUpdate(oldProps: IComponentProps, newProps: IComponentProps) {
-    console.log('componentDidUpdate', oldProps, newProps);
+    // TODO: сделать deep сравнение
+    if (oldProps !== newProps) {
+      return false;
+    }
+
     return true;
   }
 
@@ -85,7 +91,7 @@ class Component {
 
     if (this._element) {
       this._removeEvents();
-      this._element.replaceWith(newElement);
+      // this._element.replaceWith(newElement);
     }
 
     this._element = newElement;
@@ -172,7 +178,7 @@ class Component {
       set: (target: IComponentProps, prop: string, value: unknown) => {
         target[prop] = value;
 
-        this._eventBus.emit(Component.EVENTS.FLOW_CDM, { ...target }, target);
+        this._eventBus.emit(Component.EVENTS.FLOW_CDU, { ...target }, target);
         return true;
       },
       deleteProperty: () => {
