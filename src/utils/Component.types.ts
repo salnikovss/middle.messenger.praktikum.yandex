@@ -1,9 +1,15 @@
+import Component from './Component';
+
 export interface IComponentProps {
   events?: ComponentEvents;
-  [key: string]: unknown;
+  [key: string]: any;
 }
+// | {
+//     events?: ComponentEvents;
+//   }
+// | Record<string, unknown | Component | Component[]>;
 
-export type ComponentMeta<T> = {
+export type ComponentMeta<T = unknown> = {
   props: T;
 };
 

@@ -1,21 +1,30 @@
-import { ComponentEvents, ComponentMeta, IComponentProps } from './Component.types';
+import { nanoid } from 'nanoid';
+
+import { ComponentMeta, IComponentProps } from './Component.types';
 import EventBus, { IEventBus } from './EventBus';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-class Component<T extends IComponentProps = any> {
+class Component {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
     FLOW_RENDER: 'flow:render',
   };
 
-  _element: HTMLElement | null = null;
-  _meta: ComponentMeta<T>;
-  _eventBus: IEventBus;
-  props;
+  public id = nanoid(6);
 
-  constructor(props: T = {} as T) {
+  protected _element: HTMLElement | null = null;
+  protected _meta: ComponentMeta;
+  protected _eventBus: IEventBus;
+  protected props: IComponentProps;
+  protected children: Record<string, Component | Component[]> = {};
+
+  constructor(propsAndChildren: IComponentProps = {}) {
     this._eventBus = new EventBus();
+
+    const { props, children } = this.getChildren(propsAndChildren);
+
+    this.children = children;
 
     this._meta = {
       props,
@@ -41,7 +50,7 @@ class Component<T extends IComponentProps = any> {
     this.componentDidMount();
   }
 
-  componentDidMount(oldProps?: T) {
+  componentDidMount(oldProps?: IComponentProps) {
     console.log('componentDidMount', oldProps);
   }
 
@@ -49,16 +58,16 @@ class Component<T extends IComponentProps = any> {
     this._eventBus.emit(Component.EVENTS.FLOW_CDM);
   }
 
-  _componentDidUpdate(oldProps: T, newProps: T) {
+  _componentDidUpdate(oldProps: IComponentProps, newProps: IComponentProps) {
     console.log('_componentDidUpdate', oldProps, newProps);
   }
 
-  componentDidUpdate(oldProps: T, newProps: T) {
+  componentDidUpdate(oldProps: IComponentProps, newProps: IComponentProps) {
     console.log('componentDidUpdate', oldProps, newProps);
     return true;
   }
 
-  setProps = (nextProps: T) => {
+  setProps = (nextProps: IComponentProps) => {
     if (!nextProps) {
       return;
     }
@@ -85,24 +94,19 @@ class Component<T extends IComponentProps = any> {
   }
 
   _removeEvents() {
-    const events: ComponentEvents | undefined = (this.props as IComponentProps).events;
+    const { events = {} } = this.props as IComponentProps;
 
-    if (events) {
-      Object.entries(events).forEach(([event, listener]) => {
-        this._element?.removeEventListener(event, listener);
-      });
-    }
+    Object.entries(events).forEach(([event, listener]) => {
+      this._element?.removeEventListener(event, listener);
+    });
   }
 
   _addEvents() {
-    const events: ComponentEvents | undefined = (this.props as IComponentProps).events;
+    const { events = {} } = this.props as IComponentProps;
 
-    if (events) {
-      Object.entries(events).forEach(([event, listener]) => {
-        this._element?.addEventListener(event, listener);
-        // console.log(event, listener, this._element);
-      });
-    }
+    Object.entries(events).forEach(([event, listener]) => {
+      this._element?.addEventListener(event, listener);
+    });
   }
 
   // Переопределяется пользователем. Необходимо вернуть разметку
@@ -112,8 +116,45 @@ class Component<T extends IComponentProps = any> {
 
   compile(template: (context: Record<string, unknown>) => string, context: Record<string, unknown>) {
     const fragment = this._createDocumentElement('template') as HTMLTemplateElement;
+
+    Object.entries(this.children).forEach(([key, child]) => {
+      if (Array.isArray(child)) {
+        context[key] = child.map((ch) => `<div data-id="id-${ch.id}"></div>`);
+        return;
+      }
+      context[key] = `<div data-id="id-${child.id}"></div>`;
+    });
+
     const htmlString = template(context);
     fragment.innerHTML = htmlString;
+
+    Object.entries(this.children).forEach(([key, child]) => {
+      if (Array.isArray(child)) {
+        context[key] = child.forEach((ch) => {
+          const childStub = fragment.content.querySelector(`[data-id="id-${ch.id}"]`);
+          if (!childStub) {
+            return;
+          }
+
+          const content = ch.getContent();
+          if (content) {
+            childStub.replaceWith(content);
+          }
+        });
+
+        return;
+      }
+
+      const stub = fragment.content.querySelector(`[data-id="id-${child.id}"]`);
+      if (!stub) {
+        return;
+      }
+
+      const content = child.getContent();
+      if (content) {
+        stub.replaceWith(content);
+      }
+    });
 
     return fragment.content;
   }
@@ -122,8 +163,8 @@ class Component<T extends IComponentProps = any> {
     return this.element ?? null;
   }
 
-  _makePropsProxy(props: T) {
-    return new Proxy(props as unknown as object, {
+  _makePropsProxy(props: IComponentProps) {
+    return new Proxy(props, {
       get: (target: IComponentProps, prop: string) => {
         const value = target[prop];
         return typeof value === 'function' ? value.bind(target) : value;
@@ -157,6 +198,27 @@ class Component<T extends IComponentProps = any> {
     if (el) {
       el.style.display = 'none';
     }
+  }
+
+  getChildren(propsAndChildren: IComponentProps) {
+    const children: Record<string, Component | Component[]> = {};
+    const props: Record<string, unknown> = {};
+
+    Object.entries(propsAndChildren).map(([key, value]) => {
+      if (value instanceof Component) {
+        children[key] = value;
+      } else if (Array.isArray(value) && value.every((v) => v instanceof Component)) {
+        children[key] = value;
+      } else {
+        props[key] = value;
+      }
+    });
+
+    return { props, children };
+  }
+
+  protected initChildren() {
+    return;
   }
 }
 

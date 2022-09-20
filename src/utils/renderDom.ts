@@ -1,6 +1,6 @@
 import Component from './Component';
 
-export const renderDom = (component: Component | string, elementId = 'app') => {
+export const renderDom = (component: Component | string, elementId: string) => {
   const rootElement = document.getElementById(elementId);
   if (rootElement) {
     if (component instanceof Component) {

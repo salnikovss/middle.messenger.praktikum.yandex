@@ -1,20 +1,13 @@
 import './Chat.scss';
 
+import Component from '../../utils/Component';
 import template from './Chat.hbs';
+import { ChatModel } from './Chat.types';
 import ChatList from './components/ChatList';
 import Messenger from './components/Messenger';
 import SearchBox from './components/SearchBox';
 
-export type Chat = {
-  id: string;
-  name: string;
-  alt: string;
-  lastMessageTime: string;
-  unreadMessages: number;
-  avatar: string | null;
-};
-
-const chatList: Chat[] = [
+const chatList: ChatModel[] = [
   {
     id: 'chat1',
     name: 'Андрей',
@@ -114,14 +107,22 @@ const chatList: Chat[] = [
 ];
 const activeChatId = 'chat4';
 
-export const Chat = () => {
-  const activeChat = chatList.find((chat) => chat.id === activeChatId);
-  const data = {
-    searchBox: SearchBox(),
-    chatList: ChatList({ chats: chatList, activeChatId }),
-    messenger: Messenger({
-      chat: activeChat,
-    }),
-  };
-  return template(data);
-};
+export class Chat extends Component {
+  constructor() {
+    const activeChat = chatList.find((chat) => chat.id === activeChatId);
+
+    const data = {
+      searchBox: new SearchBox(),
+      chatList: ChatList({ chats: chatList, activeChatId }),
+      messenger: Messenger({
+        chat: activeChat,
+      }),
+    };
+
+    super(data);
+  }
+
+  render(): DocumentFragment {
+    return this.compile(template, this.props);
+  }
+}

@@ -2,7 +2,7 @@ import './Messenger.scss';
 
 import image from '../../../../../static/images/camera-image.jpg';
 import Button from '../../../../components/Button';
-import { TChat } from '../../Chat';
+import { ChatModel } from '../../Chat';
 import Message from '../Message';
 import MessageForm from '../MessageForm';
 import template from './Messenger.hbs';
@@ -50,7 +50,7 @@ const messages = [
   },
 ];
 
-export const Messenger = ({ chat }: { chat: TChat }) => {
+export const Messenger = ({ chat }: { chat: ChatModel }) => {
   Button();
   MessageForm();
   Message();

@@ -1,11 +1,11 @@
 import './ChatList.scss';
 
-import { Chat } from '../../Chat';
+import { ChatModel } from '../../';
 import ChatListItem from '../ChatListItem';
 import template from './ChatList.hbs';
 
 type ChatListProps = {
-  chats: Chat[];
+  chats: ChatModel[];
   activeChatId: string;
 };
 
