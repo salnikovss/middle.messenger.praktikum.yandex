@@ -4,19 +4,26 @@ import Input from '../../components/Input';
 import Component from '../../utils/Component';
 import template from './SignIn.hbs';
 
-// export const SignIn2 = () => {
-//   Button();
-//   CenteredBox();
-//   Input();
-
-//   return template();
-// };
-
 export class SignIn extends Component {
+  onSubmit(e: Event) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('submit event fired', e);
+  }
+
   render(): DocumentFragment {
-    Button();
     CenteredBox();
     Input();
-    return this.compile(template, {});
+
+    const SubmitButton = new Button({
+      body: 'Войти',
+      events: {
+        click: this.onSubmit,
+      },
+    });
+
+    return this.compile(template, {
+      submitButton: SubmitButton,
+    });
   }
 }

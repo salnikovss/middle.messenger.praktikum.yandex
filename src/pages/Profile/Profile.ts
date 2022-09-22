@@ -1,22 +1,19 @@
 import './Profile.scss';
 
 import BackButtonWrapper from '../../components/BackButtonWrapper';
-import Avatar from './components/Avatar';
+import Component from '../../utils/Component';
+import { fakeUserData } from '../../utils/fakeData';
+import { default as AvatarComponent } from './components/Avatar';
 import template from './Profile.hbs';
 
-export const Profile = () => {
-  Avatar();
-  BackButtonWrapper();
+export class Profile extends Component {
+  render(): DocumentFragment {
+    BackButtonWrapper();
+    const Avatar = new AvatarComponent();
 
-  const data = {
-    user: {
-      display_name: 'Иван',
-      first_name: 'Иван',
-      second_name: 'Иванов',
-      login: 'ivanivanov',
-      email: 'pochta@yandex.ru',
-      phone: '+7 (909) 967 30 30',
-    },
-  };
-  return template(data);
-};
+    return this.compile(template, {
+      user: fakeUserData,
+      avatar: Avatar,
+    });
+  }
+}

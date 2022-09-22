@@ -1,14 +1,9 @@
 import './ChatList.scss';
 
 import Component from '../../../../utils/Component';
-import { ChatModel } from '../../';
 import ChatListItem from '../ChatListItem';
 import template from './ChatList.hbs';
-
-type ChatListProps = {
-  chats: ChatModel[];
-  activeChatId: string;
-};
+import { ChatListProps } from './types';
 
 export class ChatList extends Component {
   constructor({ chats, activeChatId }: ChatListProps) {

@@ -6,7 +6,7 @@
         {{> input label='E-mail' type='email' name='email'}}
         {{> input label='Пароль' type='password' name='password' }}
         {{> input label='Номер телефона' type='tel' name='phone'}}
-        {{#>button}}Зарегистрироваться{{/button}}
+        {{{submitButton}}}
     </form>
     <a class='text-center d-block mt-1' href='{{routes 'SIGNIN'}}'>Уже зарегистрированы?</a>
 {{/centeredBox}}

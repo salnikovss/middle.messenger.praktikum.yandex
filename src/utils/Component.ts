@@ -11,9 +11,9 @@ export type ComponentMeta<T = unknown> = {
   props: T;
 };
 
-export type ComponentEvents = Record<string, () => void>;
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ComponentEvents = Record<string, (...args: any) => void>;
+
 class Component {
   static EVENTS = {
     INIT: 'init',
@@ -38,7 +38,7 @@ class Component {
     this.children = children;
 
     this._meta = {
-      props,
+      props: propsAndChildren,
     };
 
     this.props = this._makePropsProxy(props);
@@ -87,12 +87,12 @@ class Component {
   }
 
   componentDidUpdate(oldProps: IComponentProps, newProps: IComponentProps) {
-    // TODO: сделать deep сравнение
+    // TODO: сделать deep сравнение.
     if (oldProps !== newProps) {
-      return false;
+      return false; // поменять на true.
     }
 
-    return true;
+    return false;
   }
 
   setProps = (nextProps: IComponentProps) => {
@@ -145,19 +145,40 @@ class Component {
 
   compile(template: (context: Record<string, unknown>) => string, props: IComponentProps) {
     const fragment = this._createDocumentElement('template') as HTMLTemplateElement;
+    const components: Record<string, Component> = {};
 
-    Object.entries(this.children).forEach(([key, child]) => {
-      if (Array.isArray(child)) {
-        props[key] = child.map((ch) => `<div data-id="id-${ch.id}"></div>`);
-        return;
+    // Iterate over props and children, which were passed in the constructor
+    Object.entries({ ...props, ...this.children }).forEach(([key, prop]) => {
+      if (prop instanceof Component) {
+        // console.log('key', key, prop);
+        props[key] = `<div data-id="id-${prop.id}"></div>`;
+        components[prop.id] = prop;
+      } else if (Array.isArray(prop)) {
+        props[key] = prop
+          .filter((pr) => pr instanceof Component)
+          .map((childProp) => {
+            components[childProp.id] = childProp;
+            return `<div data-id="id-${childProp.id}"></div>`;
+          });
       }
-      props[key] = `<div data-id="id-${child.id}"></div>`;
     });
+
+    // Object.entries(this.children).forEach(([key, child]) => {
+    //   if (Array.isArray(child)) {
+    //     console.log('key child', key, child);
+    //     props[key] = child.map((ch) => `<div data-id="id-${ch.id}"></div>`);
+    //     return;
+    //   }
+    //   props[key] = `<div data-id="id-${child.id}"></div>`;
+    //   components[child.id] = child;
+    // });
 
     const htmlString = template(props);
     fragment.innerHTML = htmlString;
 
-    Object.entries(this.children).forEach(([key, child]) => {
+    // console.log('components', components, 'this.children', this.children);
+
+    Object.entries(components).forEach(([key, child]) => {
       if (Array.isArray(child)) {
         props[key] = child.forEach((ch) => {
           const childStub = fragment.content.querySelector(`[data-id="id-${ch.id}"]`);
@@ -241,11 +262,9 @@ class Component {
       }
     });
 
-    return { props, children };
-  }
+    // console.log(props, children);
 
-  protected initChildren() {
-    return;
+    return { props, children };
   }
 }
 

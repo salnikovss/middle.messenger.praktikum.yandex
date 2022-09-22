@@ -21,11 +21,11 @@ export const routeConsts = {
 export const routes = {
   [routeConsts.HOME]: () => new Chat(),
   [routeConsts.CHAT]: () => new Chat(),
-  [routeConsts.PROFILE]: Profile,
-  [routeConsts.PROFILE_EDIT]: ProfileEdit,
-  [routeConsts.PROFILE_PASSWORD_CHANGE]: PasswordChange,
+  [routeConsts.PROFILE]: () => new Profile(),
+  [routeConsts.PROFILE_EDIT]: () => new ProfileEdit(),
+  [routeConsts.PROFILE_PASSWORD_CHANGE]: () => new PasswordChange(),
   [routeConsts.SIGNIN]: () => new SignIn(),
-  [routeConsts.SIGNUP]: SignUp,
+  [routeConsts.SIGNUP]: () => new SignUp(),
   [routeConsts.ERROR404]: () => new ErrorPage({ code: 404 }),
   [routeConsts.ERROR500]: () => new ErrorPage({ code: 500 }),
 };

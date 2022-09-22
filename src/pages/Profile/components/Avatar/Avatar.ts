@@ -1,9 +1,10 @@
 import './Avatar.scss';
 
-import Handlebars from 'handlebars';
-
+import Component from '../../../../utils/Component';
 import template from './Avatar.hbs';
 
-export const Avatar = () => {
-  Handlebars.registerPartial('avatar', template);
-};
+export class Avatar extends Component {
+  render(): DocumentFragment {
+    return this.compile(template, this.props);
+  }
+}

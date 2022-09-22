@@ -1,9 +1,15 @@
 import './Modal.scss';
 
-import Handlebars from 'handlebars';
-
+import Component from '../../utils/Component';
 import template from './Modal.hbs';
+import { IModalProps } from './types';
 
-export function Modal() {
-  Handlebars.registerPartial('modal', template);
+export class Modal extends Component {
+  constructor(props: IModalProps) {
+    super(props);
+  }
+
+  render(): DocumentFragment {
+    return this.compile(template, this.props);
+  }
 }

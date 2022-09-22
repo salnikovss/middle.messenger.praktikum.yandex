@@ -19,6 +19,7 @@
   }
 
   &__inner {
+    position: relative;
     border-radius: 50%;
     background: no-repeat url(../../../../../static/images/blank-avatar.svg) var(--primaryColor) 50% 50%;
     display: block;

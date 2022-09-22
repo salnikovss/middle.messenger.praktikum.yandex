@@ -1,6 +1,3 @@
-<button 
-  type='{{#if type}}{{type}}{{else}}submit{{/if}}' 
-  class='btn btn_{{#if style}}{{style}}{{else}}primary{{/if}} {{classes}}'
->
-  {{#if text}}{{text}}{{else}}{{> @partial-block}}{{/if}}
+<button type='{{type}}' class='btn btn_{{style}} {{classes}}'>
+  {{{body}}}
 </button>

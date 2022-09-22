@@ -6,11 +6,9 @@
     </div>  
      <div class='message-form__input-container'>
         <textarea class='message-form__input' name='message' 
-            placeholder='Сообщение...' oninput='{{textareaAutogrow}}'></textarea>
+            placeholder='Сообщение...' oninput='textareaAutogrow'></textarea>
      </div>
      <div class='message-form__send-button'>
-        {{#>button style='icon btn_primary'}}
-            <i class='icon message-form__send-button-icon'></i>
-        {{/button}}
+        {{{sendButton}}}
     </div>
 </form>

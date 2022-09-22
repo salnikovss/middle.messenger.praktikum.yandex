@@ -2,23 +2,26 @@ import '../../Profile.scss';
 
 import BackButtonWrapper from '../../../../components/BackButtonWrapper';
 import Button from '../../../../components/Button';
-import Avatar from '../../components/Avatar';
+import Component from '../../../../utils/Component';
+import { fakeUserData } from '../../../../utils/fakeData';
+import { default as AvatarComponent } from '../../components/Avatar';
 import template from './PasswordChange.hbs';
 
-export const PasswordChange = () => {
-  Avatar();
-  BackButtonWrapper();
-  Button();
+export class PasswordChange extends Component {
+  render(): DocumentFragment {
+    BackButtonWrapper();
 
-  const data = {
-    user: {
-      display_name: 'Иван',
-      first_name: 'Иван',
-      second_name: 'Иванов',
-      login: 'ivanivanov',
-      email: 'pochta@yandex.ru',
-      phone: '+7 (909) 967 30 30',
-    },
-  };
-  return template(data);
-};
+    // Elements
+    const Avatar = new AvatarComponent();
+
+    const SubmitButton = new Button({
+      body: 'Сохранить',
+    });
+
+    return this.compile(template, {
+      submitButton: SubmitButton,
+      user: fakeUserData,
+      avatar: Avatar,
+    });
+  }
+}
