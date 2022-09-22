@@ -58,7 +58,7 @@ export class Messenger extends Component {
       messages: messages.map((message) => new Message(message)),
       messageForm: new MessageForm(),
       // events: {
-      //   [Component.EVENTS.FLOW_RENDER]: () => {
+      //   [Component.EVENTS.FLOW_CDM]: () => {
       //     const objDiv = document.getElementsByClassName('messenger__body');
       //     objDiv[0].scrollTop = objDiv[0].scrollHeight;
       //   },
@@ -74,7 +74,7 @@ export class Messenger extends Component {
       const objDiv = document.getElementsByClassName('messenger__body');
       objDiv[0].scrollTop = objDiv[0].scrollHeight;
     }, 200);
-
+  
     return this.compile(template, this.props);
   }
 }

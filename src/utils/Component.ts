@@ -1,7 +1,17 @@
 import { nanoid } from 'nanoid';
 
-import { ComponentMeta, IComponentProps } from './Component.types';
 import EventBus, { IEventBus } from './EventBus';
+
+export interface IComponentProps {
+  events?: ComponentEvents;
+  [key: string]: unknown;
+}
+
+export type ComponentMeta<T = unknown> = {
+  props: T;
+};
+
+export type ComponentEvents = Record<string, () => void>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 class Component {
@@ -23,7 +33,7 @@ class Component {
   constructor(propsAndChildren: IComponentProps = {}) {
     this._eventBus = new EventBus();
 
-    const { props, children } = this.getChildren(propsAndChildren);
+    const { props, children } = this._getChildren(propsAndChildren);
 
     this.children = children;
 
@@ -50,6 +60,18 @@ class Component {
 
   _componentDidMount() {
     this.componentDidMount();
+
+    Object.values(this.children).forEach((child) => {
+      if (Array.isArray(child)) {
+        child.forEach((ch) => ch.dispatchComponentDidMount());
+      } else {
+        child.dispatchComponentDidMount();
+      }
+    });
+  }
+
+  dispatchComponentDidMount() {
+    this._eventBus.emit(Component.EVENTS.FLOW_CDM);
   }
 
   componentDidMount(oldProps?: IComponentProps) {
@@ -87,11 +109,12 @@ class Component {
 
   _render() {
     const fragment = this.render();
+
     const newElement = fragment.firstElementChild as HTMLElement;
 
     if (this._element) {
       this._removeEvents();
-      // this._element.replaceWith(newElement);
+      this._element.replaceWith(newElement);
     }
 
     this._element = newElement;
@@ -115,28 +138,28 @@ class Component {
     });
   }
 
-  // Переопределяется пользователем. Необходимо вернуть разметку
+  // Must be overridden by the user in the final component
   render(): DocumentFragment {
     return new DocumentFragment();
   }
 
-  compile(template: (context: Record<string, unknown>) => string, context: Record<string, unknown>) {
+  compile(template: (context: Record<string, unknown>) => string, props: IComponentProps) {
     const fragment = this._createDocumentElement('template') as HTMLTemplateElement;
 
     Object.entries(this.children).forEach(([key, child]) => {
       if (Array.isArray(child)) {
-        context[key] = child.map((ch) => `<div data-id="id-${ch.id}"></div>`);
+        props[key] = child.map((ch) => `<div data-id="id-${ch.id}"></div>`);
         return;
       }
-      context[key] = `<div data-id="id-${child.id}"></div>`;
+      props[key] = `<div data-id="id-${child.id}"></div>`;
     });
 
-    const htmlString = template(context);
+    const htmlString = template(props);
     fragment.innerHTML = htmlString;
 
     Object.entries(this.children).forEach(([key, child]) => {
       if (Array.isArray(child)) {
-        context[key] = child.forEach((ch) => {
+        props[key] = child.forEach((ch) => {
           const childStub = fragment.content.querySelector(`[data-id="id-${ch.id}"]`);
           if (!childStub) {
             return;
@@ -206,14 +229,12 @@ class Component {
     }
   }
 
-  getChildren(propsAndChildren: IComponentProps) {
+  _getChildren(propsAndChildren: IComponentProps) {
     const children: Record<string, Component | Component[]> = {};
     const props: Record<string, unknown> = {};
 
     Object.entries(propsAndChildren).map(([key, value]) => {
-      if (value instanceof Component) {
-        children[key] = value;
-      } else if (Array.isArray(value) && value.every((v) => v instanceof Component)) {
+      if (value instanceof Component || (Array.isArray(value) && value.every((v) => v instanceof Component))) {
         children[key] = value;
       } else {
         props[key] = value;
