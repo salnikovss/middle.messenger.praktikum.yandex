@@ -11,7 +11,6 @@ import template from './ProfileEdit.hbs';
 export class ProfileEdit extends Component {
   render(): DocumentFragment {
     BackButtonWrapper();
-    Input();
 
     // Elements
     const Avatar = new AvatarComponent();
