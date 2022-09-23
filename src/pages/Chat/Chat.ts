@@ -1,23 +1,47 @@
 import './Chat.scss';
 
-import Component from '../../utils/Component';
+import { registerComponent } from '../../core';
+import Component from '../../core/Component';
 import { fakeActiveChatId, fakeChatList } from '../../utils/fakeData';
-import template from './Chat.hbs';
 import ChatList from './components/ChatList';
-import Messenger from './components/Messenger';
+import { Messenger } from './components/Messenger/Messenger';
 import SearchBox from './components/SearchBox';
-import { ChatModel } from './types';
+import { IChatProps } from './types';
 
-export class Chat extends Component {
-  render(): DocumentFragment {
-    const activeChat = fakeChatList.find((chat) => chat.id === fakeActiveChatId);
+export class Chat extends Component<IChatProps> {
+  constructor() {
+    const chatList = fakeChatList;
+    const activeChatId = fakeActiveChatId;
+    const activeChat = chatList.find((chat) => chat.id === activeChatId);
 
-    return this.compile(template, {
-      searchBox: new SearchBox(),
-      chatList: new ChatList({ chats: fakeChatList, activeChatId: fakeActiveChatId }),
-      messenger: new Messenger({
-        chat: activeChat as ChatModel,
-      }),
+    super({
+      chatList,
+      activeChatId,
+      activeChat,
     });
+  }
+
+  render() {
+    registerComponent(SearchBox);
+    registerComponent(ChatList);
+    registerComponent(Messenger);
+
+    //template=hbs
+    return `
+      <div class='chat'>
+        <aside class='chat__left-pane'>
+          <a class='chat__profile-link' href='{{routes 'PROFILE'}}'>Профиль</a>
+          <div class='chat__search-box'>
+            {{{SearchBox}}}
+          </div>
+          <div class='chat__chat-list custom-scrollbar'>
+            {{{ChatList chats=chatList activeChatId=activeChatId}}}
+          </div>
+        </aside>
+        <div class='chat__right-pane'>
+          {{{Messenger chat=activeChat}}}
+        </div>
+      </div>
+    `;
   }
 }

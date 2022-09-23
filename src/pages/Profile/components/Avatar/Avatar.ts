@@ -1,10 +1,15 @@
 import './Avatar.scss';
 
-import Component from '../../../../utils/Component';
-import template from './Avatar.hbs';
+import Component from '../../../../core/Component';
 
 export class Avatar extends Component {
-  render(): DocumentFragment {
-    return this.compile(template, this.props);
+  render() {
+    return `
+      <a href='#' class='avatar {{#if image}}avatar_filled{{/if}}'>
+        <div class='avatar__inner' {{#if image}}style='background-image: url({{image}})'{{/if}}>
+          <div class='avatar__hover'>Загрузить<br/>аватар</div>
+        </div>
+      </a>
+    `;
   }
 }

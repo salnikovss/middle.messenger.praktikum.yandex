@@ -1,19 +1,31 @@
 import './Button.scss';
 
-import Component from '../../utils/Component';
-import template from './Button.hbs';
-import { ButtonStyle, ButtonType, IButtonProps } from './types';
+import Component from '../../core/Component';
+import { ButtonStyle, ButtonType, IButtonProps, IButtonPropsWithEvents } from './types';
 
-export class Button extends Component {
-  constructor(props: IButtonProps) {
+export class Button extends Component<IButtonPropsWithEvents> {
+  constructor({ onClick, ...rest }: IButtonProps) {
+    const defaultProps = {
+      type: ButtonType.SUBMIT,
+      style: ButtonStyle.PRIMARY,
+    };
+
+    // TODO: check why button renders 4 times
+    // console.log('onClick', onClick);
+
     super({
-      ...props,
-      type: props.type || ButtonType.SUBMIT,
-      style: props.style || ButtonStyle.PRIMARY,
+      ...defaultProps,
+      ...rest,
+      events: { click: onClick },
     });
   }
 
-  render(): DocumentFragment {
-    return this.compile(template, this.props);
+  render() {
+    // language=hbs
+    return `
+      <button type='{{type}}' class='btn btn_{{style}} {{classes}}'>
+        {{{body}}}
+      </button>
+    `;
   }
 }

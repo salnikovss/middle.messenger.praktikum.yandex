@@ -1,9 +1,18 @@
 import './CenteredBox.scss';
 
-import Handlebars from 'handlebars';
+import Component from '../../core/Component';
 
-import template from './CenteredBox.hbs';
-
-export function CenteredBox() {
-  Handlebars.registerPartial('centeredBox', template);
+export class CenteredBox extends Component {
+  render() {
+    return `
+      <div class='centered-box'>
+          <div class='centered-box__inner'>
+              {{#if title}}
+                  <h1 class='centered-box__title'>{{title}}</h1>
+              {{/if}}
+              <div class='centered-box__content' data-layout=1></div>
+          </div>
+      </div>
+    `;
+  }
 }

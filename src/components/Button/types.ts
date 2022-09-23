@@ -1,4 +1,3 @@
-import { IComponentProps } from '../../utils/Component';
 export enum ButtonType {
   SUBMIT = 'SUBMIT',
   BUTTON = 'BUTTON',
@@ -10,9 +9,16 @@ export enum ButtonStyle {
   ICON = 'icon',
 }
 
-export interface IButtonProps extends IComponentProps {
+export interface IButtonProps {
   type?: ButtonType;
   body: string;
   style?: ButtonStyle;
   classes?: string;
+  onClick?: EventListener;
+}
+
+export interface IButtonPropsWithEvents extends Omit<IButtonProps, 'onClick'> {
+  events: {
+    click?: EventListener;
+  };
 }

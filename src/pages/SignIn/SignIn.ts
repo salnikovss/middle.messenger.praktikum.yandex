@@ -1,62 +1,43 @@
-import Button from '../../components/Button';
-import CenteredBox from '../../components/CenteredBox';
-import FormGroup from '../../components/FormGroup';
+import { routeConsts } from './../../../config/routes';
 import { InputType } from '../../components/Input';
-import Component from '../../utils/Component';
-import template from './SignIn.hbs';
+import Component from '../../core/Component';
 
 export class SignIn extends Component {
-  onSubmit(e: Event) {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log('submit event fired', e);
+  constructor() {
+    super();
+
+    this.setProps({
+      onSubmit: this.onSubmit.bind(this),
+      onLoginFocus: this.onLoginFocus.bind(this),
+      onLoginBlur: this.onLoginBlur.bind(this),
+    });
   }
 
-  render(): DocumentFragment {
-    CenteredBox();
+  onSubmit(e: PointerEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('onSubmit event fired', e);
+  }
 
-    const SubmitButton = new Button({
-      body: 'Войти',
-      events: {
-        click: this.onSubmit,
-      },
-    });
+  onLoginFocus(e: PointerEvent) {
+    console.log('onLoginFocus event fired', e);
+  }
 
-    const LoginFormGroup = new FormGroup({
-      label: 'Имя пользователя',
-      input: {
-        name: 'login',
-        events: {
-          blur: (e: Event) => {
-            console.log('LoginInput blur', e);
-          },
-          focus: (e: Event) => {
-            console.log('LoginInput focus', e);
-          },
-        },
-      },
-    });
+  onLoginBlur(e: PointerEvent) {
+    console.log('onLoginBlur event fired', e);
+  }
 
-    const PasswordFormGroup = new FormGroup({
-      label: 'Пароль',
-      input: {
-        name: 'password',
-        type: InputType.PASSWORD,
-        events: {
-          blur: (e: Event) => {
-            console.log('PasswordInput blur', e);
-          },
-          focus: (e: Event) => {
-            console.log('PasswordInput focus', e);
-          },
-        },
-      },
-    });
+  render() {
+    return `
+      {{#CenteredBox title='Авторизация'}}
+        <form method='post'>
+            {{{FormGroup label='Имя пользователя' name='login' onBlur=onLoginBlur onFocus=onLoginFocus}}}
+            {{{FormGroup label='Пароль' name='password' type='${InputType.PASSWORD}'}}}
 
-    return this.compile(template, {
-      submitButton: SubmitButton,
-      loginFormGroup: LoginFormGroup,
-      passwordFormGroup: PasswordFormGroup,
-    });
+            {{{Button body='Войти'}}}
+        </form>
+        {{{Link to="${routeConsts.SIGNUP}" text='Регистрация' class='text-center d-block mt-1'}}}
+      {{/CenteredBox}}
+    `;
   }
 }

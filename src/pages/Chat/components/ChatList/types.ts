@@ -1,6 +1,7 @@
-import { ChatModel } from '../../types';
+import { IChatListItemProps } from '../ChatListItem/types';
 
-export type ChatListProps = {
-  chats: ChatModel[];
+export interface IChatListProps {
+  onClick: (chatId: string) => void;
+  chats: IChatListItemProps[];
   activeChatId: string;
-};
+}

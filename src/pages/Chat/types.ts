@@ -1,8 +1,5 @@
-export type ChatModel = {
-  id: string;
-  name: string;
-  alt: string;
-  lastMessageTime: string;
-  unreadMessages: number;
-  avatar: string | null;
-};
+export interface IChatProps {
+  chatList: ChatModel[];
+  activeChatId: string;
+  activeChat: Nullable<ChatModel>;
+}

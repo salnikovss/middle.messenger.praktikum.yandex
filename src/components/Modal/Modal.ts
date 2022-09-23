@@ -1,6 +1,6 @@
 import './Modal.scss';
 
-import Component from '../../utils/Component';
+import Component from '../../core/Component';
 import template from './Modal.hbs';
 import { IModalProps } from './types';
 

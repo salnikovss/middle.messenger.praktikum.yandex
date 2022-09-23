@@ -1,6 +1,6 @@
 import './ErrorPage.scss';
 
-import Component from '../../utils/Component';
+import Component from '../../core/Component';
 import template from './ErrorPage.hbs';
 
 const errorCodesText: Record<number, string> = {

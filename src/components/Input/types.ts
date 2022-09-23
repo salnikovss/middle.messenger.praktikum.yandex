@@ -1,4 +1,4 @@
-import { IComponentProps } from '../../utils/Component';
+import { IComponentProps } from '../../core/Component';
 
 export enum InputType {
   TEXT = 'text',
@@ -8,10 +8,20 @@ export enum InputType {
   EMAIL = 'email',
 }
 
-export interface IInputProps extends IComponentProps {
+export interface IInputProps {
   name: string;
   type?: InputType;
   class?: string;
+  value?: string;
   style?: string;
   placeholder?: string;
+  onBlur: EventListener;
+  onFocus: EventListener;
+}
+
+export interface IInputPropsWithEvents extends Omit<IInputProps, 'onBlur' | 'onFocus'> {
+  events: {
+    blur?: EventListener;
+    focus?: EventListener;
+  };
 }

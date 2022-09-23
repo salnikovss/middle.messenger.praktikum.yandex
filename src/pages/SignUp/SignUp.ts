@@ -1,29 +1,34 @@
-import { Button } from '../../components/Button/Button';
-import CenteredBox from '../../components/CenteredBox';
-import Input from '../../components/Input';
-import Component from '../../utils/Component';
-import template from './SignUp.hbs';
-
+import { routeConsts } from '../../../config/routes';
+import Component from '../../core/Component';
 export class SignUp extends Component {
+  constructor() {
+    super();
+
+    this.setProps({
+      onSubmit: this.onSubmit.bind(this),
+    });
+  }
+
   onSubmit(e: Event) {
     e.preventDefault();
     e.stopPropagation();
     console.log('submit event fired', e);
   }
 
-  render(): DocumentFragment {
-    CenteredBox();
-    Input();
-
-    const SubmitButton = new Button({
-      body: 'Зарегистрироваться',
-      events: {
-        click: this.onSubmit,
-      },
-    });
-
-    return this.compile(template, {
-      submitButton: SubmitButton,
-    });
+  render() {
+    return `
+      {{#CenteredBox title='Регистрация'}}
+        <form method='post'>
+            {{{FormGroup label='Имя' name='first_name'}}}
+            {{{FormGroup label='Фамилия' name='second_name'}}}
+            {{{FormGroup label='Имя пользователя' name='login'}}}
+            {{{FormGroup label='E-mail' type='email' name='email'}}}
+            {{{FormGroup label='Пароль' type='password' name='password' }}}
+            {{{FormGroup label='Номер телефона' type='tel' name='phone'}}}
+            {{{Button body='Зарегистрироваться' onClick=onSubmit}}}
+        </form>
+        {{{Link to="${routeConsts.SIGNIN}" text='Уже зарегистрированы?' class='text-center d-block mt-1'}}}
+      {{/CenteredBox}}
+    `;
   }
 }

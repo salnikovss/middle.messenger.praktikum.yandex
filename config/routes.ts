@@ -8,6 +8,7 @@ import SignUp from '../src/pages/SignUp';
 
 export const routeConsts = {
   HOME: '/',
+  LOGOUT: '/',
   PROFILE: '/profile',
   PROFILE_EDIT: '/profile/edit',
   PROFILE_PASSWORD_CHANGE: '/profile/password-change',

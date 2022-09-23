@@ -1,9 +1,20 @@
 import './BackButtonWrapper.scss';
 
-import Handlebars from 'handlebars';
+import { Component } from '../../core';
+import { IBackButtonWrapperProps } from './types';
 
-import template from './BackButtonWrapper.hbs';
-
-export function BackButtonWrapper() {
-  Handlebars.registerPartial('backButtonWrapper', template);
+export class BackButtonWrapper extends Component<IBackButtonWrapperProps> {
+  render() {
+    return `
+      <div class='back-button-wrapper'>
+        <a class='back-button-wrapper__link' href='{{#if route}}{{route}}{{else}}/{{/if}}'>
+          <span class='back-button-wrapper__link-inner'></span>
+        </a>
+        <div class='back-button-wrapper__content custom-scrollbar'>
+          <div class='back-button-wrapper__content-inner' data-layout=1>
+          </div>
+        </div>
+      </div>
+    `;
+  }
 }
