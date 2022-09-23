@@ -1,6 +1,6 @@
-import { routeConsts } from './../../../config/routes';
 import { InputType } from '../../components/Input';
 import Component from '../../core/Component';
+import { routeConsts } from './../../../config/routes';
 
 export class SignIn extends Component {
   constructor() {
@@ -28,6 +28,10 @@ export class SignIn extends Component {
   }
 
   render() {
+console.log(123);
+
+
+    //template=hbs
     return `
       {{#CenteredBox title='Авторизация'}}
         <form method='post'>
@@ -36,7 +40,7 @@ export class SignIn extends Component {
 
             {{{Button body='Войти'}}}
         </form>
-        {{{Link to="${routeConsts.SIGNUP}" text='Регистрация' class='text-center d-block mt-1'}}}
+        {{{Link to='${routeConsts.SIGNUP}' text='Регистрация' class='text-center d-block mt-1'}}}
       {{/CenteredBox}}
     `;
   }

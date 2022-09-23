@@ -22,9 +22,9 @@ export class Chat extends Component<IChatProps> {
   }
 
   render() {
-    registerComponent(SearchBox);
-    registerComponent(ChatList);
-    registerComponent(Messenger);
+    registerComponent('SearchBox', SearchBox);
+    registerComponent('ChatList', ChatList);
+    registerComponent('Messenger', Messenger);
 
     //template=hbs
     return `

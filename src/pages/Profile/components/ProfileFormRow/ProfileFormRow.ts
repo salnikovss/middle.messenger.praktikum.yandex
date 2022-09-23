@@ -1,20 +1,18 @@
-import './FormGroup.scss';
+import Component from '../../../../core/Component';
+import { IProfileFormRowProps } from './types';
 
-import Component from '../../core/Component';
-import { IFormGroupProps } from './types';
-
-export class FormGroup extends Component<IFormGroupProps> {
+export class ProfileFormRow extends Component<IProfileFormRowProps> {
   render() {
     // template=hbs
     return `
-      <div class='form-group'>
+      <div class='data__rows-row'>
         {{#if label}}
-          <label for='field-{{name}}' class='form-group__label'>{{label}}</label>
+          <label for='field-{{name}}' class='data__row-param'>{{label}}</label>
         {{/if}}
         {{{Input 
             name=name
             type=type
-            class=class
+            class='data__row-form-control'
             style=style
             placeholder=placeholder
             value=value

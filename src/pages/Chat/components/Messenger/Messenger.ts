@@ -11,8 +11,8 @@ import { IMessengerProps } from './types';
 
 export class Messenger extends Component<IMessengerProps> {
   constructor({ chat }: IMessengerProps) {
-    registerComponent(MessageForm);
-    registerComponent(Message);
+    registerComponent('MessageForm', MessageForm);
+    registerComponent('Message', Message);
 
     super({
       chat,

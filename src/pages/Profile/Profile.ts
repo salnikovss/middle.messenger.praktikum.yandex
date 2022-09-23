@@ -9,7 +9,7 @@ import { Avatar } from './components/Avatar/Avatar';
 
 export class Profile extends Component {
   constructor() {
-    registerComponent(Avatar);
+    registerComponent('Avatar', Avatar);
     super({
       user: fakeUserData,
     });

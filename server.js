@@ -1,3 +1,6 @@
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable no-undef */
 const express = require('express');
 
 const app = express();
