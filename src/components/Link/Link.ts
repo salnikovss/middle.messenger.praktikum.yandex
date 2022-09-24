@@ -24,7 +24,7 @@ export class Link extends Component {
   }
 
   render() {
-    // language=hbs
-    return `config class="{{class}}" href="{{to}}">{{{text}}}</a>`;
+    // langu,age=hbs
+    return `<a class="{{class}}" href="{{to}}">{{{text}}}</a>`;
   }
 }

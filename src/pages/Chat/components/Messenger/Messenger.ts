@@ -7,7 +7,7 @@ import registerComponent from 'core/registerComponent';
 import { fakeMessages } from '../../../../utils/fakeData';
 import Message from '../Message';
 import MessageForm from '../MessageForm';
-import { ButtonStyle } from './components/Button/types';
+import { ButtonStyle } from './../../../../components/Button/types';
 import { IMessengerProps } from './types';
 
 export class Messenger extends Component<IMessengerProps> {
@@ -33,12 +33,6 @@ export class Messenger extends Component<IMessengerProps> {
   }
 
   render() {
-    // TODO: Trigger after render
-    // setTimeout(() => {
-    //   const objDiv = document.getElementsByClassName('messenger__body');
-    //   objDiv[0].scrollTop = objDiv[0].scrollHeight;
-    // }, 200);
-
     if (!this.props.chat) {
       return `
         <div class='messenger'>

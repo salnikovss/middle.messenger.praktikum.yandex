@@ -2,7 +2,7 @@ import './MessageForm.scss';
 
 import Component from 'core/Component';
 
-import { ButtonStyle } from './components/Button/types';
+import { ButtonStyle } from './../../../../components/Button/types';
 
 export class MessageForm extends Component {
   static componentName = 'MessageForm';
@@ -28,18 +28,4 @@ export class MessageForm extends Component {
 
     `;
   }
-
-  // render(): DocumentFragment {
-  //   Input();
-
-  //   const SendButton = new Button({
-  //     body: '<i class="icon message-form__send-button-icon"></i>',
-  //     style: ButtonStyle.ICON,
-  //     classes: 'btn_primary',
-  //   });
-
-  //   return this.compile(template, {
-  //     sendButton: SendButton,
-  //   });
-  // }
 }

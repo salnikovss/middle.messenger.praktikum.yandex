@@ -198,7 +198,9 @@ export default class Component<P = any> {
       /**
        * Ищем элемент layout-а, куда вставлять детей
        */
+      // console.log(content); return;
       const layoutContent = content.querySelector('[data-layout="1"]');
+      
 
       if (layoutContent && stubChilds.length) {
         layoutContent.append(...stubChilds);

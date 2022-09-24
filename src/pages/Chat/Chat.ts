@@ -33,7 +33,7 @@ export class Chat extends Component<IChatProps> {
     //template=hbs
     return `
       <div class='chat'>
-        configside class='chat__left-pane'>
+        <aside class='chat__left-pane'>
           {{{Link text='Профиль' class='chat__profile-link' to='${routeConsts.PROFILE}' }}}
           <div class='chat__search-box'>
             {{{SearchBox}}}
