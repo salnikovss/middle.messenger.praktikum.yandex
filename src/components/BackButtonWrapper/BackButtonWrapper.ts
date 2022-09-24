@@ -10,9 +10,11 @@ export class BackButtonWrapper extends Component<IBackButtonWrapperProps> {
     //template=hbs
     return `
       <div class='back-button-wrapper'>
-        <a class='back-button-wrapper__link' href='{{#if route}}{{route}}{{else}}/{{/if}}'>
-          <span class='back-button-wrapper__link-inner'></span>
-        </a>
+        {{{Link 
+          text="<span class='back-button-wrapper__link-inner'></span>"
+          to='${this.props.route ?? '/'}'
+          class='back-button-wrapper__link' 
+        }}}
         <div class='back-button-wrapper__content custom-scrollbar'>
           <div class='back-button-wrapper__content-inner' data-layout=1>
           </div>

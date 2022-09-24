@@ -25,6 +25,6 @@ export class Link extends Component {
 
   render() {
     // language=hbs
-    return `<a class="{{class}}" href="{{to}}">{{text}}</a>`;
+    return `<a class="{{class}}" href="{{to}}">{{{text}}}</a>`;
   }
 }
