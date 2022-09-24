@@ -1,6 +1,5 @@
 import './Profile.scss';
 
-import BackButtonWrapper from '../../components/BackButtonWrapper';
 import Component from '../../core/Component';
 import registerComponent from '../../core/registerComponent';
 import { fakeUserData } from '../../utils/fakeData';
@@ -8,14 +7,17 @@ import { routeConsts } from './../../../config/routes';
 import { Avatar } from './components/Avatar/Avatar';
 
 export class Profile extends Component {
+  static componentName = 'Profile';
+
   constructor() {
-    registerComponent('Avatar', Avatar);
+    registerComponent(Avatar);
     super({
       user: fakeUserData,
     });
   }
 
   render() {
+    //template=hbs
     return `
       {{#BackButtonWrapper route='${routeConsts.CHAT}'}}
         <div class='profile'>

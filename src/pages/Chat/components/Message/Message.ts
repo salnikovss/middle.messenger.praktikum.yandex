@@ -4,6 +4,7 @@ import Component from '../../../../core/Component';
 import { IMessageProps } from './types';
 
 export class Message extends Component<IMessageProps> {
+  static componentName = 'Message';
   constructor({ item }: { item: IMessageProps }) {
     super({ ...item });
   }

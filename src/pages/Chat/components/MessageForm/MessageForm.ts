@@ -4,6 +4,7 @@ import Component from '../../../../core/Component';
 import { ButtonStyle } from './../../../../components/Button/types';
 
 export class MessageForm extends Component {
+  static componentName = 'MessageForm';
   constructor() {
     super();
   }

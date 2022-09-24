@@ -4,6 +4,8 @@ import Component from '../../../../core/Component';
 import { IChatListItemProps, IChatListItemPropsWithEvents } from './types';
 
 export class ChatListItem extends Component<IChatListItemPropsWithEvents> {
+  static componentName = 'ChatListItem';
+
   constructor({ onClick, activeChatId, item }: IChatListItemProps) {
     super({
       ...item,

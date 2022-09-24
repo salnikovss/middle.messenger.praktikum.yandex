@@ -1,5 +1,3 @@
-import { ChatModel } from '../../types';
-
 export interface IChatListItemProps {
   item: ChatModel;
   activeChatId?: string;

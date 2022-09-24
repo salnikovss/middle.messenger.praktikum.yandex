@@ -1,6 +1,8 @@
 import { routeConsts } from '../../../config/routes';
 import Component from '../../core/Component';
 export class SignUp extends Component {
+  static componentName = 'SignUp';
+
   constructor() {
     super();
 

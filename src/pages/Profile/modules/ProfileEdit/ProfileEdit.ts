@@ -10,9 +10,11 @@ import { InputType } from './../../../../components/Input/types';
 import { IProfileEditProps } from './types';
 
 export class ProfileEdit extends Component<IProfileEditProps> {
+  static componentName = 'ProfileEdit';
+
   constructor() {
-    registerComponent('Avatar', Avatar);
-    registerComponent('ProfileFormRow', ProfileFormRow);
+    registerComponent(Avatar);
+    registerComponent(ProfileFormRow);
     super({
       user: fakeUserData,
     });

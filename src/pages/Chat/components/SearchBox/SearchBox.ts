@@ -1,6 +1,8 @@
 import Component from '../../../../core/Component';
 
 export class SearchBox extends Component {
+  static componentName = 'SearchBox';
+
   render() {
     //template=hbs
     return `

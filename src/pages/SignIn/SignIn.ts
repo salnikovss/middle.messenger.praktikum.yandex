@@ -3,6 +3,8 @@ import Component from '../../core/Component';
 import { routeConsts } from './../../../config/routes';
 
 export class SignIn extends Component {
+  static componentName = 'SignIn';
+  
   constructor() {
     super();
 
@@ -28,8 +30,7 @@ export class SignIn extends Component {
   }
 
   render() {
-console.log(123);
-
+    console.log(123);
 
     //template=hbs
     return `

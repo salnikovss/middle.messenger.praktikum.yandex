@@ -10,9 +10,11 @@ import { ButtonStyle } from './../../../../components/Button/types';
 import { IMessengerProps } from './types';
 
 export class Messenger extends Component<IMessengerProps> {
+  static componentName = 'Messenger';
+
   constructor({ chat }: IMessengerProps) {
-    registerComponent('MessageForm', MessageForm);
-    registerComponent('Message', Message);
+    registerComponent(MessageForm);
+    registerComponent(Message);
 
     super({
       chat,

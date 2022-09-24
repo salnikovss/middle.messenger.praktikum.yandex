@@ -4,6 +4,8 @@ import Component from '../../core/Component';
 import { IInputProps, IInputPropsWithEvents, InputType } from './types';
 
 export class Input extends Component<IInputPropsWithEvents> {
+  static componentName = 'Input';
+  
   constructor({ onBlur, onFocus, ...rest }: IInputProps) {
     super({
       ...rest,

@@ -4,6 +4,7 @@ import { Component } from '../../core';
 import { IBackButtonWrapperProps } from './types';
 
 export class BackButtonWrapper extends Component<IBackButtonWrapperProps> {
+  static componentName = 'BackButtonWrapper';
   render() {
     return `
       <div class='back-button-wrapper'>

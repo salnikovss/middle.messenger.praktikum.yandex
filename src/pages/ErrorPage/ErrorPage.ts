@@ -10,6 +10,8 @@ const errorCodesText: Record<number, string> = {
 };
 
 export default class ErrorPage extends Component<IErrorPageProps> {
+  static componentName = 'ErrorPage';
+  
   constructor(props: IErrorPageProps) {
     super({
       ...props,

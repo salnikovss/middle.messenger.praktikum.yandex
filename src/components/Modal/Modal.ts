@@ -1,15 +1,30 @@
 import './Modal.scss';
 
 import Component from '../../core/Component';
-import template from './Modal.hbs';
 import { IModalProps } from './types';
 
 export class Modal extends Component {
+  static componentName = 'Modal';
+  
   constructor(props: IModalProps) {
     super(props);
   }
 
-  render(): DocumentFragment {
-    return this.compile(template, this.props);
+  render() {
+    return `
+      <div class='modal'>
+        <div class="modal__content">
+          {{#if title}}
+          <div class="modal__head">
+            <p class="modal__title">{{title}}</p>
+          </div>
+          {{/if}}
+          <div class="modal__body">
+              {{body}}
+          </div>
+        </div>
+        <div class="modal__backdrop"></div>
+      </div>
+    `;
   }
 }

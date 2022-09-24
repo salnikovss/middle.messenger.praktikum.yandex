@@ -12,13 +12,13 @@ import Link from './components/Link';
 import { registerComponent } from './core';
 import renderDOM from './core/renderDOM';
 
-registerComponent('Link', Link);
-registerComponent('Input', Input);
-registerComponent('FormGroup', FormGroup);
-registerComponent('Button', Button);
-registerComponent('Form', Form);
-registerComponent('CenteredBox', CenteredBox);
-registerComponent('BackButtonWrapper', BackButtonWrapper);
+registerComponent(Link);
+registerComponent(Input);
+registerComponent(FormGroup);
+registerComponent(Button);
+registerComponent(Form);
+registerComponent(CenteredBox);
+registerComponent(BackButtonWrapper);
 
 const handleRoute = () => {
   const { pathname } = document.location;

@@ -9,6 +9,8 @@ import SearchBox from './components/SearchBox';
 import { IChatProps } from './types';
 
 export class Chat extends Component<IChatProps> {
+  static componentName = 'Chat';
+
   constructor() {
     const chatList = fakeChatList;
     const activeChatId = fakeActiveChatId;
@@ -22,9 +24,9 @@ export class Chat extends Component<IChatProps> {
   }
 
   render() {
-    registerComponent('SearchBox', SearchBox);
-    registerComponent('ChatList', ChatList);
-    registerComponent('Messenger', Messenger);
+    registerComponent(SearchBox);
+    registerComponent(ChatList);
+    registerComponent(Messenger);
 
     //template=hbs
     return `

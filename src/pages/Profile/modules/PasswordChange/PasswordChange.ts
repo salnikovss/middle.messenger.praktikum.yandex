@@ -10,9 +10,11 @@ import { InputType } from './../../../../components/Input/types';
 import { IPasswordChangeProps } from './types';
 
 export class PasswordChange extends Component<IPasswordChangeProps> {
+  static componentName = 'PasswordChange';
+
   constructor() {
-    registerComponent('Avatar', Avatar);
-    registerComponent('ProfileFormRow', ProfileFormRow);
+    registerComponent(Avatar);
+    registerComponent(ProfileFormRow);
     super({
       user: fakeUserData,
     });

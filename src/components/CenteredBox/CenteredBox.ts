@@ -3,6 +3,8 @@ import './CenteredBox.scss';
 import Component from '../../core/Component';
 
 export class CenteredBox extends Component {
+  static componentName = 'CenteredBox';
+
   render() {
     return `
       <div class='centered-box'>

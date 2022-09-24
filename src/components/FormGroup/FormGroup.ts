@@ -4,6 +4,8 @@ import Component from '../../core/Component';
 import { IFormGroupProps } from './types';
 
 export class FormGroup extends Component<IFormGroupProps> {
+  static componentName = 'FormGroup';
+  
   render() {
     // template=hbs
     return `

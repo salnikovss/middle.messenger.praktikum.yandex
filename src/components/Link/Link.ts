@@ -9,11 +9,13 @@ interface LinkProps {
 }
 
 export class Link extends Component {
+  static componentName = 'Link';
+
   constructor(props: LinkProps) {
     const onClick = (e: MouseEvent) => {
       // const router = new Router();
       // router.go(this.props.to);
-      console.log('clicked');
+      console.log('clicked', e);
       // e.preventDefault();
     };
 

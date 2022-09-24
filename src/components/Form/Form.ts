@@ -2,6 +2,8 @@ import Component from '../../core/Component';
 import { IFormProps, IFormPropsWithEvents } from './types';
 
 export class Form extends Component<IFormPropsWithEvents> {
+  static componentName = 'Form';
+  
   constructor({ onSubmit, ...rest }: IFormProps) {
     super();
     this.setProps({

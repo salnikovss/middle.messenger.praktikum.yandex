@@ -6,8 +6,10 @@ import ChatListItem from '../ChatListItem';
 import { IChatListProps } from './types';
 
 export class ChatList extends Component<IChatListProps> {
+  static componentName = 'ChatList';
+
   constructor({ chats, activeChatId }: IChatListProps) {
-    registerComponent('ChatListItem', ChatListItem);
+    registerComponent(ChatListItem);
     super();
 
     this.setProps({

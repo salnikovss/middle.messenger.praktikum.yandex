@@ -4,6 +4,8 @@ import Component from '../../core/Component';
 import { ButtonStyle, ButtonType, IButtonProps, IButtonPropsWithEvents } from './types';
 
 export class Button extends Component<IButtonPropsWithEvents> {
+  static componentName = 'Button';
+
   constructor({ onClick, ...rest }: IButtonProps) {
     const defaultProps = {
       type: ButtonType.SUBMIT,
