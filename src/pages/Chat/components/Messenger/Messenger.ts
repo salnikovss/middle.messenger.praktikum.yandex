@@ -1,13 +1,13 @@
 import './Messenger.scss';
 
+import { ButtonType } from 'components/Button/types';
 import Component from 'core/Component';
 import registerComponent from 'core/registerComponent';
 
-import { ButtonType } from '../../../../components/Button/types';
 import { fakeMessages } from '../../../../utils/fakeData';
 import Message from '../Message';
 import MessageForm from '../MessageForm';
-import { ButtonStyle } from './../../../../components/Button/types';
+import { ButtonStyle } from './components/Button/types';
 import { IMessengerProps } from './types';
 
 export class Messenger extends Component<IMessengerProps> {

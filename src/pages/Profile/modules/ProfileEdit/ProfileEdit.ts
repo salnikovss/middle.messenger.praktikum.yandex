@@ -1,13 +1,13 @@
 import '../../Profile.scss';
 
+import { Avatar } from 'components/Avatar/Avatar';
+import { ProfileFormRow } from 'components/ProfileFormRow/ProfileFormRow';
+import { routeConsts } from 'config/routes';
 import Component from 'core/Component';
 import registerComponent from 'core/registerComponent';
 
 import { fakeUserData } from '../../../../utils/fakeData';
-import { Avatar } from '../../components/Avatar/Avatar';
-import { ProfileFormRow } from '../../components/ProfileFormRow/ProfileFormRow';
-import { routeConsts } from './../../../../../config/routes';
-import { InputType } from './../../../../components/Input/types';
+import { InputType } from './components/Input/types';
 import { IProfileEditProps } from './types';
 
 export class ProfileEdit extends Component<IProfileEditProps> {

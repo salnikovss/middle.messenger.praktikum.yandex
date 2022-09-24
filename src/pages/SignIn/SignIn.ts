@@ -1,7 +1,6 @@
+import { InputType } from 'components/Input';
+import { routeConsts } from 'config/routes';
 import Component from 'core/Component';
-
-import { InputType } from '../../components/Input';
-import { routeConsts } from './../../../config/routes';
 
 export class SignIn extends Component {
   static componentName = 'SignIn';

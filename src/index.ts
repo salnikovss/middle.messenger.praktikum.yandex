@@ -1,7 +1,8 @@
 import './index.scss';
 import './helpers/handlebar-helpers';
 
-import { routeConsts, routes } from '../config/routes';
+import { routeConsts, routes } from 'config/routes';
+
 import { BackButtonWrapper } from './components/BackButtonWrapper/BackButtonWrapper';
 import Button from './components/Button';
 import { CenteredBox } from './components/CenteredBox/CenteredBox';

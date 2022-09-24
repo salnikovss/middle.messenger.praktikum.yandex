@@ -1,6 +1,5 @@
+import { routeConsts } from 'config/routes';
 import Component from 'core/Component';
-
-import { routeConsts } from '../../../config/routes';
 export class SignUp extends Component {
   static componentName = 'SignUp';
 

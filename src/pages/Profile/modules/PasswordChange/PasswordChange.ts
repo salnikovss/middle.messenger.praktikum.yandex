@@ -1,13 +1,13 @@
 import '../../Profile.scss';
 
+import { InputType } from 'components/Input';
+import { routeConsts } from 'config/routes';
 import Component from 'core/Component';
 import registerComponent from 'core/registerComponent';
 
 import { fakeUserData } from '../../../../utils/fakeData';
 import { Avatar } from '../../components/Avatar/Avatar';
 import { ProfileFormRow } from '../../components/ProfileFormRow/ProfileFormRow';
-import { routeConsts } from './../../../../../config/routes';
-import { InputType } from './../../../../components/Input/types';
 import { IPasswordChangeProps } from './types';
 
 export class PasswordChange extends Component<IPasswordChangeProps> {

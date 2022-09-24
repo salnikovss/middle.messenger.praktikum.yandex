@@ -1,10 +1,10 @@
 import './Chat.scss';
 
+import { routeConsts } from 'config/routes';
 import { registerComponent } from 'core';
 import Component from 'core/Component';
 
 import { fakeActiveChatId, fakeChatList } from '../../utils/fakeData';
-import { routeConsts } from '../../config/routes';
 import ChatList from './components/ChatList';
 import { Messenger } from './components/Messenger/Messenger';
 import SearchBox from './components/SearchBox';
@@ -33,7 +33,7 @@ export class Chat extends Component<IChatProps> {
     //template=hbs
     return `
       <div class='chat'>
-        <aside class='chat__left-pane'>
+        configside class='chat__left-pane'>
           {{{Link text='Профиль' class='chat__profile-link' to='${routeConsts.PROFILE}' }}}
           <div class='chat__search-box'>
             {{{SearchBox}}}

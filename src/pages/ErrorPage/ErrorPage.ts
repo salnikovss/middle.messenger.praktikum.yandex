@@ -1,8 +1,8 @@
 import './ErrorPage.scss';
 
+import { routeConsts } from 'config/routes';
 import Component from 'core/Component';
 
-import { routeConsts } from './../../../config/routes';
 import { IErrorPageProps } from './types';
 
 const errorCodesText: Record<number, string> = {

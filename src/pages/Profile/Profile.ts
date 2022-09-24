@@ -1,10 +1,10 @@
 import './Profile.scss';
 
+import { routeConsts } from 'config/routes';
 import Component from 'core/Component';
 import registerComponent from 'core/registerComponent';
 
 import { fakeUserData } from '../../utils/fakeData';
-import { routeConsts } from './../../../config/routes';
 import { Avatar } from './components/Avatar/Avatar';
 
 export class Profile extends Component {

@@ -23,7 +23,8 @@
     "core": "./src/core",
     "components": "./src/components",
     "helpers": "./src/helpers",
-    "pages": "./src/pages"
+    "pages": "./src/pages",
+    "config": "./src/config"
   },
   "author": "",
   "license": "ISC",
