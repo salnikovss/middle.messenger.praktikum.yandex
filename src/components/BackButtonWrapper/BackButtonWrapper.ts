@@ -1,11 +1,13 @@
 import './BackButtonWrapper.scss';
 
-import { Component } from '../../core';
+import { Component } from 'core';
+
 import { IBackButtonWrapperProps } from './types';
 
 export class BackButtonWrapper extends Component<IBackButtonWrapperProps> {
   static componentName = 'BackButtonWrapper';
   render() {
+    //template=hbs
     return `
       <div class='back-button-wrapper'>
         <a class='back-button-wrapper__link' href='{{#if route}}{{route}}{{else}}/{{/if}}'>

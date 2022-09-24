@@ -1,4 +1,5 @@
-import { IComponentProps } from '../../../../core/Component';
+import { IComponentProps } from 'core/Component';
+
 import { ChatModel } from '../../types';
 import { MessageModel } from '../Message';
 import { MessageForm } from '../MessageForm/MessageForm';

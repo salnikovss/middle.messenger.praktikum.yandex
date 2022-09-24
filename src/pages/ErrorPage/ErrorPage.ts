@@ -1,6 +1,7 @@
 import './ErrorPage.scss';
 
-import Component from '../../core/Component';
+import Component from 'core/Component';
+
 import { routeConsts } from './../../../config/routes';
 import { IErrorPageProps } from './types';
 

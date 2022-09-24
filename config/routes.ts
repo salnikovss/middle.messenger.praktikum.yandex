@@ -1,10 +1,10 @@
-import Chat from '../src/pages/Chat';
-import ErrorPage from '../src/pages/ErrorPage';
-import Profile from '../src/pages/Profile';
-import PasswordChange from '../src/pages/Profile/modules/PasswordChange';
-import ProfileEdit from '../src/pages/Profile/modules/ProfileEdit';
-import SignIn from '../src/pages/SignIn';
-import SignUp from '../src/pages/SignUp';
+import Chat from 'pages/Chat';
+import ErrorPage from 'pages/ErrorPage';
+import Profile from 'pages/Profile';
+import PasswordChange from 'pages/Profile/modules/PasswordChange';
+import ProfileEdit from 'pages/Profile/modules/ProfileEdit';
+import SignIn from 'pages/SignIn';
+import SignUp from 'pages/SignUp';
 
 export const routeConsts = {
   HOME: '/',

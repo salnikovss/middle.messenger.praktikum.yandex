@@ -1,6 +1,6 @@
 import './Avatar.scss';
 
-import Component from '../../../../core/Component';
+import Component from 'core/Component';
 
 export class Avatar extends Component {
   static componentName = 'Avatar';

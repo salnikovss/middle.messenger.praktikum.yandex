@@ -1,6 +1,7 @@
 import './Button.scss';
 
-import Component from '../../core/Component';
+import Component from 'core/Component';
+
 import { ButtonStyle, ButtonType, IButtonProps, IButtonPropsWithEvents } from './types';
 
 export class Button extends Component<IButtonPropsWithEvents> {

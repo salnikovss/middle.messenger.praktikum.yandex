@@ -1,5 +1,3 @@
-import { IComponentProps } from '../../core/Component';
-
 export enum InputType {
   TEXT = 'text',
   PASSWORD = 'password',

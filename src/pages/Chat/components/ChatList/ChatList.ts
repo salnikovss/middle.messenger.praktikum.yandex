@@ -1,7 +1,8 @@
 import './ChatList.scss';
 
-import Component from '../../../../core/Component';
-import registerComponent from '../../../../core/registerComponent';
+import Component from 'core/Component';
+import registerComponent from 'core/registerComponent';
+
 import ChatListItem from '../ChatListItem';
 import { IChatListProps } from './types';
 

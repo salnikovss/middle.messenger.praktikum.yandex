@@ -1,6 +1,6 @@
 import './link.scss';
 
-import Component from '../../core/Component';
+import Component from 'core/Component';
 
 interface LinkProps {
   text: string;
@@ -15,6 +15,7 @@ export class Link extends Component {
     const onClick = (e: MouseEvent) => {
       // const router = new Router();
       // router.go(this.props.to);
+      // eslint-disable-next-line no-console
       console.log('clicked', e);
       // e.preventDefault();
     };

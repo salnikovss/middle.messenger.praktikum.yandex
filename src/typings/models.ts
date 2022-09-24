@@ -1,4 +1,4 @@
-import { MessageAuthor, MessageStatus, MessageType } from '../src/pages/Chat/components/Message';
+import { MessageAuthor, MessageStatus, MessageType } from 'pages/Chat/components/Message';
 
 declare global {
   //Chat

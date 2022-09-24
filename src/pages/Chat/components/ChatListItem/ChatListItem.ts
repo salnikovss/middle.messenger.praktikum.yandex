@@ -1,6 +1,7 @@
 import './ChatListItem.scss';
 
-import Component from '../../../../core/Component';
+import Component from 'core/Component';
+
 import { IChatListItemProps, IChatListItemPropsWithEvents } from './types';
 
 export class ChatListItem extends Component<IChatListItemPropsWithEvents> {

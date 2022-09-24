@@ -1,8 +1,9 @@
 import './Messenger.scss';
 
+import Component from 'core/Component';
+import registerComponent from 'core/registerComponent';
+
 import { ButtonType } from '../../../../components/Button/types';
-import Component from '../../../../core/Component';
-import registerComponent from '../../../../core/registerComponent';
 import { fakeMessages } from '../../../../utils/fakeData';
 import Message from '../Message';
 import MessageForm from '../MessageForm';

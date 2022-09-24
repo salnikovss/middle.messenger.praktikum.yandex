@@ -1,7 +1,8 @@
 import './Profile.scss';
 
-import Component from '../../core/Component';
-import registerComponent from '../../core/registerComponent';
+import Component from 'core/Component';
+import registerComponent from 'core/registerComponent';
+
 import { fakeUserData } from '../../utils/fakeData';
 import { routeConsts } from './../../../config/routes';
 import { Avatar } from './components/Avatar/Avatar';

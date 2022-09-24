@@ -1,6 +1,7 @@
 import './FormGroup.scss';
 
-import Component from '../../core/Component';
+import Component from 'core/Component';
+
 import { IFormGroupProps } from './types';
 
 export class FormGroup extends Component<IFormGroupProps> {

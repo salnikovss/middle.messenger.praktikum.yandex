@@ -1,4 +1,5 @@
-import Component from '../../core/Component';
+import Component from 'core/Component';
+
 import { IFormProps, IFormPropsWithEvents } from './types';
 
 export class Form extends Component<IFormPropsWithEvents> {
@@ -14,6 +15,7 @@ export class Form extends Component<IFormPropsWithEvents> {
     });
   }
   render() {
+    //template=hbs
     return `
       <form method="post" data-layout="form">fo</form>
     `;

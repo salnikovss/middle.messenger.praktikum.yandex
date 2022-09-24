@@ -113,6 +113,7 @@ export default class Component<P = any> {
   // }
 
   componentDidMount(oldProps?: IComponentProps) {
+    // eslint-disable-next-line no-console
     console.log('componentDidMount', oldProps);
   }
 
@@ -358,6 +359,7 @@ export default class Component<P = any> {
       }, 100);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return this.element!;
   }
 

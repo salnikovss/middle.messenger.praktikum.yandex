@@ -1,6 +1,7 @@
 import './Input.scss';
 
-import Component from '../../core/Component';
+import Component from 'core/Component';
+
 import { IInputProps, IInputPropsWithEvents, InputType } from './types';
 
 export class Input extends Component<IInputPropsWithEvents> {

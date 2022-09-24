@@ -3,7 +3,7 @@ import Handlebars, { HelperOptions } from 'handlebars';
 import Component from './Component';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-interface ComponentConstructable<Props = any> {
+export interface ComponentConstructable<Props = any> {
   new (props: Props): Component;
   componentName?: string;
 }

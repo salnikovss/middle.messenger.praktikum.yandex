@@ -1,11 +1,12 @@
 import './CenteredBox.scss';
 
-import Component from '../../core/Component';
+import Component from 'core/Component';
 
 export class CenteredBox extends Component {
   static componentName = 'CenteredBox';
 
   render() {
+    //template=hbs
     return `
       <div class='centered-box'>
           <div class='centered-box__inner'>

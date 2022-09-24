@@ -1,6 +1,7 @@
 import './Modal.scss';
 
-import Component from '../../core/Component';
+import Component from 'core/Component';
+
 import { IModalProps } from './types';
 
 export class Modal extends Component {
@@ -11,6 +12,7 @@ export class Modal extends Component {
   }
 
   render() {
+    //template=hbs
     return `
       <div class='modal'>
         <div class="modal__content">

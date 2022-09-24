@@ -1,6 +1,7 @@
 import './Message.scss';
 
-import Component from '../../../../core/Component';
+import Component from 'core/Component';
+
 import { IMessageProps } from './types';
 
 export class Message extends Component<IMessageProps> {

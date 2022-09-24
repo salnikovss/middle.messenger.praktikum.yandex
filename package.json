@@ -19,6 +19,12 @@
     "url": "git@study:salnikovss/middle.messenger.praktikum.yandex.git"
   },
   "keywords": [],
+  "alias": {
+    "core": "./src/core",
+    "components": "./src/components",
+    "helpers": "./src/helpers",
+    "pages": "./src/pages"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -39,6 +45,5 @@
     "handlebars": "^4.7.7",
     "nanoid": "^4.0.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }

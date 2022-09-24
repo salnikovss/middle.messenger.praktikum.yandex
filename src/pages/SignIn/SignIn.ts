@@ -1,10 +1,11 @@
+import Component from 'core/Component';
+
 import { InputType } from '../../components/Input';
-import Component from '../../core/Component';
 import { routeConsts } from './../../../config/routes';
 
 export class SignIn extends Component {
   static componentName = 'SignIn';
-  
+
   constructor() {
     super();
 
@@ -18,20 +19,21 @@ export class SignIn extends Component {
   onSubmit(e: PointerEvent) {
     e.preventDefault();
     e.stopPropagation();
+    // eslint-disable-next-line no-console
     console.log('onSubmit event fired', e);
   }
 
   onLoginFocus(e: PointerEvent) {
+    // eslint-disable-next-line no-console
     console.log('onLoginFocus event fired', e);
   }
 
   onLoginBlur(e: PointerEvent) {
+    // eslint-disable-next-line no-console
     console.log('onLoginBlur event fired', e);
   }
 
   render() {
-    console.log(123);
-
     //template=hbs
     return `
       {{#CenteredBox title='Авторизация'}}

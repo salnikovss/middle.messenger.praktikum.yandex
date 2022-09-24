@@ -1,5 +1,6 @@
+import Component from 'core/Component';
+
 import { routeConsts } from '../../../config/routes';
-import Component from '../../core/Component';
 export class SignUp extends Component {
   static componentName = 'SignUp';
 
@@ -14,6 +15,7 @@ export class SignUp extends Component {
   onSubmit(e: Event) {
     e.preventDefault();
     e.stopPropagation();
+    // eslint-disable-next-line no-console
     console.log('submit event fired', e);
   }
 

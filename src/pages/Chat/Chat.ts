@@ -1,7 +1,8 @@
 import './Chat.scss';
 
-import { registerComponent } from '../../core';
-import Component from '../../core/Component';
+import { registerComponent } from 'core';
+import Component from 'core/Component';
+
 import { fakeActiveChatId, fakeChatList } from '../../utils/fakeData';
 import ChatList from './components/ChatList';
 import { Messenger } from './components/Messenger/Messenger';

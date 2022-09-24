@@ -1,4 +1,5 @@
-import Component from '../../../../core/Component';
+import Component from 'core/Component';
+
 import { IProfileFormRowProps } from './types';
 
 export class ProfileFormRow extends Component<IProfileFormRowProps> {
