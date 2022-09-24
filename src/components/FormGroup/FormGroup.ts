@@ -21,6 +21,7 @@ export class FormGroup extends Component<IFormGroupProps> {
             style=style
             placeholder=placeholder
             value=value
+            ref=ref
             onBlur=onBlur
             onFocus=onFocus
         }}}

@@ -31,7 +31,7 @@ export default class Component<P = any> {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   protected state: any = {};
-  protected refs: { [key: string]: HTMLElement } = {};
+  protected refs: Record<string, HTMLElement> = {};
 
   // private readonly _meta: ComponentMeta;
 
@@ -200,7 +200,6 @@ export default class Component<P = any> {
        */
       // console.log(content); return;
       const layoutContent = content.querySelector('[data-layout="1"]');
-      
 
       if (layoutContent && stubChilds.length) {
         layoutContent.append(...stubChilds);

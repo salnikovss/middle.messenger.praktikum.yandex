@@ -37,8 +37,10 @@ export class SignIn extends Component {
     return `
       {{#CenteredBox title='Авторизация'}}
         <form method='post'>
-            {{{FormGroup label='Имя пользователя' name='login' onBlur=onLoginBlur onFocus=onLoginFocus}}}
-            {{{FormGroup label='Пароль' name='password' type='${InputType.PASSWORD}'}}}
+            {{{FormGroup label='Имя пользователя' name='login' 
+                ref='loginInput' onBlur=onLoginBlur onFocus=onLoginFocus}}}
+            {{{FormGroup label='Пароль' name='password'
+                ref='passwordInput' type='${InputType.PASSWORD}'}}}
 
             {{{Button body='Войти'}}}
         </form>

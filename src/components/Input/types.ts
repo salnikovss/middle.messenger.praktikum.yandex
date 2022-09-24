@@ -9,6 +9,7 @@ export enum InputType {
 export interface IInputProps {
   name: string;
   type?: InputType;
+  ref?: HTMLElement;
   class?: string;
   value?: string;
   style?: string;
