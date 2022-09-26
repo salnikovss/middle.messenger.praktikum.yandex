@@ -24,7 +24,8 @@
     "components": "./src/components",
     "helpers": "./src/helpers",
     "pages": "./src/pages",
-    "config": "./src/config"
+    "config": "./src/config",
+    "utils": "./src/utils"
   },
   "author": "",
   "license": "ISC",

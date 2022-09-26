@@ -1,6 +1,6 @@
 import './index.scss';
-import './helpers/handlebar-helpers';
 
+import { default as ErrorComponent } from 'components/Error';
 import { routeConsts, routes } from 'config/routes';
 
 import { BackButtonWrapper } from './components/BackButtonWrapper/BackButtonWrapper';
@@ -15,6 +15,7 @@ import renderDOM from './core/renderDOM';
 
 registerComponent(Link);
 registerComponent(Input);
+registerComponent(ErrorComponent);
 registerComponent(FormGroup);
 registerComponent(Button);
 registerComponent(Form);

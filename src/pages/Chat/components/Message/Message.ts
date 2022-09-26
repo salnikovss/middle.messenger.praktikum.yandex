@@ -1,6 +1,8 @@
 import './Message.scss';
 
 import Component from 'core/Component';
+import { getTime } from 'utils/getTime';
+import nl2br from 'utils/nl2br';
 
 import { IMessageProps } from './types';
 
@@ -22,11 +24,11 @@ export class Message extends Component<IMessageProps> {
               <p class='message__author'>{{author.name}}</p>
               {{/if}}
             {{/unless}}
-            {{{nl2br body}}}
+            ${nl2br(this.props.body || '', false)}
           {{/if}}
         </div>
         <div class='message__meta'>
-          <span class='message__time'>{{getTime dateTime}}</span>
+          <span class='message__time'>${getTime(this.props.dateTime)}</span>
           {{#if status}}<span class='message__status message__status-{{status}}'></span>{{/if}}
         </div>
       </div>

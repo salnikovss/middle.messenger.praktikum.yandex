@@ -39,7 +39,8 @@ export default function registerComponent<Props extends any>(Component: Componen
       children[component.id] = component;
 
       if (ref) {
-        refs[ref] = component.getContent();
+        // refs[ref] = component.getContent();
+        refs[ref] = component;
       }
 
       const contents = fn ? fn(this) : '';

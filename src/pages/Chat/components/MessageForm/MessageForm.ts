@@ -18,14 +18,13 @@ export class MessageForm extends Component {
         </div>  
         <div class='message-form__input-container'>
             <textarea class='message-form__input' name='message' 
-                placeholder='Сообщение...' oninput='textareaAutogrow'></textarea>
+                placeholder='Сообщение...'></textarea>
         </div>
         <div class='message-form__send-button'>
             {{{Button body='<i class="icon message-form__send-button-icon"></i>'
               style='${ButtonStyle.ICON}' classes='btn_primary'}}}
         </div>
     </form>
-
     `;
   }
 }

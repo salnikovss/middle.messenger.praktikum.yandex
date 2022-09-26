@@ -7,6 +7,26 @@ import { IFormGroupProps } from './types';
 export class FormGroup extends Component<IFormGroupProps> {
   static componentName = 'FormGroup';
 
+  constructor({ onInput, onBlur, ...rest }: IFormGroupProps) {
+    super({
+      ...rest,
+      onInput: (evt: Event) => {
+        this.refs.errorRef.setProps({ text: '' });
+        if (onInput) {
+          onInput(evt);
+        }
+      },
+      onBlur: (evt: FocusEvent) => {
+        const value = (evt.target as HTMLInputElement)?.value;
+        const error = value;
+        this.refs.errorRef.setProps({ text: error });
+        if (onBlur) {
+          onBlur(evt);
+        }
+      },
+    });
+  }
+
   render() {
     // template=hbs
     return `
@@ -21,11 +41,12 @@ export class FormGroup extends Component<IFormGroupProps> {
             style=style
             placeholder=placeholder
             value=value
-            ref=ref
+            ref='inputRef'
+            onInput=onInput
             onBlur=onBlur
             onFocus=onFocus
         }}}
-        <p class='form-group__help-box'></p>
+        {{{Error text=error ref='errorRef'}}}
       </div>    
     `;
   }

@@ -9,15 +9,24 @@ export class SignIn extends Component {
     super();
 
     this.setProps({
-      onSubmit: this.onSubmit.bind(this),
       onLoginFocus: this.onLoginFocus.bind(this),
       onLoginBlur: this.onLoginBlur.bind(this),
+      events: {
+        submit: this.onSubmit.bind(this),
+      },
     });
   }
 
   onSubmit(e: PointerEvent) {
     e.preventDefault();
     e.stopPropagation();
+
+    const { loginInput, passwordInput } = this.refs;
+    const loginValue = (loginInput.refs.inputRef.getContent() as HTMLInputElement).value;
+    const passwordValue = (passwordInput.refs.inputRef.getContent() as HTMLInputElement).value;
+
+    // console.log('Submitted data', [loginValue, passwordValue]);
+
     // eslint-disable-next-line no-console
     console.log('onSubmit event fired', e);
   }

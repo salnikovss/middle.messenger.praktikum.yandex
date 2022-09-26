@@ -84,7 +84,7 @@
     margin-bottom: 10px;
 
     &_color-red {
-      color: #f44d4d;
+      color: var(--dangerColor);
     }
   }
 }

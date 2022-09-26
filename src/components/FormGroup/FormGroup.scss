@@ -11,25 +11,9 @@
     margin-bottom: 8px;
   }
 
-  &__help-box {
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 8px;
-    line-height: 8px;
-  }
-
   &_has-error {
-    .form-group {
-      &__input {
-        border-color: #f44d4d;
-      }
-
-      &__hint {
-        color: #f44d4d;
-      }
+    .input {
+      border-color: var(--dangerColor);
     }
   }
 }

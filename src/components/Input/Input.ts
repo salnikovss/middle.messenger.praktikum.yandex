@@ -6,8 +6,8 @@ import { IInputProps, IInputPropsWithEvents, InputType } from './types';
 
 export class Input extends Component<IInputPropsWithEvents> {
   static componentName = 'Input';
-  
-  constructor({ onBlur, onFocus, ...rest }: IInputProps) {
+
+  constructor({ onInput, onBlur, onFocus, ...rest }: IInputProps) {
     super({
       ...rest,
       type: rest.type || InputType.TEXT,
@@ -15,6 +15,7 @@ export class Input extends Component<IInputPropsWithEvents> {
       events: {
         focus: onFocus,
         blur: onBlur,
+        input: onInput,
       },
     });
   }

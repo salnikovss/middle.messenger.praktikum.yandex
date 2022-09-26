@@ -14,13 +14,15 @@ export interface IInputProps {
   value?: string;
   style?: string;
   placeholder?: string;
-  onBlur: EventListener;
-  onFocus: EventListener;
+  onInput?: (e: Event) => void;
+  onBlur?: (e: FocusEvent) => void;
+  onFocus?: (e: FocusEvent) => void;
 }
 
-export interface IInputPropsWithEvents extends Omit<IInputProps, 'onBlur' | 'onFocus'> {
+export interface IInputPropsWithEvents extends Omit<IInputProps, 'onBlur' | 'onInput' | 'onFocus'> {
   events: {
-    blur?: EventListener;
-    focus?: EventListener;
+    input?: (e: Event) => void;
+    blur?: (e: FocusEvent) => void;
+    focus?: (e: FocusEvent) => void;
   };
 }

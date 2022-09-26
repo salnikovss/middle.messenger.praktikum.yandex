@@ -31,7 +31,8 @@ export default class Component<P = any> {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   protected state: any = {};
-  protected refs: Record<string, HTMLElement> = {};
+  public refs: Record<string, Component> = {};
+  // protected refs: Record<string, HTMLElement> = {};
 
   // private readonly _meta: ComponentMeta;
 
