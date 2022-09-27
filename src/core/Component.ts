@@ -118,7 +118,7 @@ export default class Component<P = any> {
     console.log('componentDidMount', oldProps);
   }
 
-  _componentDidUpdate(oldProps: IComponentProps, newProps: IComponentProps) {
+  _componentDidUpdate(oldProps: P, newProps: P) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -126,7 +126,7 @@ export default class Component<P = any> {
     this._render();
   }
 
-  componentDidUpdate(oldProps: IComponentProps, newProps: IComponentProps) {
+  componentDidUpdate(oldProps: P, newProps: P) {
     // TODO: сделать реальное сравнение.
     return true;
 
@@ -213,31 +213,6 @@ export default class Component<P = any> {
     return fragment.content;
   }
 
-  /*
-  _render2() {
-    const fragment = this.render();
-
-    const newElement = fragment.firstElementChild as HTMLElement;
-
-    if (this._element) {
-      this._removeEvents();
-      this._element.replaceWith(newElement);
-    }
-
-    this._element = newElement;
-
-    this._addEvents();
-  }
-  */
-
-  // _removeEvents() {
-  //   const { events = {} } = this.props as IComponentProps;
-
-  //   Object.entries(events).forEach(([event, listener]) => {
-  //     this._element?.removeEventListener(event, listener);
-  //   });
-  // }
-
   _removeEvents() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const events: Record<string, () => void> = (this.props as any).events;
@@ -252,14 +227,6 @@ export default class Component<P = any> {
       }
     });
   }
-
-  // _addEvents() {
-  //   const { events = {} } = this.props as IComponentProps;
-
-  //   Object.entries(events).forEach(([event, listener]) => {
-  //     this._element?.addEventListener(event, listener);
-  //   });
-  // }
 
   _addEvents() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -280,76 +247,6 @@ export default class Component<P = any> {
   render(): DocumentFragment | string {
     return new DocumentFragment();
   }
-
-  // compile(template: (context: Record<string, unknown>) => string, props: IComponentProps) {
-  //   const fragment = this._createDocumentElement('template') as HTMLTemplateElement;
-  //   const components: Record<string, Component> = {};
-
-  //   // Iterate over props and children, which were passed in the constructor
-  //   Object.entries({ ...props, ...this.children }).forEach(([key, prop]) => {
-  //     if (prop instanceof Component) {
-  //       // console.log('key', key, prop);
-  //       props[key] = `<div data-id="id-${prop.id}"></div>`;
-  //       components[prop.id] = prop;
-  //     } else if (Array.isArray(prop)) {
-  //       props[key] = prop
-  //         .filter((pr) => pr instanceof Component)
-  //         .map((childProp) => {
-  //           components[childProp.id] = childProp;
-  //           return `<div data-id="id-${childProp.id}"></div>`;
-  //         });
-  //     }
-  //   });
-
-  //   // Object.entries(this.children).forEach(([key, child]) => {
-  //   //   if (Array.isArray(child)) {
-  //   //     console.log('key child', key, child);
-  //   //     props[key] = child.map((ch) => `<div data-id="id-${ch.id}"></div>`);
-  //   //     return;
-  //   //   }
-  //   //   props[key] = `<div data-id="id-${child.id}"></div>`;
-  //   //   components[child.id] = child;
-  //   // });
-
-  //   const htmlString = template(props);
-  //   fragment.innerHTML = htmlString;
-
-  //   // console.log('components', components, 'this.children', this.children);
-
-  //   Object.entries(components).forEach(([key, child]) => {
-  //     if (Array.isArray(child)) {
-  //       props[key] = child.forEach((ch) => {
-  //         const childStub = fragment.content.querySelector(`[data-id="id-${ch.id}"]`);
-  //         if (!childStub) {
-  //           return;
-  //         }
-
-  //         const content = ch.getContent();
-  //         if (content) {
-  //           childStub.replaceWith(content);
-  //         }
-  //       });
-
-  //       return;
-  //     }
-
-  //     const stub = fragment.content.querySelector(`[data-id="id-${child.id}"]`);
-  //     if (!stub) {
-  //       return;
-  //     }
-
-  //     const content = child.getContent();
-  //     if (content) {
-  //       stub.replaceWith(content);
-  //     }
-  //   });
-
-  //   return fragment.content;
-  // }
-
-  // getContent() {
-  //   return this.element ?? null;
-  // }
 
   getContent(): HTMLElement {
     // Хак, чтобы вызвать CDM только после добавления в DOM

@@ -151,5 +151,5 @@ export const fakeUserData: UserModel = {
   second_name: 'Иванов',
   login: 'ivanivanov',
   email: 'pochta@yandex.ru',
-  phone: '+7 (909) 967 30 30',
+  phone: '+79099673030',
 };

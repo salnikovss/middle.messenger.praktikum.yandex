@@ -5,6 +5,23 @@ import { IProfileFormRowProps } from './types';
 export class ProfileFormRow extends Component<IProfileFormRowProps> {
   static componentName = 'ProfileFormRow';
 
+  constructor({ onFocus, ...rest }: IProfileFormRowProps) {
+    super({
+      ...rest,
+      onFocus: (evt: FocusEvent) => {
+        this.setError();
+
+        if (onFocus) {
+          onFocus(evt);
+        }
+      },
+    });
+  }
+
+  setError(text = '') {
+    this.refs.errorRef.setProps({ text });
+  }
+
   render() {
     // template=hbs
     return `
@@ -19,10 +36,11 @@ export class ProfileFormRow extends Component<IProfileFormRowProps> {
             style=style
             placeholder=placeholder
             value=value
+            ref='inputRef'
             onBlur=onBlur
             onFocus=onFocus
         }}}
-        <p class='form-group__help-box'></p>
+        {{{Error text=error ref='errorRef'}}}
       </div>    
     `;
   }

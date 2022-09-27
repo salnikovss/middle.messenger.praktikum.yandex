@@ -48,9 +48,16 @@
     display: flex;
     margin-bottom: 10px;
     border-bottom: 1px solid #4c546f;
+    position: relative;
 
     &:last-child {
       border: none;
+    }
+
+    .error {
+      bottom: 0;
+      right: 0;
+      text-align: right;
     }
   }
 

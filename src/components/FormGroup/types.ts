@@ -1,9 +1,11 @@
+import Error from 'components/Error';
+import Input, { IInputProps } from 'components/Input';
+
 import { IErrorProps } from '../Error/types';
-import { IInputProps } from '../Input';
 
 export interface IFormGroupProps extends IInputProps, IErrorProps {
   label?: string;
-  error?: string;
-  ref?: HTMLElement;
-  errorRef?: HTMLElement;
+  inputRef?: Input;
+  errorRef?: Error;
+  textarea?: boolean;
 }

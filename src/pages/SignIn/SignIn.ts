@@ -1,79 +1,51 @@
 import { InputType } from 'components/Input';
 import { routeConsts } from 'config/routes';
 import Component from 'core/Component';
+import Form from 'utils/Form';
 
-import FormValidator from '../../utils/FormValidator';
-import { PredefinedRules, ValidationValue } from '../../utils/FormValidator';
+import { FormGroup } from '../../components/FormGroup/FormGroup';
+import { PredefinedRules } from '../../utils/FormValidator';
 
 export class SignIn extends Component {
   static componentName = 'SignIn';
-  private formValidator?: FormValidator;
+  public form: Form;
 
   constructor() {
     super();
 
+    const { login, password } = PredefinedRules;
+    this.form = new Form({ login, password });
+
     this.setProps({
-      onLoginBlur: this.validate.bind(this, 'login'),
-      onPasswordBlur: this.validate.bind(this, 'password'),
+      onLoginBlur: () => this.form.validate('login'),
+      onPasswordBlur: () => this.form.validate('password'),
       events: {
         submit: this.onSubmit.bind(this),
       },
     });
   }
 
-  prepareFormValidator() {
-    const { login, password } = PredefinedRules;
-    const rules = { login, password };
-
-    this.formValidator = new FormValidator(rules);
+  componentDidMount(): void {
+    // Set form refs after compontent has been mounted
+    const { loginInput: login, passwordInput: password } = this.refs as Record<string, FormGroup>;
+    this.form.setRefs({ login, password });
   }
 
-  getSubmittedData(): Record<string, ValidationValue> {
-    const { loginInput, passwordInput } = this.refs;
-    const loginValue = (loginInput.refs.inputRef.getContent() as HTMLInputElement).value;
-    const passwordValue = (passwordInput.refs.inputRef.getContent() as HTMLInputElement).value;
-    return {
-      login: loginValue,
-      password: passwordValue,
-    };
-  }
-
-  validate(field?: string) {
-    if (!this.formValidator) {
-      this.prepareFormValidator();
-    }
-
-    let validationResult;
-    const submittedData = this.getSubmittedData();
-    if (field) {
-      validationResult = this.formValidator?.validate({ [field]: submittedData[field] });
-    } else {
-      validationResult = this.formValidator?.validate(submittedData);
-    }
-
-    console.log('validationResult', validationResult);
-
-    return validationResult;
-  }
-
-  onSubmit(e: PointerEvent) {
+  onSubmit(e: SubmitEvent) {
     e.preventDefault();
     e.stopPropagation();
 
     // eslint-disable-next-line no-console
-    console.log('Submitted data', this.getSubmittedData());
-    // eslint-disable-next-line no-console
-    console.log('Validation result', this.validate());
-  }
+    console.log('Submitted data', this.form.getValues());
 
-  onLoginFocus(e: PointerEvent) {
+    const validationResult = this.form.validate();
     // eslint-disable-next-line no-console
-    console.log('onLoginFocus event fired', e);
-  }
+    console.log('Validation result', validationResult);
 
-  onLoginBlur(e: PointerEvent) {
-    // eslint-disable-next-line no-console
-    console.log('onLoginBlur event fired', e);
+    if (!this.form.hasErrors) {
+      // eslint-disable-next-line no-console
+      console.log('Validation passed. Submitting form....');
+    }
   }
 
   render() {
@@ -82,15 +54,11 @@ export class SignIn extends Component {
       {{#CenteredBox title='Авторизация'}}
         <form method='post'>
             {{{FormGroup label='Имя пользователя' name='login' 
-                ref='loginInput' 
-                onBlur=onLoginBlur 
-                onFocus=onLoginFocus
+                ref='loginInput' onBlur=onLoginBlur
             }}}
 
-            {{{FormGroup label='Пароль' name='password'
-                onBlur=onPasswordBlur 
-                onFocus=onPasswordFocus
-                ref='passwordInput' type='${InputType.PASSWORD}'
+            {{{FormGroup label='Пароль' name='password' type='${InputType.PASSWORD}'
+                onBlur=onPasswordBlur ref='passwordInput'
             }}}
 
             {{{Button body='Войти'}}}
