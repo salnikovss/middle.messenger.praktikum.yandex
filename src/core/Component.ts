@@ -99,19 +99,7 @@ export default class Component<P = any> {
 
   _componentDidMount() {
     this.componentDidMount();
-
-    // Object.values(this.children).forEach((child) => {
-    //   if (Array.isArray(child)) {
-    //     child.forEach((ch) => ch.dispatchComponentDidMount());
-    //   } else {
-    //     child.dispatchComponentDidMount();
-    //   }
-    // });
   }
-
-  // dispatchComponentDidMount() {
-  //   this._eventBus.emit(Component.EVENTS.FLOW_CDM);
-  // }
 
   componentDidMount(oldProps?: IComponentProps) {
     // eslint-disable-next-line no-console
@@ -127,14 +115,8 @@ export default class Component<P = any> {
   }
 
   componentDidUpdate(oldProps: P, newProps: P) {
-    // TODO: сделать реальное сравнение.
     return true;
-
-    if (oldProps !== newProps) {
-      return true; // поменять на true.
-    }
-
-    return false;
+    return oldProps !== newProps;
   }
 
   setProps = (nextProps: Partial<P>) => {
