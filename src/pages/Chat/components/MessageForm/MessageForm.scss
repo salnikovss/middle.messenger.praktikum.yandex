@@ -3,15 +3,6 @@
   justify-content: space-between;
   align-items: flex-end;
 
-  .form-group {
-    margin-bottom: 0;
-
-    .error {
-      bottom: -5px;
-      left: 2px;
-    }
-  }
-
   &__attachments-button {
     &-icon {
       background-image: url(../../../../../static/images/clip.svg);

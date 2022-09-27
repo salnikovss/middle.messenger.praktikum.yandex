@@ -5,8 +5,11 @@
     "selector-class-pattern": "^([a-z][a-z0-9_]*)(-[a-z0-9_]+)*$",
     "custom-property-pattern": "^[a-z][a-zA-Z0-9]+$",
     "scss/dollar-variable-pattern": "^[a-z][a-zA-Z0-9]+$",
-    "string-quotes": "single",
-    "function-url-quotes": null
+    "declaration-block-single-line-max-declarations": null,
+    "string-quotes": "double",
+    "function-url-quotes": null,
+    "function-whitespace-after": null,
+    "selector-pseudo-element-colon-notation": null
   },
   "plugins": ["stylelint-scss"],
   "ignoreFiles": ["build/*"]

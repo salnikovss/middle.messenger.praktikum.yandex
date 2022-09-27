@@ -9,3 +9,14 @@
   width: 100%;
   color: var(--dangerColor);
 }
+
+.message-form .error {
+  bottom: -5px;
+  left: 2px;
+}
+
+.data__rows-row .error {
+  bottom: 0;
+  right: 0;
+  text-align: right;
+}
