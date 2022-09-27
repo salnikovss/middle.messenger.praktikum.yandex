@@ -22,7 +22,7 @@
   console.log(validate);
 */
 
-type ValidationValue = string | number;
+export type ValidationValue = string | number;
 type ValidationParams = Record<string, unknown>;
 type ValidatorFunction = (value: ValidationValue, params?: ValidationParams) => boolean;
 type Validator = (value: ValidationValue) => string | void;
