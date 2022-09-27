@@ -5,8 +5,9 @@ import Form from 'utils/Form';
 
 import { FormGroup } from '../../components/FormGroup/FormGroup';
 import { PredefinedRules } from '../../utils/FormValidator';
+import { ISignInProps } from './types';
 
-export class SignIn extends Component {
+export class SignIn extends Component<ISignInProps> {
   static componentName = 'SignIn';
   public form: Form;
 
