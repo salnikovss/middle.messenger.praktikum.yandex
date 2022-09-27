@@ -17,8 +17,8 @@ export class MessageForm extends Component {
             {{{Button body="<i class='icon message-form__attachments-button-icon'></i>" type='button' style='icon'}}}
         </div>  
         <div class='message-form__input-container'>
-            <textarea class='message-form__input' name='message' 
-                placeholder='Сообщение...'></textarea>
+            {{{Textarea class='message-form__input' name='message'
+                placeholder='Сообщение...'}}}
         </div>
         <div class='message-form__send-button'>
             {{{Button body='<i class="icon message-form__send-button-icon"></i>'

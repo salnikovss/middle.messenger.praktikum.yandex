@@ -1,6 +1,7 @@
 import './index.scss';
 
 import { default as ErrorComponent } from 'components/Error';
+import Textarea from 'components/Textarea';
 import { routeConsts, routes } from 'config/routes';
 
 import { BackButtonWrapper } from './components/BackButtonWrapper/BackButtonWrapper';
@@ -14,6 +15,7 @@ import { registerComponent } from './core';
 import renderDOM from './core/renderDOM';
 
 registerComponent(Link);
+registerComponent(Textarea);
 registerComponent(Input);
 registerComponent(ErrorComponent);
 registerComponent(FormGroup);

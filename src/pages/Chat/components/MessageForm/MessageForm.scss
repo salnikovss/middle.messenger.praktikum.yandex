@@ -17,26 +17,6 @@
     padding-right: 20px;
   }
 
-  &__input {
-    resize: none;
-    width: 100%;
-    font-family: inherit;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 12px;
-    border: none;
-    background: transparent;
-    height: 28px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    color: #fff;
-    vertical-align: middle;
-
-    &::placeholder {
-      color: #9898b0;
-    }
-  }
-
   &__send-button {
     &-icon {
       background-image: url(../../../../../static/images/enter-arrow.svg);

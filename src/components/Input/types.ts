@@ -1,3 +1,5 @@
+import Component from 'core/Component';
+
 export enum InputType {
   TEXT = 'text',
   PASSWORD = 'password',
@@ -9,7 +11,7 @@ export enum InputType {
 export interface IInputProps {
   name: string;
   type?: InputType;
-  ref?: HTMLElement;
+  ref?: Component;
   class?: string;
   value?: string;
   style?: string;
