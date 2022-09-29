@@ -2,7 +2,9 @@ import './CenteredBox.scss';
 
 import Component from 'core/Component';
 
-export class CenteredBox extends Component {
+import { CenteredBoxProps } from './types';
+
+export class CenteredBox extends Component<CenteredBoxProps> {
   static componentName = 'CenteredBox';
 
   render() {

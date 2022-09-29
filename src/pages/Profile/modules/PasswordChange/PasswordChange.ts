@@ -10,9 +10,9 @@ import { PredefinedRules } from 'utils/FormValidator';
 import { fakeUserData } from '../../../../utils/fakeData';
 import { Avatar } from '../../components/Avatar/Avatar';
 import { ProfileFormRow } from '../../components/ProfileFormRow/ProfileFormRow';
-import { IPasswordChangeProps } from './types';
+import { PasswordChangeProps } from './types';
 
-export class PasswordChange extends Component<IPasswordChangeProps> {
+export class PasswordChange extends Component<PasswordChangeProps> {
   static componentName = 'PasswordChange';
   public form: Form;
 
@@ -41,7 +41,7 @@ export class PasswordChange extends Component<IPasswordChangeProps> {
       oldPasswordInput: old_password,
       newPasswordInput: new_password,
       newPassword2Input: new_password2,
-    } = this.refs as Record<string, ProfileFormRow>;
+    } = this.refs as unknown as Record<string, ProfileFormRow>;
     this.form.setRefs({ old_password, new_password, new_password2 });
   }
 
@@ -63,29 +63,23 @@ export class PasswordChange extends Component<IPasswordChangeProps> {
   }
 
   render() {
+    //template=hbs
     return `
       {{#BackButtonWrapper route='${routeConsts.CHAT}'}}
         <div class='profile'>
-            <div class='profile__avatar'>
-                {{{Avatar}}}
-            </div>
+            <div class='profile__avatar'>{{{Avatar}}}</div>
 
             <form class='data__rows-block profile__rows-block-details' method='post'>
                 {{{ProfileFormRow label='Текущий пароль' type='${InputType.PASSWORD}' name='oldPassword'
-                      placeholder='********************'
-                      onBlur=onOldPasswordBlur ref='oldPasswordInput'}}}
+                      placeholder='********************' onBlur=onOldPasswordBlur ref='oldPasswordInput'}}}
 
                 {{{ProfileFormRow label='Новый пароль' type='${InputType.PASSWORD}' name='newPassword'
-                      placeholder='********************'
-                      onBlur=onNewPasswordBlur ref='newPasswordInput'}}}
-                      
-                {{{ProfileFormRow label='Повторить пароль' type='${InputType.PASSWORD}' name='newPassword2'
-                      placeholder='********************'
-                      onBlur=onNewPassword2Blur ref='newPassword2Input'}}}
+                      placeholder='********************' onBlur=onNewPasswordBlur ref='newPasswordInput'}}}
 
-                <div class='data__rows-row data__rows-row-button'>
-                    {{{Button body='Сохранить'}}}
-                </div>
+                {{{ProfileFormRow label='Повторить пароль' type='${InputType.PASSWORD}' name='newPassword2'
+                      placeholder='********************' onBlur=onNewPassword2Blur ref='newPassword2Input'}}}
+
+                <div class='data__rows-row data__rows-row-button'>{{{Button body='Сохранить'}}}</div>
             </form>
         </div>
         {{/BackButtonWrapper}}

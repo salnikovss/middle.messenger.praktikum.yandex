@@ -1,4 +1,4 @@
-export interface IPasswordChangeProps {
+export type PasswordChangeProps = {
   user: UserModel;
   onOldPasswordBlur: (e: FocusEvent) => void;
   onNewPasswordBlur: (e: FocusEvent) => void;
@@ -6,4 +6,4 @@ export interface IPasswordChangeProps {
   events: {
     submit: (e: SubmitEvent) => void;
   };
-}
+};

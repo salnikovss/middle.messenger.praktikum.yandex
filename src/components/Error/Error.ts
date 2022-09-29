@@ -2,9 +2,9 @@ import './Error.scss';
 
 import Component from 'core/Component';
 
-import { IErrorProps } from './types';
+import { ErrorProps } from './types';
 
-export class Error extends Component<IErrorProps> {
+export class Error extends Component<ErrorProps> {
   static componentName = 'Error';
 
   render() {

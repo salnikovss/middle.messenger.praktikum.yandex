@@ -1,11 +1,7 @@
-import { IComponentProps } from 'core/Component';
-
-import { ChatModel } from '../../types';
-import { MessageModel } from '../Message';
 import { MessageForm } from '../MessageForm/MessageForm';
 
-export interface IMessengerProps extends IComponentProps {
+export type MessengerProps = {
   chat: ChatModel;
   messages?: MessageModel[];
   messageForm?: MessageForm;
-}
+};

@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IMessageProps extends MessageModel {}
+export type MessageProps = { item: MessageModel };
 
 export type MessageAuthor = {
   avatar?: Nullable<string>;

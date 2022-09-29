@@ -2,19 +2,16 @@ import './Button.scss';
 
 import Component from 'core/Component';
 
-import { ButtonStyle, ButtonType, IButtonProps, IButtonPropsWithEvents } from './types';
+import { ButtonProps, ButtonPropsWithEvents, ButtonStyle, ButtonType } from './types';
 
-export class Button extends Component<IButtonPropsWithEvents> {
+export class Button extends Component<ButtonPropsWithEvents> {
   static componentName = 'Button';
 
-  constructor({ onClick, ...rest }: IButtonProps) {
+  constructor({ onClick, ...rest }: ButtonProps) {
     const defaultProps = {
       type: ButtonType.SUBMIT,
       style: ButtonStyle.PRIMARY,
     };
-
-    // TODO: check why button renders 4 times
-    // console.log('onClick', onClick);
 
     super({
       ...defaultProps,

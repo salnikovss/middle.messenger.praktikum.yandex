@@ -2,9 +2,6 @@ import Component from 'core/Component';
 
 export class SearchBox extends Component {
   static componentName = 'SearchBox';
-  constructor() {
-    super();
-  }
 
   render() {
     //template=hbs

@@ -1,9 +1,10 @@
-import { IErrorProps } from 'components/Error';
+import Error, { ErrorProps } from 'components/Error';
 import { Input } from 'components/Input/Input';
-import { IInputProps } from 'components/Input/types';
+import { InputProps } from 'components/Input/types';
 
-export interface IProfileFormRowProps extends IInputProps, IErrorProps {
-  label?: string;
-  inputRef?: Input;
-  errorRef?: Error;
-}
+export type ProfileFormRowProps = InputProps &
+  ErrorProps & {
+    label?: string;
+    inputRef?: Input;
+    errorRef?: Error;
+  };

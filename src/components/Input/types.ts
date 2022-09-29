@@ -1,5 +1,3 @@
-import Component from 'core/Component';
-
 export enum InputType {
   TEXT = 'text',
   PASSWORD = 'password',
@@ -8,10 +6,9 @@ export enum InputType {
   EMAIL = 'email',
 }
 
-export interface IInputProps {
+export type InputProps = {
   name: string;
   type?: InputType;
-  ref?: Component;
   class?: string;
   value?: string;
   style?: string;
@@ -19,12 +16,12 @@ export interface IInputProps {
   onInput?: (e: Event) => void;
   onBlur?: (e: FocusEvent) => void;
   onFocus?: (e: FocusEvent) => void;
-}
+};
 
-export interface IInputPropsWithEvents extends Omit<IInputProps, 'onBlur' | 'onInput' | 'onFocus'> {
+export type InputPropsWithEvents = Omit<InputProps, 'onBlur' | 'onInput' | 'onFocus'> & {
   events: {
     input?: (e: Event) => void;
     blur?: (e: FocusEvent) => void;
     focus?: (e: FocusEvent) => void;
   };
-}
+};

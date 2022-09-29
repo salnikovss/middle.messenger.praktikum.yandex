@@ -2,12 +2,12 @@ import './Input.scss';
 
 import Component from 'core/Component';
 
-import { IInputProps, IInputPropsWithEvents, InputType } from './types';
+import { InputProps, InputPropsWithEvents, InputType } from './types';
 
-export class Input extends Component<IInputPropsWithEvents> {
+export class Input extends Component<InputPropsWithEvents> {
   static componentName = 'Input';
 
-  constructor({ onInput, onBlur, onFocus, ...rest }: IInputProps) {
+  constructor({ onInput, onBlur, onFocus, ...rest }: InputProps) {
     super({
       ...rest,
       type: rest.type || InputType.TEXT,

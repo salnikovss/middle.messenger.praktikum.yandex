@@ -2,12 +2,12 @@ import './Modal.scss';
 
 import Component from 'core/Component';
 
-import { IModalProps } from './types';
+import { ModalProps } from './types';
 
-export class Modal extends Component {
+export class Modal extends Component<ModalProps> {
   static componentName = 'Modal';
-  
-  constructor(props: IModalProps) {
+
+  constructor(props: ModalProps) {
     super(props);
   }
 
@@ -17,9 +17,9 @@ export class Modal extends Component {
       <div class='modal'>
         <div class="modal__content">
           {{#if title}}
-          <div class="modal__head">
-            <p class="modal__title">{{title}}</p>
-          </div>
+            <div class="modal__head">
+              <p class="modal__title">{{title}}</p>
+            </div>
           {{/if}}
           <div class="modal__body">
               {{body}}

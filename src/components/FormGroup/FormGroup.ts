@@ -2,12 +2,12 @@ import './FormGroup.scss';
 
 import Component from 'core/Component';
 
-import { IFormGroupProps } from './types';
+import { FormGroupProps } from './types';
 
-export class FormGroup extends Component<IFormGroupProps> {
+export class FormGroup extends Component<FormGroupProps> {
   static componentName = 'FormGroup';
 
-  constructor({ onFocus, ...rest }: IFormGroupProps) {
+  constructor({ onFocus, ...rest }: FormGroupProps) {
     super({
       ...rest,
       onFocus: (evt: FocusEvent) => {
@@ -32,18 +32,18 @@ export class FormGroup extends Component<IFormGroupProps> {
           <label for='field-{{name}}' class='form-group__label'>{{label}}</label>
         {{/if}}
         {{#if textarea}}
-          {{{Textarea 
-              class=class 
-              name='message' 
+          {{{Textarea
+              class=class
+              name='message'
               placeholder=placeholder
-              ref='inputRef' 
+              ref='inputRef'
               onInput=onInput
               onBlur=onBlur
-              onFocus=onFocus    
+              onFocus=onFocus
               value=value
           }}}
         {{else}}
-          {{{Input 
+          {{{Input
               name=name
               type=type
               class=class
@@ -57,7 +57,7 @@ export class FormGroup extends Component<IFormGroupProps> {
           }}}
         {{/if}}
         {{{Error text=error ref='errorRef'}}}
-      </div>    
+      </div>
     `;
   }
 }

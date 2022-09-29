@@ -1,7 +1,7 @@
-import { IChatListItemProps } from '../ChatListItem/types';
+import { ChatListItemProps } from '../ChatListItem/types';
 
-export interface IChatListProps {
+export type ChatListProps = {
   onClick: (chatId: string) => void;
-  chats: IChatListItemProps[];
+  chats: ChatListItemProps[];
   activeChatId: string;
 }

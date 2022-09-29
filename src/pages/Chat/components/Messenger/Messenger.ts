@@ -8,12 +8,12 @@ import { fakeMessages } from '../../../../utils/fakeData';
 import Message from '../Message';
 import MessageForm from '../MessageForm';
 import { ButtonStyle } from './../../../../components/Button/types';
-import { IMessengerProps } from './types';
+import { MessengerProps } from './types';
 
-export class Messenger extends Component<IMessengerProps> {
+export class Messenger extends Component<MessengerProps> {
   static componentName = 'Messenger';
 
-  constructor({ chat }: IMessengerProps) {
+  constructor({ chat }: MessengerProps) {
     registerComponent(MessageForm);
     registerComponent(Message);
 
@@ -34,6 +34,7 @@ export class Messenger extends Component<IMessengerProps> {
 
   render() {
     if (!this.props.chat) {
+      //template=hbs
       return `
         <div class='messenger'>
           <div class='messenger__empty messenger__empty_centered'>
@@ -45,16 +46,17 @@ export class Messenger extends Component<IMessengerProps> {
       `;
     }
 
+    //template=hbs
     return `
       <div class='messenger'>
         <div class='messenger__header'>
           <div class='messenger__chat-info'>
-              <span class='messenger__chat-avatar' 
+              <span class='messenger__chat-avatar'
                 {{#if chat.avatar}}style='background-image:url({{chat.avatar}})'{{/if}}></span>
               <span class='messenger__chat-name'>{{chat.name}}</span>
           </div>
           <div class='messenger__actions'>
-            {{{Button style='${ButtonStyle.ICON}' type='${ButtonType.BUTTON}' 
+            {{{Button style='${ButtonStyle.ICON}' type='${ButtonType.BUTTON}'
               classes='messenger__dots-button'
               body='<span class="dot"></span><span class="dot"></span><span class="dot"></span>'
             }}}

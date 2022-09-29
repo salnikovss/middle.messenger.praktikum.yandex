@@ -1,4 +1,4 @@
-import { IComponentProps } from 'core/Component';
-export interface IModalProps extends IComponentProps {
+export type ModalProps = {
   title?: string;
-}
+  body: string;
+};

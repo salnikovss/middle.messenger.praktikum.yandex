@@ -2,12 +2,12 @@ import './Textarea.scss';
 
 import Component from 'core/Component';
 
-import { ITextareaProps, ITextareaPropsWithEvents } from './types';
+import { TextareaProps, TextareaPropsWithEvents } from './types';
 
-export class Textarea extends Component<ITextareaPropsWithEvents> {
+export class Textarea extends Component<TextareaPropsWithEvents> {
   static componentName = 'Textarea';
 
-  constructor({ onInput, onBlur, onFocus, ...rest }: ITextareaProps) {
+  constructor({ onInput, onBlur, onFocus, ...rest }: TextareaProps) {
     super({
       ...rest,
       value: rest.value || '',
@@ -22,7 +22,7 @@ export class Textarea extends Component<ITextareaPropsWithEvents> {
   render() {
     //template=hbs
     return `
-      <textarea class='textarea {{class}}' name='{{name}}' 
+      <textarea class='textarea {{class}}' name='{{name}}'
           id='field-{{name}}' {{#if placeholder}}placeholder='{{placeholder}}'{{/if}}
       >{{value}}</textarea>
     `;

@@ -10,9 +10,9 @@ import { PredefinedRules } from 'utils/FormValidator';
 import { fakeUserData } from '../../../../utils/fakeData';
 import { Avatar } from '../../components/Avatar/Avatar';
 import { ProfileFormRow } from '../../components/ProfileFormRow/ProfileFormRow';
-import { IProfileEditProps } from './types';
+import { ProfileEditProps } from './types';
 
-export class ProfileEdit extends Component<IProfileEditProps> {
+export class ProfileEdit extends Component<ProfileEditProps> {
   static componentName = 'ProfileEdit';
   public form: Form;
 
@@ -47,7 +47,7 @@ export class ProfileEdit extends Component<IProfileEditProps> {
       emailInput: email,
       displayNameInput: display_name,
       phoneInput: phone,
-    } = this.refs as Record<string, ProfileFormRow>;
+    } = this.refs as unknown as Record<string, ProfileFormRow>;
     this.form.setRefs({ email, login, first_name, second_name, display_name, phone });
   }
 
@@ -69,6 +69,7 @@ export class ProfileEdit extends Component<IProfileEditProps> {
   }
 
   render() {
+    //template=hbs
     return `
       {{#BackButtonWrapper route='${routeConsts.CHAT}'}}
         <div class='profile'>
@@ -79,19 +80,23 @@ export class ProfileEdit extends Component<IProfileEditProps> {
             <form class='data__rows-block profile__rows-block-details' method='post'>
                 {{{ProfileFormRow label='Email' type='${InputType.EMAIL}' name='email' value=user.email
                       onBlur=onEmailBlur ref='emailInput'}}}
+
                 {{{ProfileFormRow label='Имя пользователя' name='login' value=user.login
                       onBlur=onLoginBlur ref='loginInput'}}}
+
                 {{{ProfileFormRow label='Имя' name='first_name' value=user.first_name
                       onBlur=onFirstNameBlur ref='firstNameInput'}}}
+
                 {{{ProfileFormRow label='Фамилия' name='second_name' value=user.second_name
                       onBlur=onSecondNameBlur ref='secondNameInput'}}}
+
                 {{{ProfileFormRow label='Отображаемое имя' name='display_name' value=user.display_name
                       onBlur=onDisplayNameBlur ref='displayNameInput'}}}
+
                 {{{ProfileFormRow label='Телефон' name='phone' value=user.phone
                       onBlur=onPhoneBlur ref='phoneInput'}}}
-                <div class='data__rows-row data__rows-row-button'>
-                  {{{Button body='Сохранить'}}}
-                </div>
+
+                <div class='data__rows-row data__rows-row-button'>{{{Button body='Сохранить'}}}</div>
             </form>
         </div>
         {{/BackButtonWrapper}}

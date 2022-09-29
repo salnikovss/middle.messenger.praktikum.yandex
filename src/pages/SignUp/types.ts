@@ -1,4 +1,4 @@
-export interface ISignUpProps {
+export type SignUpProps = {
   onEmailBlur: (e: FocusEvent) => void;
   onLoginBlur: (e: FocusEvent) => void;
   onFirstNameBlur: (e: FocusEvent) => void;
@@ -8,4 +8,4 @@ export interface ISignUpProps {
   events: {
     submit: (e: SubmitEvent) => void;
   };
-}
+};

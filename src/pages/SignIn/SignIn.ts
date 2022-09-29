@@ -5,9 +5,9 @@ import Form from 'utils/Form';
 
 import { FormGroup } from '../../components/FormGroup/FormGroup';
 import { PredefinedRules } from '../../utils/FormValidator';
-import { ISignInProps } from './types';
+import { SignInProps } from './types';
 
-export class SignIn extends Component<ISignInProps> {
+export class SignIn extends Component<SignInProps> {
   static componentName = 'SignIn';
   public form: Form;
 
@@ -28,7 +28,7 @@ export class SignIn extends Component<ISignInProps> {
 
   componentDidMount(): void {
     // Set form refs after compontent has been mounted
-    const { loginInput: login, passwordInput: password } = this.refs as Record<string, FormGroup>;
+    const { loginInput: login, passwordInput: password } = this.refs as unknown as Record<string, FormGroup>;
     this.form.setRefs({ login, password });
   }
 
@@ -54,13 +54,11 @@ export class SignIn extends Component<ISignInProps> {
     return `
       {{#CenteredBox title='Авторизация'}}
         <form method='post'>
-            {{{FormGroup label='Имя пользователя' name='login' 
-                ref='loginInput' onBlur=onLoginBlur
-            }}}
+            {{{FormGroup label='Имя пользователя' name='login'
+                ref='loginInput' onBlur=onLoginBlur}}}
 
             {{{FormGroup label='Пароль' name='password' type='${InputType.PASSWORD}'
-                onBlur=onPasswordBlur ref='passwordInput'
-            }}}
+                onBlur=onPasswordBlur ref='passwordInput'}}}
 
             {{{Button body='Войти'}}}
         </form>

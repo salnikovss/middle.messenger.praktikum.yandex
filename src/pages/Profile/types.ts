@@ -1,3 +1,3 @@
-export interface IProfileProps {
+export type ProfileProps = {
   user: UserModel;
 }

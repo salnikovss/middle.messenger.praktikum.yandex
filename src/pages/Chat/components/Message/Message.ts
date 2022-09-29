@@ -4,32 +4,30 @@ import Component from 'core/Component';
 import { getTime } from 'utils/getTime';
 import nl2br from 'utils/nl2br';
 
-import { IMessageProps } from './types';
+import { MessageProps } from './types';
 
-export class Message extends Component<IMessageProps> {
+export class Message extends Component<MessageProps> {
   static componentName = 'Message';
-  constructor({ item }: { item: IMessageProps }) {
-    super({ ...item });
-  }
 
   render() {
+    //template=hbs
     return `
-      <div class='message message_type-{{type}} message_{{#if fromMe}}from-me{{else}}from-others{{/if}}'>
+      <div class='message message_type-{{item.type}} message_{{#if item.fromMe}}from-me{{else}}from-others{{/if}}'>
         <div class='message__body'>
-          {{#if image}}
-            <img src='{{image}}' alt='' />
+          {{#if item.image}}
+            <img src='{{item.image}}' alt='' />
           {{else}}
-            {{#unless fromMe}}
-              {{#if author}}
-              <p class='message__author'>{{author.name}}</p>
+            {{#unless item.fromMe}}
+              {{#if item.author}}
+              <p class='message__author'>{{item.author.name}}</p>
               {{/if}}
             {{/unless}}
-            ${nl2br(this.props.body || '', false)}
+            ${nl2br(this.props.item.body || '', false)}
           {{/if}}
         </div>
         <div class='message__meta'>
-          <span class='message__time'>${getTime(this.props.dateTime)}</span>
-          {{#if status}}<span class='message__status message__status-{{status}}'></span>{{/if}}
+          <span class='message__time'>${getTime(this.props.item.dateTime)}</span>
+          {{#if item.status}}<span class='message__status message__status-{{item.status}}'></span>{{/if}}
         </div>
       </div>
     `;

@@ -1,4 +1,4 @@
-export interface IErrorPageProps {
+export type ErrorPageProps = {
   code: number;
   text?: string;
-}
+};

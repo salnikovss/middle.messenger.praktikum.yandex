@@ -4,12 +4,12 @@ import Component from 'core/Component';
 import registerComponent from 'core/registerComponent';
 
 import ChatListItem from '../ChatListItem';
-import { IChatListProps } from './types';
+import { ChatListProps } from './types';
 
-export class ChatList extends Component<IChatListProps> {
+export class ChatList extends Component<ChatListProps> {
   static componentName = 'ChatList';
 
-  constructor({ chats, activeChatId }: IChatListProps) {
+  constructor({ chats, activeChatId }: ChatListProps) {
     registerComponent(ChatListItem);
     super();
 
@@ -26,11 +26,12 @@ export class ChatList extends Component<IChatListProps> {
   };
 
   render() {
+    //template=hbs
     return `
       <ul class='chat-list'>
         {{#each chats}}
           <li class='chat-list__item'>
-              {{{ChatListItem item=this onClick=this.onClick activeChatId="${this.props.activeChatId}" }}}
+              {{{ChatListItem chat=this onClick=this.onClick activeChatId="${this.props.activeChatId}" }}}
           </li>
         {{/each}}
       </ul>

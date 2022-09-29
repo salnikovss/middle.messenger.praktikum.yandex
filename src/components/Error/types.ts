@@ -1,3 +1,3 @@
-export interface IErrorProps {
+export type ErrorProps = {
   text?: string;
-}
+};

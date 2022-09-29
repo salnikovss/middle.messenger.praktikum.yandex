@@ -1,4 +1,4 @@
-export interface IProfileEditProps {
+export type ProfileEditProps = {
   user: UserModel;
   onEmailBlur: (e: FocusEvent) => void;
   onLoginBlur: (e: FocusEvent) => void;
@@ -9,4 +9,4 @@ export interface IProfileEditProps {
   events: {
     submit: (e: SubmitEvent) => void;
   };
-}
+};

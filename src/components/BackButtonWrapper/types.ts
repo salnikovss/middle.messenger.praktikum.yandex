@@ -1,3 +1,3 @@
-export interface IBackButtonWrapperProps {
+export type BackButtonWrapperProps = {
   route: string;
-}
+};

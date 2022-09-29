@@ -49,6 +49,7 @@ export class MessageForm extends Component {
   }
 
   render() {
+    //template=hbs
     return `
       <form class='message-form'>
         <div class='message-form__attachments-button'>

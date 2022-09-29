@@ -3,23 +3,15 @@ import { nanoid } from 'nanoid';
 
 import EventBus, { IEventBus } from './EventBus';
 
-export interface IComponentProps {
-  events?: ComponentEvents;
-  [key: string]: unknown;
-}
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ComponentMeta<T = any> = {
-  props: T;
+export type ComponentEventHandler = (...args: any) => void;
+export type ComponentEvents = Record<string, ComponentEventHandler>;
+export type ComponentProps = {
+  [key: string]: unknown;
+  events?: ComponentEvents;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ComponentEvents = Record<string, (...args: any) => void>;
-
-// export type ComponentEvents = Values<typeof Component.EVENTS>;
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default class Component<P = any> {
+export default class Component<T extends ComponentProps = Record<string, unknown>> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -27,33 +19,17 @@ export default class Component<P = any> {
     FLOW_RENDER: 'flow:render',
   };
 
-  public id = nanoid(6);
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  protected state: any = {};
-  public refs: Record<string, Component> = {};
-  // protected refs: Record<string, HTMLElement> = {};
-
-  // private readonly _meta: ComponentMeta;
-
   protected _element: Nullable<HTMLElement> = null;
-  // eventBus: () => EventBus;
   protected _eventBus: IEventBus;
-  protected readonly props: P;
+  protected readonly props: T;
+  public id = nanoid(6);
+  public refs: Record<string, Component<T>> = {};
+  protected children: Record<string, Component<T>> = {};
 
-  protected children: Record<string, Component> = {};
-
-  public constructor(props?: P) {
+  public constructor(props: T = {} as T) {
     const eventBus = new EventBus();
 
-    // this._meta = {
-    //   props,
-    // };
-
-    this.getStateFromProps(props);
-
-    this.props = this._makePropsProxy(props || ({} as P));
-    this.state = this._makePropsProxy(this.state);
+    this.props = this._makePropsProxy(props);
 
     this._eventBus = eventBus;
 
@@ -62,51 +38,27 @@ export default class Component<P = any> {
     eventBus.emit(Component.EVENTS.INIT, this.props);
   }
 
-  /*
-  constructor(propsAndChildren: IComponentProps = {}) {
-    this._eventBus = new EventBus();
-
-    const { props, children } = this._getChildren(propsAndChildren);
-
-    this.children = children;
-
-    // this._meta = {
-    //   props: propsAndChildren,
-    // };
-
-    this.props = this._makePropsProxy(props);
-
-    this._registerEvents(this._eventBus);
-    this._eventBus.emit(Component.EVENTS.INIT);
-  }
-  */
-
-  _registerEvents(eventBus: IEventBus) {
+  private _registerEvents(eventBus: IEventBus) {
     eventBus.on(Component.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-  protected getStateFromProps(_props: any): void {
-    this.state = {};
-  }
-
   init() {
     this._eventBus.emit(Component.EVENTS.FLOW_RENDER, this.props);
   }
 
-  _componentDidMount() {
+  private _componentDidMount() {
     this.componentDidMount();
   }
 
-  componentDidMount(oldProps?: IComponentProps) {
-    // eslint-disable-next-line no-console
-    console.log('componentDidMount', oldProps);
+  // Can be redeclared
+  componentDidMount() {
+    return;
   }
 
-  _componentDidUpdate(oldProps: P, newProps: P) {
+  private _componentDidUpdate(oldProps: T, newProps: T) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -114,12 +66,12 @@ export default class Component<P = any> {
     this._render();
   }
 
-  componentDidUpdate(oldProps: P, newProps: P) {
+  componentDidUpdate(oldProps: T, newProps: T): boolean {
     return true;
     return oldProps !== newProps;
   }
 
-  setProps = (nextProps: Partial<P>) => {
+  setProps = (nextProps: Partial<ComponentProps>) => {
     if (!nextProps) {
       return;
     }
@@ -131,7 +83,7 @@ export default class Component<P = any> {
     return this._element;
   }
 
-  _render() {
+  private _render() {
     const fragment = this._compile();
 
     this._removeEvents();
@@ -147,23 +99,14 @@ export default class Component<P = any> {
     }
   }
 
-  _compile(): DocumentFragment {
+  private _compile(): DocumentFragment {
     const fragment = document.createElement('template');
 
-    /**
-     * Рендерим шаблон
-     */
     const template = Handlebars.compile(this.render());
-    // fragment.innerHTML = template({ ...this.props, children: this.children });
-    fragment.innerHTML = template({ ...this.state, ...this.props, children: this.children, refs: this.refs });
+    fragment.innerHTML = template({ ...this.props, children: this.children, refs: this.refs });
 
-    /**
-     * Заменяем заглушки на компоненты
-     */
+    // Replace stubs with components
     Object.entries(this.children).forEach(([id, component]) => {
-      /**
-       * Ищем заглушку по id
-       */
       const stub = fragment.content.querySelector(`[data-id="${id}"]`);
 
       if (!stub) {
@@ -172,16 +115,10 @@ export default class Component<P = any> {
 
       const stubChilds = stub.childNodes.length ? stub.childNodes : [];
 
-      /**
-       * Заменяем заглушку на component._element
-       */
       const content = component.getContent();
       stub.replaceWith(content);
 
-      /**
-       * Ищем элемент layout-а, куда вставлять детей
-       */
-      // console.log(content); return;
+      // Paste content to layout
       const layoutContent = content.querySelector('[data-layout="1"]');
 
       if (layoutContent && stubChilds.length) {
@@ -189,40 +126,23 @@ export default class Component<P = any> {
       }
     });
 
-    /**
-     * Возвращаем фрагмент
-     */
     return fragment.content;
   }
 
-  _removeEvents() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const events: Record<string, () => void> = (this.props as any).events;
-
-    if (!events || !this._element) {
-      return;
+  private _removeEvents() {
+    if (this.props.events) {
+      Object.entries(this.props.events).forEach(([event, listener]) => {
+        this._element?.removeEventListener(event, listener);
+      });
     }
-
-    Object.entries(events).forEach(([event, listener]) => {
-      if (this._element) {
-        this._element.removeEventListener(event, listener);
-      }
-    });
   }
 
-  _addEvents() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const events: Record<string, () => void> = (this.props as any).events;
-
-    if (!events) {
-      return;
+  private _addEvents() {
+    if (this.props.events) {
+      Object.entries(this.props.events).forEach(([event, listener]) => {
+        this._element?.addEventListener(event, listener);
+      });
     }
-
-    Object.entries(events).forEach(([event, listener]) => {
-      if (this._element) {
-        this._element.addEventListener(event, listener);
-      }
-    });
   }
 
   // Must be overridden by the user in the final component
@@ -231,7 +151,7 @@ export default class Component<P = any> {
   }
 
   getContent(): HTMLElement {
-    // Хак, чтобы вызвать CDM только после добавления в DOM
+    // Hack to call CDM only after adding to DOM
     if (this.element?.parentNode?.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
       setTimeout(() => {
         if (this.element?.parentNode?.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) {
@@ -244,16 +164,17 @@ export default class Component<P = any> {
     return this.element!;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  _makePropsProxy(props: any): any {
-    return new Proxy(props, {
-      get: (target: IComponentProps, prop: string) => {
+  private _makePropsProxy(props: T): T {
+    return new Proxy<T>(props, {
+      get: (target, prop: string) => {
         const value = target[prop];
         return typeof value === 'function' ? value.bind(target) : value;
       },
-      set: (target: IComponentProps, prop: string, value: unknown) => {
+      set: (target: Record<string, unknown>, prop: string, value) => {
         const oldProps = { ...target };
-        target[prop] = value;
+        if (typeof target === 'object') {
+          target[prop] = value;
+        }
 
         this._eventBus.emit(Component.EVENTS.FLOW_CDU, oldProps, target);
         return true;
@@ -262,11 +183,6 @@ export default class Component<P = any> {
         throw new Error('Permission denied');
       },
     });
-  }
-
-  _createDocumentElement(tagName: string) {
-    // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
-    return document.createElement(tagName);
   }
 
   show() {
@@ -281,22 +197,5 @@ export default class Component<P = any> {
     if (el) {
       el.style.display = 'none';
     }
-  }
-
-  _getChildren(propsAndChildren: IComponentProps) {
-    const children: Record<string, Component | Component[]> = {};
-    const props: Record<string, unknown> = {};
-
-    Object.entries(propsAndChildren).map(([key, value]) => {
-      if (value instanceof Component || (Array.isArray(value) && value.every((v) => v instanceof Component))) {
-        children[key] = value;
-      } else {
-        props[key] = value;
-      }
-    });
-
-    // console.log(props, children);
-
-    return { props, children };
   }
 }

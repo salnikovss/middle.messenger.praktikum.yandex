@@ -8,15 +8,19 @@ import { fakeActiveChatId, fakeChatList } from '../../utils/fakeData';
 import ChatList from './components/ChatList';
 import { Messenger } from './components/Messenger/Messenger';
 import SearchBox from './components/SearchBox';
-import { IChatProps } from './types';
+import { ChatProps } from './types';
 
-export class Chat extends Component<IChatProps> {
+export class Chat extends Component<ChatProps> {
   static componentName = 'Chat';
 
   constructor() {
     const chatList = fakeChatList;
     const activeChatId = fakeActiveChatId;
     const activeChat = chatList.find((chat) => chat.id === activeChatId);
+
+    registerComponent(SearchBox);
+    registerComponent(ChatList);
+    registerComponent(Messenger);
 
     super({
       chatList,
@@ -26,10 +30,6 @@ export class Chat extends Component<IChatProps> {
   }
 
   render() {
-    registerComponent(SearchBox);
-    registerComponent(ChatList);
-    registerComponent(Messenger);
-
     //template=hbs
     return `
       <div class='chat'>

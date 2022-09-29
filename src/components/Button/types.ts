@@ -9,16 +9,16 @@ export enum ButtonStyle {
   ICON = 'icon',
 }
 
-export interface IButtonProps {
+export type ButtonProps = {
   type?: ButtonType;
   body: string;
   style?: ButtonStyle;
   classes?: string;
   onClick?: EventListener;
-}
+};
 
-export interface IButtonPropsWithEvents extends Omit<IButtonProps, 'onClick'> {
+export type ButtonPropsWithEvents = Omit<ButtonProps, 'onClick'> & {
   events: {
     click?: EventListener;
   };
-}
+};

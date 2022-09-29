@@ -2,14 +2,14 @@ import Handlebars, { HelperOptions } from 'handlebars';
 
 import Component from './Component';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface ComponentConstructable<Props = any> {
-  new (props: Props): Component;
+export interface ComponentConstructable<Props extends Record<string, unknown>> {
+  new (props: Props): Component<Props>;
   componentName?: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint, @typescript-eslint/no-explicit-any
-export default function registerComponent<Props extends any>(Component: ComponentConstructable<Props>) {
+export default function registerComponent<Props extends Record<string, unknown>>(
+  Component: ComponentConstructable<Props>
+) {
   Handlebars.registerHelper(
     Component.componentName || Component.name,
     function (this: Props, { hash: { ref, ...hash }, data, fn }: HelperOptions) {
@@ -23,12 +23,8 @@ export default function registerComponent<Props extends any>(Component: Componen
 
       const { children, refs } = data.root;
 
-      /**
-       * Костыль для того, чтобы передавать переменные
-       * внутрь блоков вручную подменяя значение
-       */
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (Object.keys(hash) as any).forEach((key: keyof Props) => {
+      // Fix to pass variables inside blocks manually substituting the value
+      Object.keys(hash).forEach((key: keyof Props) => {
         if (this[key] && typeof this[key] === 'string') {
           hash[key] = hash[key].replace(new RegExp(`{{${key as string}}}`, 'i'), this[key]);
         }
@@ -39,7 +35,6 @@ export default function registerComponent<Props extends any>(Component: Componen
       children[component.id] = component;
 
       if (ref) {
-        // refs[ref] = component.getContent();
         refs[ref] = component;
       }
 

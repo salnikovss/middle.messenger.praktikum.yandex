@@ -4,8 +4,9 @@ import Form from 'utils/Form';
 import { PredefinedRules } from 'utils/FormValidator';
 
 import { FormGroup } from '../../components/FormGroup/FormGroup';
-import { ISignUpProps } from './types';
-export class SignUp extends Component<ISignUpProps> {
+import { SignUpProps } from './types';
+
+export class SignUp extends Component<SignUpProps> {
   static componentName = 'SignUp';
   public form: Form;
 
@@ -29,7 +30,7 @@ export class SignUp extends Component<ISignUpProps> {
   }
 
   componentDidMount(): void {
-    // Set form refs after compontent has been mounted
+    // Set form refs after component has been mounted
     const {
       firstNameInput: first_name,
       secondNameInput: second_name,
@@ -37,7 +38,7 @@ export class SignUp extends Component<ISignUpProps> {
       emailInput: email,
       passwordInput: password,
       phoneInput: phone,
-    } = this.refs as Record<string, FormGroup>;
+    } = this.refs as unknown as Record<string, FormGroup>;
     this.form.setRefs({ first_name, second_name, login, email, password, phone });
   }
 
@@ -59,6 +60,7 @@ export class SignUp extends Component<ISignUpProps> {
   }
 
   render() {
+    //template=hbs
     return `
       {{#CenteredBox title='Регистрация'}}
         <form method='post'>
