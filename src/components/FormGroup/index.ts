@@ -1,2 +1,2 @@
-export { FormGroup as default } from './FormGroup';
+export { default } from './FormGroup';
 export * from './types';

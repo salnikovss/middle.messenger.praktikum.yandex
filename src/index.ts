@@ -1,14 +1,14 @@
 import './index.scss';
 
+import BackButtonWrapper from 'components/BackButtonWrapper';
+import CenteredBox from 'components/CenteredBox';
 import { default as ErrorComponent } from 'components/Error';
+import Input from 'components/Input';
 import Textarea from 'components/Textarea';
 import { routeConsts, routes } from 'config/routes';
 
-import { BackButtonWrapper } from './components/BackButtonWrapper/BackButtonWrapper';
 import Button from './components/Button';
-import { CenteredBox } from './components/CenteredBox/CenteredBox';
 import FormGroup from './components/FormGroup';
-import { Input } from './components/Input/Input';
 import Link from './components/Link';
 import { registerComponent } from './core';
 import renderDOM from './core/renderDOM';

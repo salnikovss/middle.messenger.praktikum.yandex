@@ -4,7 +4,7 @@ import Component from 'core/Component';
 
 import { ButtonProps, ButtonPropsWithEvents, ButtonStyle, ButtonType } from './types';
 
-export class Button extends Component<ButtonPropsWithEvents> {
+export default class Button extends Component<ButtonPropsWithEvents> {
   static componentName = 'Button';
 
   constructor({ onClick, ...rest }: ButtonProps) {

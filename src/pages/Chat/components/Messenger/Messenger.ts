@@ -13,7 +13,7 @@ import { MessengerProps } from './types';
 registerComponent(MessageForm);
 registerComponent(Message);
 
-export class Messenger extends Component<MessengerProps> {
+export default class Messenger extends Component<MessengerProps> {
   static componentName = 'Messenger';
 
   constructor({ chat }: MessengerProps) {

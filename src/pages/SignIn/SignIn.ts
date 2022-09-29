@@ -1,20 +1,20 @@
+import FormGroup from 'components/FormGroup';
 import { InputType } from 'components/Input';
 import { routeConsts } from 'config/routes';
 import Component from 'core/Component';
 import Form from 'utils/Form';
 
-import { FormGroup } from '../../components/FormGroup/FormGroup';
-import { PredefinedRules } from '../../utils/FormValidator';
+import { predefinedRules } from '../../utils/FormValidator/predefinedRules';
 import { SignInProps } from './types';
 
-export class SignIn extends Component<SignInProps> {
+export default class SignIn extends Component<SignInProps> {
   static componentName = 'SignIn';
   public form: Form;
 
   constructor() {
     super();
 
-    const { login, password } = PredefinedRules;
+    const { login, password } = predefinedRules;
     this.form = new Form({ login, password });
 
     this.setProps({

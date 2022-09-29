@@ -6,7 +6,7 @@ import nl2br from 'utils/nl2br';
 
 import { MessageProps } from './types';
 
-export class Message extends Component<MessageProps> {
+export default class Message extends Component<MessageProps> {
   static componentName = 'Message';
 
   render() {
@@ -15,7 +15,7 @@ export class Message extends Component<MessageProps> {
       <div class='message message_type-{{item.type}} message_{{#if item.fromMe}}from-me{{else}}from-others{{/if}}'>
         <div class='message__body'>
           {{#if item.image}}
-            <img src='{{item.image}}' alt='' />
+            <img src='{{item.image}}' alt='{{#if item.author}}{{item.author.name}}{{else}}твой аватар{{/if}}' />
           {{else}}
             {{#unless item.fromMe}}
               {{#if item.author}}

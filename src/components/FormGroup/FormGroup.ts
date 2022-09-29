@@ -4,7 +4,7 @@ import Component from 'core/Component';
 
 import { FormGroupProps } from './types';
 
-export class FormGroup extends Component<FormGroupProps> {
+export default class FormGroup extends Component<FormGroupProps> {
   static componentName = 'FormGroup';
 
   constructor({ onFocus, ...rest }: FormGroupProps) {

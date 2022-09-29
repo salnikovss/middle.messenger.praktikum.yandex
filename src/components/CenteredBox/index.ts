@@ -1,1 +1,1 @@
-export { CenteredBox as default } from './CenteredBox';
+export { default } from './CenteredBox';

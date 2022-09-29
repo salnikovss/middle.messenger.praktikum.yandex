@@ -2,7 +2,7 @@ import Component from 'core/Component';
 
 import { ProfileFormRowProps } from './types';
 
-export class ProfileFormRow extends Component<ProfileFormRowProps> {
+export default class ProfileFormRow extends Component<ProfileFormRowProps> {
   static componentName = 'ProfileFormRow';
 
   constructor({ onFocus, ...rest }: ProfileFormRowProps) {

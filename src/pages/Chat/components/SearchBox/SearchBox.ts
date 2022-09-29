@@ -1,6 +1,6 @@
 import Component from 'core/Component';
 
-export class SearchBox extends Component {
+export default class SearchBox extends Component {
   static componentName = 'SearchBox';
 
   render() {

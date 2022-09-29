@@ -1,2 +1,2 @@
-export { Message as default } from './Message';
+export { default } from './Message';
 export * from './types';

@@ -1,4 +1,4 @@
-import { MessageForm } from '../MessageForm/MessageForm';
+import MessageForm from '../MessageForm';
 
 export type MessengerProps = {
   chat: ChatModel;

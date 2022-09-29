@@ -5,11 +5,11 @@ import Component from 'core/Component';
 import registerComponent from 'core/registerComponent';
 
 import { fakeUserData } from '../../utils/fakeData';
-import { Avatar } from './components/Avatar/Avatar';
+import Avatar from './components/Avatar';
 import ProfileDataRow from './components/ProfileDataRow';
 import { ProfileProps } from './types';
 
-export class Profile extends Component<ProfileProps> {
+export default class Profile extends Component<ProfileProps> {
   static componentName = 'Profile';
 
   constructor() {

@@ -1,2 +1,2 @@
-export { ProfileFormRow as default } from './ProfileFormRow';
+export { default } from './ProfileFormRow';
 export * from './types';

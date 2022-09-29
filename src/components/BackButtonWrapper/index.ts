@@ -1,1 +1,1 @@
-export { BackButtonWrapper as default } from './BackButtonWrapper';
+export { default } from './BackButtonWrapper';

@@ -6,7 +6,7 @@ import Component from 'core/Component';
 
 import { fakeActiveChatId, fakeChatList } from '../../utils/fakeData';
 import ChatList from './components/ChatList';
-import { Messenger } from './components/Messenger/Messenger';
+import Messenger from './components/Messenger';
 import SearchBox from './components/SearchBox';
 import { ChatProps } from './types';
 
@@ -14,7 +14,7 @@ registerComponent(SearchBox);
 registerComponent(ChatList);
 registerComponent(Messenger);
 
-export class Chat extends Component<ChatProps> {
+export default class Chat extends Component<ChatProps> {
   static componentName = 'Chat';
 
   constructor() {

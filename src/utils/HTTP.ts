@@ -30,7 +30,7 @@ function queryStringify(data: Record<string, unknown>) {
   return params.join('&');
 }
 
-export class HTTP {
+export default class HTTP {
   get(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
     return this.send(url, { ...options, method: METHOD.GET });
   }

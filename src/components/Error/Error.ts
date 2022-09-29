@@ -4,7 +4,7 @@ import Component from 'core/Component';
 
 import { ErrorProps } from './types';
 
-export class Error extends Component<ErrorProps> {
+export default class Error extends Component<ErrorProps> {
   static componentName = 'Error';
 
   render() {

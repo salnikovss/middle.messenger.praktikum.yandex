@@ -4,7 +4,7 @@ import Component from 'core/Component';
 
 import { ModalProps } from './types';
 
-export class Modal extends Component<ModalProps> {
+export default class Modal extends Component<ModalProps> {
   static componentName = 'Modal';
 
   constructor(props: ModalProps) {

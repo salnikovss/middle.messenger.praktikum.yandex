@@ -4,7 +4,7 @@ import Component from 'core/Component';
 
 import { LinkProps, LinkPropsWithEvents } from './types';
 
-export class Link extends Component<LinkPropsWithEvents> {
+export default class Link extends Component<LinkPropsWithEvents> {
   static componentName = 'Link';
 
   constructor(props: LinkProps) {

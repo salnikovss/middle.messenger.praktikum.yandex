@@ -1,8 +1,7 @@
+import FormGroup from 'components/FormGroup';
 import ProfileFormRow from 'pages/Profile/components/ProfileFormRow';
 
-import { FormGroup } from '../components/FormGroup/FormGroup';
-import FormValidator, { ValidationValue } from './FormValidator';
-import { ValidationRules } from './FormValidator';
+import FormValidator, { ValidationRules, ValidationValue } from './FormValidator';
 
 type RefTypes = ProfileFormRow | FormGroup;
 

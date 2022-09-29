@@ -4,24 +4,24 @@ import { InputType } from 'components/Input';
 import { routeConsts } from 'config/routes';
 import Component from 'core/Component';
 import registerComponent from 'core/registerComponent';
+import Avatar from 'pages/Profile/components/Avatar';
+import ProfileFormRow from 'pages/Profile/components/ProfileFormRow';
 import Form from 'utils/Form';
-import { PredefinedRules } from 'utils/FormValidator';
+import { predefinedRules } from 'utils/FormValidator';
 
 import { fakeUserData } from '../../../../utils/fakeData';
-import { Avatar } from '../../components/Avatar/Avatar';
-import { ProfileFormRow } from '../../components/ProfileFormRow/ProfileFormRow';
 import { ProfileEditProps } from './types';
 
 registerComponent(Avatar);
 registerComponent(ProfileFormRow);
-export class ProfileEdit extends Component<ProfileEditProps> {
+export default class ProfileEdit extends Component<ProfileEditProps> {
   static componentName = 'ProfileEdit';
   public form: Form;
 
   constructor() {
     super();
 
-    const { email, login, first_name, second_name, display_name, phone } = PredefinedRules;
+    const { email, login, first_name, second_name, display_name, phone } = predefinedRules;
     this.form = new Form({ email, login, first_name, second_name, display_name, phone });
 
     this.setProps({

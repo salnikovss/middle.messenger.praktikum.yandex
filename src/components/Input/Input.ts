@@ -4,7 +4,7 @@ import Component from 'core/Component';
 
 import { InputProps, InputPropsWithEvents, InputType } from './types';
 
-export class Input extends Component<InputPropsWithEvents> {
+export default class Input extends Component<InputPropsWithEvents> {
   static componentName = 'Input';
 
   constructor({ onInput, onBlur, onFocus, ...rest }: InputProps) {

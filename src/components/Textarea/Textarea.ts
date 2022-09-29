@@ -4,7 +4,7 @@ import Component from 'core/Component';
 
 import { TextareaProps, TextareaPropsWithEvents } from './types';
 
-export class Textarea extends Component<TextareaPropsWithEvents> {
+export default class Textarea extends Component<TextareaPropsWithEvents> {
   static componentName = 'Textarea';
 
   constructor({ onInput, onBlur, onFocus, ...rest }: TextareaProps) {

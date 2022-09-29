@@ -1,20 +1,20 @@
 import './MessageForm.scss';
 
+import FormGroup from 'components/FormGroup';
 import Component from 'core/Component';
 import Form from 'utils/Form';
+import { predefinedRules } from 'utils/FormValidator';
 
-import { FormGroup } from '../../../../components/FormGroup/FormGroup';
-import { PredefinedRules } from '../../../../utils/FormValidator';
 import { ButtonStyle } from './../../../../components/Button/types';
 
-export class MessageForm extends Component {
+export default class MessageForm extends Component {
   static componentName = 'MessageForm';
   public form: Form;
 
   constructor() {
     super();
 
-    const { message } = PredefinedRules;
+    const { message } = predefinedRules;
     this.form = new Form({ message });
 
     this.setProps({
@@ -54,11 +54,11 @@ export class MessageForm extends Component {
       <form class='message-form'>
         <div class='message-form__attachments-button'>
             {{{Button body="<i class='icon message-form__attachments-button-icon'></i>" type='button' style='icon'}}}
-        </div>  
+        </div>
         <div class='message-form__input-container'>
             {{{FormGroup class='message-form__input' name='message'
                 placeholder='Сообщение...' textarea=true
-                onBlur=onMessageBlur ref='messageInput'  
+                onBlur=onMessageBlur ref='messageInput'
             }}}
         </div>
         <div class='message-form__send-button'>

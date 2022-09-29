@@ -4,7 +4,7 @@ import Component from 'core/Component';
 
 import { AvatarProps } from './types';
 
-export class Avatar extends Component<AvatarProps> {
+export default class Avatar extends Component<AvatarProps> {
   static componentName = 'Avatar';
 
   render() {

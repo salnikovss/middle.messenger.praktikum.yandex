@@ -1,19 +1,19 @@
+import FormGroup from 'components/FormGroup';
 import { routeConsts } from 'config/routes';
 import Component from 'core/Component';
 import Form from 'utils/Form';
-import { PredefinedRules } from 'utils/FormValidator';
+import { predefinedRules } from 'utils/FormValidator';
 
-import { FormGroup } from '../../components/FormGroup/FormGroup';
 import { SignUpProps } from './types';
 
-export class SignUp extends Component<SignUpProps> {
+export default class SignUp extends Component<SignUpProps> {
   static componentName = 'SignUp';
   public form: Form;
 
   constructor() {
     super();
 
-    const { first_name, second_name, login, email, password, phone } = PredefinedRules;
+    const { first_name, second_name, login, email, password, phone } = predefinedRules;
     this.form = new Form({ first_name, second_name, login, email, password, phone });
 
     this.setProps({

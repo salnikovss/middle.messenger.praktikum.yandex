@@ -4,24 +4,24 @@ import { InputType } from 'components/Input';
 import { routeConsts } from 'config/routes';
 import Component from 'core/Component';
 import registerComponent from 'core/registerComponent';
+import Avatar from 'pages/Profile/components/Avatar';
+import ProfileFormRow from 'pages/Profile/components/ProfileFormRow';
 import Form from 'utils/Form';
-import { PredefinedRules } from 'utils/FormValidator';
+import { predefinedRules } from 'utils/FormValidator';
 
 import { fakeUserData } from '../../../../utils/fakeData';
-import { Avatar } from '../../components/Avatar/Avatar';
-import { ProfileFormRow } from '../../components/ProfileFormRow/ProfileFormRow';
 import { PasswordChangeProps } from './types';
 
 registerComponent(Avatar);
 registerComponent(ProfileFormRow);
-export class PasswordChange extends Component<PasswordChangeProps> {
+export default class PasswordChange extends Component<PasswordChangeProps> {
   static componentName = 'PasswordChange';
   public form: Form;
 
   constructor() {
     super();
 
-    const { password: old_password, password: new_password, password: new_password2 } = PredefinedRules;
+    const { password: old_password, password: new_password, password: new_password2 } = predefinedRules;
     this.form = new Form({ old_password, new_password, new_password2 });
 
     this.setProps({

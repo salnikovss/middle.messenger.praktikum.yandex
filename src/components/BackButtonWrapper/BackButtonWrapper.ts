@@ -4,7 +4,7 @@ import { Component } from 'core';
 
 import { BackButtonWrapperProps } from './types';
 
-export class BackButtonWrapper extends Component<BackButtonWrapperProps> {
+export default class BackButtonWrapper extends Component<BackButtonWrapperProps> {
   static componentName = 'BackButtonWrapper';
   render() {
     //template=hbs

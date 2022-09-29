@@ -4,7 +4,7 @@ import Component from 'core/Component';
 
 import { ChatListItemProps, ChatListItemPropsWithEvents } from './types';
 
-export class ChatListItem extends Component<ChatListItemPropsWithEvents> {
+export default class ChatListItem extends Component<ChatListItemPropsWithEvents> {
   static componentName = 'ChatListItem';
 
   constructor({ onClick, activeChatId, chat, ...rest }: ChatListItemProps) {
@@ -37,7 +37,7 @@ export class ChatListItem extends Component<ChatListItemPropsWithEvents> {
         <div class='chat-list-item__data'>
           <div class='chat-list-item__row'>
               <p class='chat-list-item__name'>{{chat.name}}</p>
-              <p class='chat-list-item__date'>{{chat.lastMessageTime}}</p>
+              <time class='chat-list-item__date' datetime="{{chat.lastMessageTime}}">{{chat.lastMessageTime}}</time>
           </div>
 
           <div class='chat-list-item__row chat-list-item__row_full-height'>

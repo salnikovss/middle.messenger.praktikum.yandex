@@ -4,7 +4,7 @@ import Component from 'core/Component';
 
 import { CenteredBoxProps } from './types';
 
-export class CenteredBox extends Component<CenteredBoxProps> {
+export default class CenteredBox extends Component<CenteredBoxProps> {
   static componentName = 'CenteredBox';
 
   render() {
