@@ -12,14 +12,14 @@ import { Avatar } from '../../components/Avatar/Avatar';
 import { ProfileFormRow } from '../../components/ProfileFormRow/ProfileFormRow';
 import { PasswordChangeProps } from './types';
 
+registerComponent(Avatar);
+registerComponent(ProfileFormRow);
 export class PasswordChange extends Component<PasswordChangeProps> {
   static componentName = 'PasswordChange';
   public form: Form;
 
   constructor() {
     super();
-    registerComponent(Avatar);
-    registerComponent(ProfileFormRow);
 
     const { password: old_password, password: new_password, password: new_password2 } = PredefinedRules;
     this.form = new Form({ old_password, new_password, new_password2 });

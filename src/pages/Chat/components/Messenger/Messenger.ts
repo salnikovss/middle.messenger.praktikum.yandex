@@ -10,13 +10,13 @@ import MessageForm from '../MessageForm';
 import { ButtonStyle } from './../../../../components/Button/types';
 import { MessengerProps } from './types';
 
+registerComponent(MessageForm);
+registerComponent(Message);
+
 export class Messenger extends Component<MessengerProps> {
   static componentName = 'Messenger';
 
   constructor({ chat }: MessengerProps) {
-    registerComponent(MessageForm);
-    registerComponent(Message);
-
     super({
       chat,
       messages: fakeMessages,

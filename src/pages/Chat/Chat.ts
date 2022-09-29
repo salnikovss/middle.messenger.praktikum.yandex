@@ -10,6 +10,10 @@ import { Messenger } from './components/Messenger/Messenger';
 import SearchBox from './components/SearchBox';
 import { ChatProps } from './types';
 
+registerComponent(SearchBox);
+registerComponent(ChatList);
+registerComponent(Messenger);
+
 export class Chat extends Component<ChatProps> {
   static componentName = 'Chat';
 
@@ -17,10 +21,6 @@ export class Chat extends Component<ChatProps> {
     const chatList = fakeChatList;
     const activeChatId = fakeActiveChatId;
     const activeChat = chatList.find((chat) => chat.id === activeChatId);
-
-    registerComponent(SearchBox);
-    registerComponent(ChatList);
-    registerComponent(Messenger);
 
     super({
       chatList,

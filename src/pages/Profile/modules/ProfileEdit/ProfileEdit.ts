@@ -12,14 +12,14 @@ import { Avatar } from '../../components/Avatar/Avatar';
 import { ProfileFormRow } from '../../components/ProfileFormRow/ProfileFormRow';
 import { ProfileEditProps } from './types';
 
+registerComponent(Avatar);
+registerComponent(ProfileFormRow);
 export class ProfileEdit extends Component<ProfileEditProps> {
   static componentName = 'ProfileEdit';
   public form: Form;
 
   constructor() {
     super();
-    registerComponent(Avatar);
-    registerComponent(ProfileFormRow);
 
     const { email, login, first_name, second_name, display_name, phone } = PredefinedRules;
     this.form = new Form({ email, login, first_name, second_name, display_name, phone });

@@ -6,11 +6,11 @@ import registerComponent from 'core/registerComponent';
 import ChatListItem from '../ChatListItem';
 import { ChatListProps } from './types';
 
+registerComponent(ChatListItem);
 export class ChatList extends Component<ChatListProps> {
   static componentName = 'ChatList';
 
   constructor({ chats, activeChatId }: ChatListProps) {
-    registerComponent(ChatListItem);
     super();
 
     this.setProps({
