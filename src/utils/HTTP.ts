@@ -1,4 +1,6 @@
-enum METHOD {
+import queryStringify from './queryStringify';
+
+enum Method {
   GET = 'GET',
   POST = 'POST',
   PUT = 'PUT',
@@ -7,54 +9,39 @@ enum METHOD {
 }
 
 type Options = {
-  method: METHOD;
+  method: Method;
   data?: Record<string, unknown>;
   timeout?: number;
   headers?: Record<string, string>;
 };
 
 type OptionsWithoutMethod = Omit<Options, 'method'>;
-
-/**
- * Функцию реализовывать здесь необязательно, но может помочь не плодить логику у GET-метода
- * На входе: объект. Пример: {a: 1, b: 2, c: {d: 123}, k: [1, 2, 3]}
- * На выходе: строка. Пример: ?a=1&b=2&c=[object Object]&k=1,2,3
- */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function queryStringify(data: Record<string, unknown>) {
-  if (typeof data !== 'object') {
-    throw new Error('Data should be an object');
-  }
-
-  const params = Object.entries(data).map(([k, v]) => k + '=' + (v && typeof v === 'object' ? v.toString() : v));
-  return params.join('&');
-}
-
 export default class HTTP {
   get(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-    return this.send(url, { ...options, method: METHOD.GET });
+    const { data } = options;
+    return this._send(data ? `${url}&${queryStringify(data)}` : url, { ...options, method: Method.GET });
   }
 
   put(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-    return this.send(url, { ...options, method: METHOD.PUT });
+    return this._send(url, { ...options, method: Method.PUT });
   }
 
   post(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-    return this.send(url, { ...options, method: METHOD.POST });
+    return this._send(url, { ...options, method: Method.POST });
   }
 
   delete(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-    return this.send(url, { ...options, method: METHOD.DELETE });
+    return this._send(url, { ...options, method: Method.DELETE });
   }
 
-  send(url: string, options: Options = { method: METHOD.GET }): Promise<XMLHttpRequest> {
+  private _send(url: string, options: Options = { method: Method.GET }): Promise<XMLHttpRequest> {
     const { method, data, headers, timeout } = options;
 
     return new Promise((resolve, reject) => {
       let xhrTimeout: number | undefined;
       const xhr = new XMLHttpRequest();
 
-      xhr.open(method, method === METHOD.GET && !!data ? `${url}&${queryStringify(data)}` : url);
+      xhr.open(method, url);
 
       if (headers) {
         Object.entries(headers).forEach(([key, value]) => {
@@ -77,7 +64,7 @@ export default class HTTP {
         xhrTimeout = setTimeout(xhr.abort, timeout);
       }
 
-      if (method === METHOD.GET || !data) {
+      if (method === Method.GET || !data) {
         xhr.send();
       } else {
         xhr.setRequestHeader('Content-Type', 'application/json');
