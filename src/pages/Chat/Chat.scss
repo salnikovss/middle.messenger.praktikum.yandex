@@ -1,56 +1,53 @@
 .chat {
-    $leftPaneXPadding: 10px;
+  display: flex;
+  height: 100%;
 
+  &__left-pane {
+    flex: 0 0 310px;
+    background-color: var(--primaryColor);
+    border-right: 1px solid var(--darkColor);
     display: flex;
-    height: 100%;
+    flex-direction: column;
+  }
 
-    &__left-pane {
-        flex: 0 0 310px;
-        background-color: var(--primaryColor);
-        border-right: 1px solid #343A4F;
+  &__right-pane {
+    flex-grow: 1;
+    background-color: var(--darkColor);
+  }
 
-        display: flex;
-        flex-direction: column;
+  &__profile-link {
+    padding: 0 10px;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 12px;
+    color: #9898b0;
+
+    &::after {
+      content: "";
+      background: url(../../../static/images/arrow.svg) 0 50%;
+      width: 6px;
+      height: 10px;
+      margin-left: 8px;
     }
 
-    &__right-pane {
-        flex-grow: 1;
-        background-color: #343A4F;
+    &:hover {
+      opacity: 0.8;
     }
+  }
 
-    &__profile-link {
-        padding: 0 $leftPaneXPadding;
-        margin: 20px 0;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        width: 100%;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 12px;
-        line-height: 12px;
-        color: #9898B0;
+  &__search-box {
+    padding: 0 10px;
+  }
 
-        &::after {
-            content: '';
-            background: url(../../../static/images/arrow.svg) 0 50%;
-            width: 6px;
-            height: 10px;
-            margin-left: 8px;
-        }
-
-        &:hover {
-            opacity: .8;
-        }
-    }
-
-    &__search-box {
-        padding: 0 $leftPaneXPadding;
-    }
-
-    &__chat-list {
-        overflow-y: auto;
-        flex-grow: 1;
-        border-top: 1px solid #343A4F;
-    }
+  &__chat-list {
+    overflow-y: auto;
+    flex-grow: 1;
+    border-top: 1px solid var(--darkColor);
+  }
 }

@@ -2,28 +2,51 @@
   "name": "middle.messenger.praktikum.yandex",
   "version": "1.0.0",
   "description": "### Откройте pull request в ветку main из ветки, где вы разрабатывали проект, и добавьте ссылку на этот pr в README.md в ветке main.  ### ВАЖНО: pull request должен называться “Sprint i” (i — номер спринта).",
-  "source": "src/index.hbs",
+  "source": "static/index.html",
   "scripts": {
+    "clean:dist": "rimraf dist",
     "dev": "npx parcel static/index.html --no-cache",
-    "prebuild": "rm -rf dist",
+    "prebuild": "npm run clean:dist",
     "build": "npx parcel build static/index.html",
-    "prestart": "rm -rf dist",
-    "start": "npx parcel build static/index.html && node server.js"
+    "prestart": "npm run clean:dist",
+    "start": "npx parcel build static/index.html --no-cache && node server.js",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "stylelint": "npx stylelint '**/*.scss'",
+    "stylelint:fix": "npx stylelint '**/*.scss' --fix"
   },
   "repository": {
     "type": "git",
     "url": "git@study:salnikovss/middle.messenger.praktikum.yandex.git"
   },
   "keywords": [],
+  "alias": {
+    "core": "./src/core",
+    "components": "./src/components",
+    "helpers": "./src/helpers",
+    "pages": "./src/pages",
+    "config": "./src/config",
+    "utils": "./src/utils"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@parcel/transformer-sass": "2.7.0",
-    "eslint": "^8.23.1",
+    "@typescript-eslint/eslint-plugin": "5.37.0",
+    "@typescript-eslint/parser": "5.37.0",
+    "eslint": "8.23.1",
+    "eslint-plugin-simple-import-sort": "8.0.0",
     "express": "4.18.1",
+    "handlebars": "^4.7.7",
+    "nanoid": "^4.0.0",
     "parcel": "2.7.0",
-    "parcel-transformer-hbs": "1.0.4",
     "prettier": "2.7.1",
-    "sass": "1.54.9"
+    "rimraf": "^3.0.2",
+    "sass": "1.54.9",
+    "stylelint": "14.12.0",
+    "stylelint-config-prettier-scss": "0.0.1",
+    "stylelint-config-standard-scss": "5.0.0",
+    "stylelint-scss": "4.3.0",
+    "typescript": "4.8.3"
   }
 }

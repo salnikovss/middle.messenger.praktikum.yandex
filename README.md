@@ -1,8 +1,9 @@
-[Ссылка Pull Request](https://github.com/salnikovss/middle.messenger.praktikum.yandex/pull/1)
+[Ссылка Pull Request](https://github.com/salnikovss/middle.messenger.praktikum.yandex/pull/2)
 
 # YP Messenger - учебный проект мессенджера
 
 # Команды
+
 ## Разработка проекта
 
 ```bash
@@ -23,6 +24,16 @@ npm run build
 ```bash
 npm install
 npm run start
+```
+
+## Статический анализ кода и стилей
+
+
+```bash
+npm run lint
+npm run lint:fix
+npm run stylelint
+npm run stylelint:fix
 ```
 
 # UI

@@ -1,0 +1,8 @@
+a.link {
+  color: var(--secondaryColor);
+  text-decoration: none;
+
+  &:hover {
+    opacity: 0.6;
+  }
+}

@@ -1,41 +1,40 @@
 .back-button-wrapper {
-    $blockPadding: 64px;
+  $blockPadding: 64px;
 
-    height: 100%;
+  height: 100%;
+  display: flex;
+
+  &__link-inner {
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    background: var(--secondaryColor) url(../../../static/images/back-arrow.svg) no-repeat 50% 50%;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  &__link {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $blockPadding;
+    flex-shrink: 0;
+    background-color: var(--primaryColor);
+    transition: background-color 0.2s ease-in-out;
 
-    &__link {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: $blockPadding;
-        flex-shrink: 0;
-        background-color: var(--primaryColor);
-        transition: background-color 0.2s ease-in-out;
+    &:hover {
+      background-color: var(--primaryColorDarken);
 
-        &:hover {
-            background-color: var(--primaryColorDarken);
-
-            .back-button-wrapper__link-inner {
-                background-color: var(--secondaryColorDarken);
-            }
-        }
+      .back-button-wrapper__link-inner {
+        background-color: var(--secondaryColorDarken);
+      }
     }
+  }
 
-    &__link-inner {
-        border-radius: 50%;
-        width: 28px;
-        height: 28px;
-        background: var(--secondaryColor) url(../../../static/images/back-arrow.svg) no-repeat 50% 50%;
-        transition: background-color 0.2s ease-in-out;
-
-    }
-
-    &__content {
-        padding: $blockPadding;
-        padding-right: $blockPadding * 2;
-        background-color: #343A4F;
-        flex: 1;
-        overflow: auto;
-    }
+  &__content {
+    padding: $blockPadding;
+    padding-right: $blockPadding * 2;
+    background-color: var(--darkColor);
+    flex: 1;
+    overflow: auto;
+  }
 }
