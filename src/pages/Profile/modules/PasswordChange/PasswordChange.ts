@@ -79,7 +79,9 @@ export default class PasswordChange extends Component<PasswordChangeProps> {
                 {{{ProfileFormRow label='Повторить пароль' type='${InputType.PASSWORD}' name='newPassword2'
                       placeholder='********************' onBlur=onNewPassword2Blur ref='newPassword2Input'}}}
 
-                <div class='data__rows-row data__rows-row-button'>{{{Button body='Сохранить'}}}</div>
+                <div class='data__rows-row data__rows-row-button'>
+                  {{#Button}}Сохранить{{/Button}}
+                </div>
             </form>
         </div>
         {{/BackButtonWrapper}}

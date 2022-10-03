@@ -60,7 +60,7 @@ export default class SignIn extends Component<SignInProps> {
             {{{FormGroup label='Пароль' name='password' type='${InputType.PASSWORD}'
                 onBlur=onPasswordBlur ref='passwordInput'}}}
 
-            {{{Button body='Войти'}}}
+            {{#Button}}Войти{{/Button}}
         </form>
         {{{Link to='${routeConsts.SIGNUP}' text='Регистрация' class='text-center d-block mt-1'}}}
       {{/CenteredBox}}

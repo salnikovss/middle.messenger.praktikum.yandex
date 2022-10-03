@@ -53,7 +53,9 @@ export default class MessageForm extends Component {
     return `
       <form class='message-form'>
         <div class='message-form__attachments-button'>
-            {{{Button body="<i class='icon message-form__attachments-button-icon'></i>" type='button' style='icon'}}}
+            {{#Button type='button' style='icon'}}
+                <i class='icon message-form__attachments-button-icon'></i>
+            {{/Button}}
         </div>
         <div class='message-form__input-container'>
             {{{FormGroup class='message-form__input' name='message'
@@ -62,8 +64,9 @@ export default class MessageForm extends Component {
             }}}
         </div>
         <div class='message-form__send-button'>
-            {{{Button body='<i class="icon message-form__send-button-icon"></i>'
-              style='${ButtonStyle.ICON}' classes='btn_primary'}}}
+            {{#Button style='${ButtonStyle.ICON}' classes='btn_primary'}}
+              <i class="icon message-form__send-button-icon"></i>
+            {{/Button}}
         </div>
       </form>
     `;

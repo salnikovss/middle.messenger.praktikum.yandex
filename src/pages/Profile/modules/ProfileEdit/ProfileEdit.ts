@@ -96,7 +96,9 @@ export default class ProfileEdit extends Component<ProfileEditProps> {
                 {{{ProfileFormRow label='Телефон' name='phone' value=user.phone
                       onBlur=onPhoneBlur ref='phoneInput'}}}
 
-                <div class='data__rows-row data__rows-row-button'>{{{Button body='Сохранить'}}}</div>
+                <div class='data__rows-row data__rows-row-button'>
+                  {{#Button}}Сохранить{{/Button}}
+                </div>
             </form>
         </div>
         {{/BackButtonWrapper}}

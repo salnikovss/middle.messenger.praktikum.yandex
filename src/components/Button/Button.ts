@@ -24,7 +24,7 @@ export default class Button extends Component<ButtonPropsWithEvents> {
     // language=hbs
     return `
       <button type='{{type}}' class='btn btn_{{style}} {{classes}}'>
-        {{{body}}}
+        <template data-slot='1'></template>
       </button>
     `;
   }

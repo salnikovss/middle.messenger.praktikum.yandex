@@ -70,7 +70,7 @@ export default class SignUp extends Component<SignUpProps> {
             {{{FormGroup label='E-mail' type='email' name='email' onBlur=onEmailBlur ref='emailInput'}}}
             {{{FormGroup label='Пароль' type='password' name='password' onBlur=onPasswordBlur ref='passwordInput'}}}
             {{{FormGroup label='Номер телефона' type='tel' name='phone' onBlur=onPhoneBlur ref='phoneInput'}}}
-            {{{Button body='Зарегистрироваться'}}}
+            {{#Button}}Зарегистрироваться{{/Button}}
         </form>
         {{{Link to="${routeConsts.SIGNIN}" text='Уже зарегистрированы?' class='text-center d-block mt-1'}}}
       {{/CenteredBox}}

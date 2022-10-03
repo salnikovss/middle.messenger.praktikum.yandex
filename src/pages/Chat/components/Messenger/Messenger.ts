@@ -56,10 +56,10 @@ export default class Messenger extends Component<MessengerProps> {
               <span class='messenger__chat-name'>{{chat.name}}</span>
           </div>
           <div class='messenger__actions'>
-            {{{Button style='${ButtonStyle.ICON}' type='${ButtonType.BUTTON}'
-              classes='messenger__dots-button'
-              body='<span class="dot"></span><span class="dot"></span><span class="dot"></span>'
-            }}}
+            {{#Button style='${ButtonStyle.ICON}' type='${ButtonType.BUTTON}'
+              classes='messenger__dots-button'}}
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            {{/Button}}
           </div>
         </div>
         <div class='messenger__body custom-scrollbar'>

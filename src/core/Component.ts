@@ -119,10 +119,10 @@ export default class Component<T extends ComponentProps = Record<string, unknown
       stub.replaceWith(content);
 
       // Paste content to layout
-      const layoutContent = content.querySelector('[data-layout="1"]');
+      const layoutContent = content.querySelector('[data-slot="1"]') as HTMLElement;
 
       if (layoutContent && stubChilds.length) {
-        layoutContent.append(...stubChilds);
+        layoutContent.replaceWith(...stubChilds);
       }
     });
 

@@ -16,7 +16,8 @@ export default class BackButtonWrapper extends Component<BackButtonWrapperProps>
           class='back-button-wrapper__link'
         }}}
         <div class='back-button-wrapper__content custom-scrollbar'>
-          <div class='back-button-wrapper__content-inner' data-layout=1>
+          <div class='back-button-wrapper__content-inner'>
+            <template data-slot=1></template>
           </div>
         </div>
       </div>
