@@ -1,4 +1,4 @@
 export type ErrorPageProps = {
-  code: number;
+  code?: number;
   text?: string;
 };

@@ -5,13 +5,20 @@ import CenteredBox from 'components/CenteredBox';
 import { default as ErrorComponent } from 'components/Error';
 import Input from 'components/Input';
 import Textarea from 'components/Textarea';
-import { routeConsts, routes } from 'config/routes';
+import { routeConsts } from 'config/routes';
+import Router from 'core/Router';
+import Chat from 'pages/Chat';
+import ErrorPage from 'pages/ErrorPage';
+import Profile from 'pages/Profile';
+import PasswordChange from 'pages/Profile/modules/PasswordChange';
+import ProfileEdit from 'pages/Profile/modules/ProfileEdit';
+import SignIn from 'pages/SignIn';
+import SignUp from 'pages/SignUp';
 
 import Button from './components/Button';
 import FormGroup from './components/FormGroup';
 import Link from './components/Link';
 import { registerComponent } from './core';
-import renderDOM from './core/renderDOM';
 
 registerComponent(Link);
 registerComponent(Textarea);
@@ -22,11 +29,16 @@ registerComponent(Button);
 registerComponent(CenteredBox);
 registerComponent(BackButtonWrapper);
 
-const handleRoute = () => {
-  const { pathname } = document.location;
-  const page = routes[pathname] ?? routes[routeConsts.ERROR404];
+export const router = new Router('#app');
 
-  renderDOM(page(), 'app');
-};
-
-window.addEventListener('load', handleRoute);
+router
+  .use(routeConsts.HOME, Chat)
+  .use(routeConsts.CHAT, Chat)
+  .use(routeConsts.PROFILE, Profile)
+  .use(routeConsts.PROFILE_EDIT, ProfileEdit)
+  .use(routeConsts.PROFILE_PASSWORD_CHANGE, PasswordChange)
+  .use(routeConsts.SIGNIN, SignIn)
+  .use(routeConsts.SIGNUP, SignUp)
+  .use(routeConsts.ERROR404, ErrorPage, { code: 404 })
+  .use(routeConsts.ERROR500, ErrorPage, { code: 500 })
+  .start();

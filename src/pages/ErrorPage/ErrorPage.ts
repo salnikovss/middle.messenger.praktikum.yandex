@@ -14,6 +14,8 @@ export default class ErrorPage extends Component<ErrorPageProps> {
   static componentName = 'ErrorPage';
 
   constructor(props: ErrorPageProps) {
+    props.code = props.code ?? 404;
+
     super({
       ...props,
       text: errorCodesText[props.code] ?? '',

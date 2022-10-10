@@ -10,6 +10,10 @@ export type ComponentProps = {
   [key: string]: unknown;
   events?: ComponentEvents;
 };
+export type ComponentConstructable<T extends Record<string, unknown>> = {
+  new (props: T): Component<T>;
+  componentName?: string;
+};
 
 export default class Component<T extends ComponentProps = Record<string, unknown>> {
   static EVENTS = {
