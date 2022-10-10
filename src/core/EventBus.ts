@@ -15,8 +15,6 @@ export interface IEventBus {
 class EventBus implements IEventBus {
   _listeners: Listeners = {};
 
-  // constructor() {}
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: string, callback: (...args: any) => void): void {
     if (!this._listeners[event]) {

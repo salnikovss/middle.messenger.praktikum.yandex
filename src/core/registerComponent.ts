@@ -2,10 +2,10 @@ import Handlebars, { HelperOptions } from 'handlebars';
 
 import Component from './Component';
 
-export interface ComponentConstructable<Props extends Record<string, unknown>> {
+export type ComponentConstructable<Props extends Record<string, unknown>> = {
   new (props: Props): Component<Props>;
   componentName?: string;
-}
+};
 
 export default function registerComponent<Props extends Record<string, unknown>>(
   Component: ComponentConstructable<Props>
