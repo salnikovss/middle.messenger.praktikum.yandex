@@ -39,6 +39,7 @@ export default class Router {
 
   _onRoute(pathname: string) {
     const route = this.getRoute(pathname);
+
     if (!route) {
       return;
     }

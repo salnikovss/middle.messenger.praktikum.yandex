@@ -20,25 +20,31 @@ import FormGroup from './components/FormGroup';
 import Link from './components/Link';
 import { registerComponent } from './core';
 
-registerComponent(Link);
-registerComponent(Textarea);
-registerComponent(Input);
-registerComponent(ErrorComponent);
-registerComponent(FormGroup);
-registerComponent(Button);
-registerComponent(CenteredBox);
-registerComponent(BackButtonWrapper);
+function registerComponents() {
+  registerComponent(Link);
+  registerComponent(Textarea);
+  registerComponent(Input);
+  registerComponent(ErrorComponent);
+  registerComponent(FormGroup);
+  registerComponent(Button);
+  registerComponent(CenteredBox);
+  registerComponent(BackButtonWrapper);
+}
 
-export const router = new Router('#app');
+document.addEventListener('DOMContentLoaded', () => {
+  registerComponents();
 
-router
-  .use(routeConsts.HOME, Chat)
-  .use(routeConsts.CHAT, Chat)
-  .use(routeConsts.PROFILE, Profile)
-  .use(routeConsts.PROFILE_EDIT, ProfileEdit)
-  .use(routeConsts.PROFILE_PASSWORD_CHANGE, PasswordChange)
-  .use(routeConsts.SIGNIN, SignIn)
-  .use(routeConsts.SIGNUP, SignUp)
-  .use(routeConsts.ERROR404, ErrorPage, { code: 404 })
-  .use(routeConsts.ERROR500, ErrorPage, { code: 500 })
-  .start();
+  window.router = new Router('#app');
+
+  window.router
+    .use(routeConsts.HOME, Chat)
+    .use(routeConsts.CHAT, Chat)
+    .use(routeConsts.PROFILE, Profile)
+    .use(routeConsts.PROFILE_EDIT, ProfileEdit)
+    .use(routeConsts.PROFILE_PASSWORD_CHANGE, PasswordChange)
+    .use(routeConsts.SIGNIN, SignIn)
+    .use(routeConsts.SIGNUP, SignUp)
+    .use(routeConsts.ERROR404, ErrorPage, { code: 404 })
+    .use(routeConsts.ERROR500, ErrorPage, { code: 500 })
+    .start();
+});

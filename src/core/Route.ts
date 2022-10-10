@@ -37,12 +37,12 @@ export default class Route {
   }
 
   render() {
-    if (!this._component) {
-      this._component = new this._componentClass(this._props.initialProps ?? {});
-      renderDOM(this._component, this._props.rootQuery);
-      return;
-    }
+    // if (!this._component) {
+    this._component = new this._componentClass(this._props.initialProps ?? {});
+    // } else {
+    //   this._component.show();
+    // }
 
-    this._component.show();
+    renderDOM(this._component, this._props.rootQuery);
   }
 }

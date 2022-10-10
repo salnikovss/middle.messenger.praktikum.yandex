@@ -12,8 +12,9 @@ export default class Link extends Component<LinkPropsWithEvents> {
       ...props,
       events: {
         click: (e: MouseEvent) => {
-          location.href = this.props.to;
           e.preventDefault();
+          window.router.go(this.props.to);
+          return false;
         },
       },
     });
