@@ -14,11 +14,13 @@ import PasswordChange from 'pages/Profile/modules/PasswordChange';
 import ProfileEdit from 'pages/Profile/modules/ProfileEdit';
 import SignIn from 'pages/SignIn';
 import SignUp from 'pages/SignUp';
+import { initApp } from 'services/initApp';
 
 import Button from './components/Button';
 import FormGroup from './components/FormGroup';
 import Link from './components/Link';
-import { registerComponent } from './core';
+import { registerComponent, Store } from './core';
+import { defaultState } from './store';
 
 function registerComponents() {
   registerComponent(Link);
@@ -32,9 +34,11 @@ function registerComponents() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  const store = new Store<AppState>(defaultState);
   registerComponents();
 
   window.router = new Router('#app');
+  window.store = store;
 
   window.router
     .use(routeConsts.HOME, Chat)
@@ -47,4 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
     .use(routeConsts.ERROR404, ErrorPage, { code: 404 })
     .use(routeConsts.ERROR500, ErrorPage, { code: 500 })
     .start();
+
+  store.dispatch(initApp);
 });

@@ -6,7 +6,7 @@ import Component from 'core/Component';
 import registerComponent from 'core/registerComponent';
 import Avatar from 'pages/Profile/components/Avatar';
 import ProfileFormRow from 'pages/Profile/components/ProfileFormRow';
-import Form from 'utils/Form';
+import { Form } from 'utils';
 import { predefinedRules } from 'utils/FormValidator';
 
 import { fakeUserData } from '../../../../utils/fakeData';

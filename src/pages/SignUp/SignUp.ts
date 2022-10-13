@@ -1,12 +1,13 @@
 import FormGroup from 'components/FormGroup';
 import { routeConsts } from 'config/routes';
 import Component from 'core/Component';
-import Form from 'utils/Form';
+import { Form } from 'utils';
+import { withStore } from 'utils';
 import { predefinedRules } from 'utils/FormValidator';
 
 import { SignUpProps } from './types';
 
-export default class SignUp extends Component<SignUpProps> {
+class SignUp extends Component<SignUpProps> {
   static componentName = 'SignUp';
   public form: Form;
 
@@ -77,3 +78,5 @@ export default class SignUp extends Component<SignUpProps> {
     `;
   }
 }
+
+export default withStore(SignUp);

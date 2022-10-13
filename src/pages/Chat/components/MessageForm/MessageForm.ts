@@ -2,7 +2,7 @@ import './MessageForm.scss';
 
 import FormGroup from 'components/FormGroup';
 import Component from 'core/Component';
-import Form from 'utils/Form';
+import { Form } from 'utils';
 import { predefinedRules } from 'utils/FormValidator';
 
 import { ButtonStyle } from './../../../../components/Button/types';

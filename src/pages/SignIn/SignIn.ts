@@ -2,7 +2,7 @@ import FormGroup from 'components/FormGroup';
 import { InputType } from 'components/Input';
 import { routeConsts } from 'config/routes';
 import Component from 'core/Component';
-import Form from 'utils/Form';
+import { Form } from 'utils';
 
 import { predefinedRules } from '../../utils/FormValidator/predefinedRules';
 import { SignInProps } from './types';

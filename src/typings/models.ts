@@ -13,12 +13,14 @@ declare global {
 
   // User
   export type UserModel = {
-    display_name: Nullable<string>;
-    first_name: Nullable<string>;
-    second_name: Nullable<string>;
-    login: Nullable<string>;
-    email: Nullable<string>;
-    phone: Nullable<string>;
+    id: number;
+    display_name: string;
+    first_name: string;
+    second_name: string;
+    login: string;
+    email: string;
+    phone: string;
+    avatar: string;
   };
 
   // Message

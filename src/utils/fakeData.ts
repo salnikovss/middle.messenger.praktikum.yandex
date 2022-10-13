@@ -146,6 +146,8 @@ export const fakeChatList: ChatModel[] = [
 export const fakeActiveChatId = 'chat4';
 
 export const fakeUserData: UserModel = {
+  id: 1,
+  avatar: '',
   display_name: 'Иван',
   first_name: 'Иван',
   second_name: 'Иванов',

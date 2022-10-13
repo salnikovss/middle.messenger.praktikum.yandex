@@ -20,6 +20,7 @@ export default class Component<T extends ComponentProps = Record<string, unknown
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
     FLOW_CDU: 'flow:component-did-update',
+    FLOW_CWU: 'flow:component-will-unmount',
     FLOW_RENDER: 'flow:render',
   };
 
@@ -46,6 +47,7 @@ export default class Component<T extends ComponentProps = Record<string, unknown
     eventBus.on(Component.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
+    eventBus.on(Component.EVENTS.FLOW_CWU, this._componentWillUnmount.bind(this));
     eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
@@ -53,14 +55,19 @@ export default class Component<T extends ComponentProps = Record<string, unknown
     this._eventBus.emit(Component.EVENTS.FLOW_RENDER, this.props);
   }
 
-  private _componentDidMount() {
-    this.componentDidMount();
+  private _componentDidMount(props: T) {
+    this.componentDidMount(props);
   }
 
-  // Can be redeclared
-  componentDidMount() {
-    return;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  componentDidMount(_props: T) {}
+
+  _componentWillUnmount() {
+    this._eventBus.destroy();
+    this.componentWillUnmount();
   }
+
+  componentWillUnmount() {}
 
   private _componentDidUpdate(oldProps: T, newProps: T) {
     const response = this.componentDidUpdate(oldProps, newProps);
