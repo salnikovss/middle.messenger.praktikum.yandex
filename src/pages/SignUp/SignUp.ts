@@ -11,8 +11,8 @@ class SignUp extends Component<SignUpProps> {
   static componentName = 'SignUp';
   public form: Form;
 
-  constructor() {
-    super();
+  constructor(props: SignUpProps) {
+    super(props);
 
     const { first_name, second_name, login, email, password, phone } = predefinedRules;
     this.form = new Form({ first_name, second_name, login, email, password, phone });

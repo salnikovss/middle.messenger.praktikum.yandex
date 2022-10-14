@@ -7,17 +7,14 @@ type RouteProps = {
 };
 
 export default class Route {
-  _pathname: string;
-  _component: Nullable<Component>;
-  _props: RouteProps;
-  _componentClass: ComponentConstructable<Record<string, unknown>>;
+  private _component: Nullable<Component> = null;
 
-  constructor(pathname: string, view: ComponentConstructable<Record<string, unknown>>, props: RouteProps) {
-    this._pathname = pathname;
-    this._componentClass = view;
-    this._component = null;
-    this._props = props;
-  }
+  constructor(
+    private _pathname: string,
+    private _componentClass: ComponentConstructable<Record<string, unknown>>,
+    private _props: RouteProps,
+    public authRequired = false
+  ) {}
 
   navigate(pathname: string) {
     if (this.match(pathname)) {

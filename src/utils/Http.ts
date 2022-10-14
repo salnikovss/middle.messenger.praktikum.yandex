@@ -1,5 +1,6 @@
 import { apiHost } from 'config/app';
 
+import { buildPath } from './buildPath';
 import queryStringify from './queryStringify';
 
 enum Method {
@@ -50,7 +51,7 @@ export default class Http {
       let xhrTimeout: number | undefined;
       const xhr = new XMLHttpRequest();
 
-      xhr.open(method, this.baseUrl + url);
+      xhr.open(method, buildPath(this.baseUrl, url));
 
       if (headers) {
         Object.entries(headers).forEach(([key, value]) => {

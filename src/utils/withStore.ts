@@ -1,7 +1,7 @@
 import { Store } from 'core';
 import { ComponentConstructable } from 'core/Component';
 
-type WithStateProps = { store: Store<AppState> };
+export type WithStateProps = { store: Store<AppState> };
 
 export default function withStore<P extends WithStateProps>(WrappedBlock: ComponentConstructable<P>) {
   // @ts-expect-error No base constructor has the specified
