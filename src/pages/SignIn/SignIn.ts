@@ -2,26 +2,27 @@ import FormGroup from 'components/FormGroup';
 import { InputType } from 'components/Input';
 import { routeConsts } from 'config/routes';
 import Component from 'core/Component';
+import { login } from 'services/auth';
 import { Form } from 'utils';
+import withStore from 'utils/withStore';
 
 import { predefinedRules } from '../../utils/FormValidator/predefinedRules';
 import { SignInProps } from './types';
 
-export default class SignIn extends Component<SignInProps> {
+class SignIn extends Component<SignInProps> {
   static componentName = 'SignIn';
-  public form: Form;
+  public form: Form = new Form({
+    login: predefinedRules.login,
+    password: predefinedRules.password,
+  });
 
-  constructor() {
-    super();
-
-    const { login, password } = predefinedRules;
-    this.form = new Form({ login, password });
-
-    this.setProps({
+  constructor(props: SignInProps) {
+    super({
+      ...props,
       onLoginBlur: () => this.form.validate('login'),
       onPasswordBlur: () => this.form.validate('password'),
       events: {
-        submit: this.onSubmit.bind(this),
+        submit: (e: SubmitEvent) => this.onSubmit(e),
       },
     });
   }
@@ -32,20 +33,19 @@ export default class SignIn extends Component<SignInProps> {
     this.form.setRefs({ login, password });
   }
 
-  onSubmit(e: SubmitEvent) {
+  async onSubmit(e: SubmitEvent) {
     e.preventDefault();
     e.stopPropagation();
 
-    // eslint-disable-next-line no-console
-    console.log('Submitted data', this.form.getValues());
-
-    const validationResult = this.form.validate();
-    // eslint-disable-next-line no-console
-    console.log('Validation result', validationResult);
+    this.form.validate();
 
     if (!this.form.hasErrors) {
-      // eslint-disable-next-line no-console
-      console.log('Validation passed. Submitting form....');
+      const formValues = this.form.getValues();
+
+      this.props.store.dispatch(login, {
+        login: formValues.login,
+        password: formValues.password,
+      });
     }
   }
 
@@ -67,3 +67,5 @@ export default class SignIn extends Component<SignInProps> {
     `;
   }
 }
+
+export default withStore(SignIn);

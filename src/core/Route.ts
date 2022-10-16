@@ -1,9 +1,10 @@
 import Component, { ComponentConstructable } from './Component';
 import renderDOM from './renderDOM';
 
-type RouteProps = {
+type RouteConfig = {
   initialProps?: Record<string, unknown>;
   rootQuery: string;
+  needAuth: boolean;
 };
 
 export default class Route {
@@ -12,7 +13,7 @@ export default class Route {
   constructor(
     private _pathname: string,
     private _componentClass: ComponentConstructable<Record<string, unknown>>,
-    private _props: RouteProps,
+    public config: RouteConfig,
     public authRequired = false
   ) {}
 
@@ -35,11 +36,11 @@ export default class Route {
 
   render() {
     // if (!this._component) {
-    this._component = new this._componentClass(this._props.initialProps ?? {});
+    this._component = new this._componentClass(this.config.initialProps ?? {});
     // } else {
     //   this._component.show();
     // }
 
-    renderDOM(this._component, this._props.rootQuery);
+    renderDOM(this._component, this.config.rootQuery);
   }
 }

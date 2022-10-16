@@ -9,18 +9,13 @@ import { ButtonStyle } from './../../../../components/Button/types';
 
 export default class MessageForm extends Component {
   static componentName = 'MessageForm';
-  public form: Form;
+  public form: Form = new Form({ message: predefinedRules.message });
 
   constructor() {
-    super();
-
-    const { message } = predefinedRules;
-    this.form = new Form({ message });
-
-    this.setProps({
+    super({
       onMessageBlur: () => this.form.validate('message'),
       events: {
-        submit: this.onSubmit.bind(this),
+        submit: (e: SubmitEvent) => this.onSubmit(e),
       },
     });
   }

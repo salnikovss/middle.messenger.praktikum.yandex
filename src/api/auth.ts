@@ -2,18 +2,22 @@ import Http from 'utils/Http';
 
 import { APIError, UserDTO } from './types';
 
-type SigninRequestData = {
+export type SigninRequestData = {
   login: string;
   password: string;
 };
 
-type SignupRequestData = {
+export type SignupRequestData = {
   login: string;
   password: string;
+  first_name: string;
+  second_name: string;
+  email: string;
+  phone: string;
 };
 
 type SigninResponseData = Record<string, never> | APIError;
-type SignupResponseData = Record<string, never> | APIError;
+type SignupResponseData = { id: number } | APIError;
 
 export const authAPI = {
   signin: (data: SigninRequestData) => Http.post<SigninResponseData>('auth/signin', { data }),

@@ -1,5 +1,5 @@
 // Main types
-export type ValidationValue = string | number;
+export type ValidationValue = string;
 export type ValidationParams = Record<string, unknown>;
 export type ValidatorFunction = (value: ValidationValue, params?: ValidationParams) => boolean;
 export type Validator = (value: ValidationValue) => string | void;

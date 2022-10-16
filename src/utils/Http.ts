@@ -20,36 +20,43 @@ type Options = {
 
 type OptionsWithoutMethod = Omit<Options, 'method'>;
 
+type Response<T> = {
+  response: T;
+  status: number;
+  responseHeaders: Record<string, unknown>;
+};
+
 export default class Http {
   public static baseUrl = apiHost;
 
-  static get<T>(url: string, options: OptionsWithoutMethod = {}): Promise<T> {
+  static get<T>(url: string, options: OptionsWithoutMethod = {}): Promise<Response<T>> {
     const { data } = options;
     return this._send<T>(data ? `${url}&${queryStringify(data)}` : url, { ...options, method: Method.GET });
   }
 
-  static put<T>(url: string, options: OptionsWithoutMethod = {}): Promise<T> {
+  static put<T>(url: string, options: OptionsWithoutMethod = {}): Promise<Response<T>> {
     return this._send(url, { ...options, method: Method.PUT });
   }
 
-  static post<T>(url: string, options: OptionsWithoutMethod = {}): Promise<T> {
+  static post<T>(url: string, options: OptionsWithoutMethod = {}): Promise<Response<T>> {
     return this._send<T>(url, { ...options, method: Method.POST });
   }
 
-  static patch<T>(url: string, options: OptionsWithoutMethod = {}): Promise<T> {
+  static patch<T>(url: string, options: OptionsWithoutMethod = {}): Promise<Response<T>> {
     return this._send<T>(url, { ...options, method: Method.PATCH });
   }
 
-  static delete<T>(url: string, options: OptionsWithoutMethod = {}): Promise<T> {
+  static delete<T>(url: string, options: OptionsWithoutMethod = {}): Promise<Response<T>> {
     return this._send<T>(url, { ...options, method: Method.DELETE });
   }
 
-  private static _send<T>(url: string, options: Options = { method: Method.GET }): Promise<T> {
+  private static _send<T>(url: string, options: Options = { method: Method.GET }): Promise<Response<T>> {
     const { method, data, headers, timeout } = options;
 
     return new Promise((resolve, reject) => {
       let xhrTimeout: number | undefined;
       const xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
 
       xhr.open(method, buildPath(this.baseUrl, url));
 
@@ -63,7 +70,31 @@ export default class Http {
         if (xhrTimeout) {
           clearTimeout(xhrTimeout);
         }
-        resolve(xhr.response);
+
+        let response = xhr.response;
+
+        // Parse response headers
+        const responseHeaders: Record<string, string> = {};
+        xhr
+          .getAllResponseHeaders()
+          .trim()
+          .split(/[\r\n]+/)
+          .forEach((line) => {
+            const parts = line.split(': ');
+            const header = parts.shift() as string;
+            const value = parts.join(': ');
+            responseHeaders[header] = value;
+          });
+
+        if (response.length > 0 && responseHeaders['content-type'].includes('application/json')) {
+          response = JSON.parse(response);
+        }
+
+        resolve({
+          response,
+          status: xhr.status,
+          responseHeaders,
+        });
       };
 
       xhr.onabort = reject;

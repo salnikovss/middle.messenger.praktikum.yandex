@@ -7,6 +7,7 @@ import registerComponent from 'core/registerComponent';
 import Avatar from 'pages/Profile/components/Avatar';
 import ProfileFormRow from 'pages/Profile/components/ProfileFormRow';
 import { Form } from 'utils';
+import withStore from 'utils/withStore';
 import { predefinedRules } from 'utils/FormValidator';
 
 import { fakeUserData } from '../../../../utils/fakeData';
@@ -14,23 +15,22 @@ import { PasswordChangeProps } from './types';
 
 registerComponent(Avatar);
 registerComponent(ProfileFormRow);
-export default class PasswordChange extends Component<PasswordChangeProps> {
+
+const { password: old_password, password: new_password, password: new_password2 } = predefinedRules;
+
+class PasswordChange extends Component<PasswordChangeProps> {
   static componentName = 'PasswordChange';
-  public form: Form;
+  public form: Form = new Form({ old_password, new_password, new_password2 });
 
-  constructor() {
-    super();
-
-    const { password: old_password, password: new_password, password: new_password2 } = predefinedRules;
-    this.form = new Form({ old_password, new_password, new_password2 });
-
-    this.setProps({
+  constructor(props: PasswordChangeProps) {
+    super({
+      ...props,
       user: fakeUserData,
       onOldPasswordBlur: () => this.form.validate('email'),
       onNewPasswordBlur: () => this.form.validate('login'),
       onNewPassword2Blur: () => this.form.validate('first_name'),
       events: {
-        submit: this.onSubmit.bind(this),
+        submit: (e: SubmitEvent) => this.onSubmit(e),
       },
     });
   }
@@ -88,3 +88,5 @@ export default class PasswordChange extends Component<PasswordChangeProps> {
     `;
   }
 }
+
+export default withStore(PasswordChange);

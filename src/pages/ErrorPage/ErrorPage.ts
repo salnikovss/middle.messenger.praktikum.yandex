@@ -35,3 +35,15 @@ export default class ErrorPage extends Component<ErrorPageProps> {
     `;
   }
 }
+
+export class ErrorPage404 extends ErrorPage {
+  constructor(props: ErrorPageProps) {
+    super({ ...props, code: 404 });
+  }
+}
+
+export class ErrorPage500 extends ErrorPage {
+  constructor(props: ErrorPageProps) {
+    super({ ...props, code: 500 });
+  }
+}

@@ -7,11 +7,11 @@ import { InputProps, InputPropsWithEvents, InputType } from './types';
 export default class Input extends Component<InputPropsWithEvents> {
   static componentName = 'Input';
 
-  constructor({ onInput, onBlur, onFocus, ...rest }: InputProps) {
+  constructor({ onInput, onBlur, onFocus, value, ...rest }: InputProps) {
     super({
       ...rest,
       type: rest.type || InputType.TEXT,
-      value: rest.value || '',
+      value: value || '',
       events: {
         focus: onFocus,
         blur: onBlur,

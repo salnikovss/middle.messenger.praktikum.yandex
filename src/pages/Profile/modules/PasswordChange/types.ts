@@ -1,4 +1,7 @@
+import { Store } from 'core';
+
 export type PasswordChangeProps = {
+  store: Store<AppState>;
   user: UserModel;
   onOldPasswordBlur: (e: FocusEvent) => void;
   onNewPasswordBlur: (e: FocusEvent) => void;

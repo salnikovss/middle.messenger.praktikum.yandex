@@ -1,23 +1,23 @@
+import { authAPI, SignupRequestData } from 'api/auth';
 import FormGroup from 'components/FormGroup';
 import { routeConsts } from 'config/routes';
 import Component from 'core/Component';
 import { Form } from 'utils';
-import { withStore } from 'utils';
+import withStore from 'utils/withStore';
 import { predefinedRules } from 'utils/FormValidator';
 
+import apiHasError from '../../utils/apiHasError';
 import { SignUpProps } from './types';
+
+const { first_name, second_name, login, email, password, phone } = predefinedRules;
 
 class SignUp extends Component<SignUpProps> {
   static componentName = 'SignUp';
-  public form: Form;
+  public form: Form = new Form({ first_name, second_name, login, email, password, phone });
 
   constructor(props: SignUpProps) {
-    super(props);
-
-    const { first_name, second_name, login, email, password, phone } = predefinedRules;
-    this.form = new Form({ first_name, second_name, login, email, password, phone });
-
-    this.setProps({
+    super({
+      ...props,
       onFirstNameBlur: () => this.form.validate('first_name'),
       onSecondNameBlur: () => this.form.validate('second_name'),
       onLoginBlur: () => this.form.validate('login'),
@@ -25,7 +25,7 @@ class SignUp extends Component<SignUpProps> {
       onPasswordBlur: () => this.form.validate('password'),
       onPhoneBlur: () => this.form.validate('phone'),
       events: {
-        submit: this.onSubmit.bind(this),
+        submit: (e: SubmitEvent) => this.onSubmit(e),
       },
     });
   }
@@ -43,20 +43,31 @@ class SignUp extends Component<SignUpProps> {
     this.form.setRefs({ first_name, second_name, login, email, password, phone });
   }
 
-  onSubmit(e: SubmitEvent) {
+  async onSubmit(e: SubmitEvent) {
     e.preventDefault();
     e.stopPropagation();
 
-    // eslint-disable-next-line no-console
-    console.log('Submitted data', this.form.getValues());
+    const formValues = this.form.getValues();
 
-    const validationResult = this.form.validate();
-    // eslint-disable-next-line no-console
-    console.log('Validation result', validationResult);
+    this.form.validate();
 
     if (!this.form.hasErrors) {
-      // eslint-disable-next-line no-console
-      console.log('Validation passed. Submitting form....');
+      const { response } = await authAPI.signup(formValues as SignupRequestData);
+
+      console.log('response', response);
+      console.log('apiHasError(response)', apiHasError(response));
+
+      if (apiHasError(response)) {
+        console.log('Api error', response.reason);
+      } else {
+        console.log('user id', response.id);
+        const signinResponse = await authAPI.signin({
+          login: formValues.login,
+          password: formValues.password,
+        });
+        console.log(signinResponse);
+      }
+      // this.props.store.dispatch
     }
   }
 

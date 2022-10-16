@@ -10,11 +10,12 @@ registerComponent(ChatListItem);
 export default class ChatList extends Component<ChatListProps> {
   static componentName = 'ChatList';
 
-  constructor({ chats, activeChatId }: ChatListProps) {
-    super();
-
-    this.setProps({
-      chats: chats.map((chat) => ({ ...chat, onClick: this.onClick.bind(this) })),
+  constructor({ chats, activeChatId, ...rest }: ChatListProps) {
+    super({
+      ...rest,
+      chats: chats.map((chat) => {
+        return { ...chat, onClick: (chatId: string) => this.onClick(chatId) };
+      }),
       activeChatId,
     });
   }

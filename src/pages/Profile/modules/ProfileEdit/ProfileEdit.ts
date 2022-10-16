@@ -8,24 +8,25 @@ import Avatar from 'pages/Profile/components/Avatar';
 import ProfileFormRow from 'pages/Profile/components/ProfileFormRow';
 import { Form } from 'utils';
 import { predefinedRules } from 'utils/FormValidator';
+import withStore from 'utils/withStore';
+import withUser from 'utils/withUser';
 
-import { fakeUserData } from '../../../../utils/fakeData';
 import { ProfileEditProps } from './types';
 
 registerComponent(Avatar);
 registerComponent(ProfileFormRow);
-export default class ProfileEdit extends Component<ProfileEditProps> {
+
+const { email, login, first_name, second_name, display_name, phone } = predefinedRules;
+
+class ProfileEdit extends Component<ProfileEditProps> {
   static componentName = 'ProfileEdit';
-  public form: Form;
+  public form: Form = new Form({ email, login, first_name, second_name, display_name, phone });
 
-  constructor() {
-    super();
-
-    const { email, login, first_name, second_name, display_name, phone } = predefinedRules;
-    this.form = new Form({ email, login, first_name, second_name, display_name, phone });
+  constructor(props: ProfileEditProps) {
+    super(props);
 
     this.setProps({
-      user: fakeUserData,
+      ...props,
       onEmailBlur: () => this.form.validate('email'),
       onLoginBlur: () => this.form.validate('login'),
       onFirstNameBlur: () => this.form.validate('first_name'),
@@ -33,7 +34,7 @@ export default class ProfileEdit extends Component<ProfileEditProps> {
       onDisplayNameBlur: () => this.form.validate('display_name'),
       onPhoneBlur: () => this.form.validate('phone'),
       events: {
-        submit: this.onSubmit.bind(this),
+        submit: (e: SubmitEvent) => this.onSubmit(e),
       },
     });
   }
@@ -69,6 +70,17 @@ export default class ProfileEdit extends Component<ProfileEditProps> {
   }
 
   render() {
+    if (!this.props.user) {
+      //template=hbs
+      return `
+        {{#BackButtonWrapper route='${routeConsts.CHAT}'}}
+        <div class='profile'>
+          Загрузка...
+        </div>
+        {{/BackButtonWrapper}}
+      `;
+    }
+
     //template=hbs
     return `
       {{#BackButtonWrapper route='${routeConsts.CHAT}'}}
@@ -105,3 +117,5 @@ export default class ProfileEdit extends Component<ProfileEditProps> {
     `;
   }
 }
+
+export default withStore(withUser(ProfileEdit));

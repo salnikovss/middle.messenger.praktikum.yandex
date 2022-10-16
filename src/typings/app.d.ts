@@ -15,7 +15,7 @@ declare global {
     screen: Screens | null;
     isLoading: boolean;
     loginFormError: string | null;
-    user: User | null;
+    user: UserModel | null;
   };
 
   interface Window {

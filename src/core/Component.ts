@@ -1,6 +1,7 @@
 import Handlebars from 'handlebars';
 import { nanoid } from 'nanoid';
 
+import isEqual from '../utils/isEqual';
 import EventBus, { IEventBus } from './EventBus';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -78,8 +79,9 @@ export default class Component<T extends ComponentProps = Record<string, unknown
   }
 
   componentDidUpdate(oldProps: T, newProps: T): boolean {
-    return true;
-    return oldProps !== newProps;
+    console.log('componentDidUpdate', this.constructor.name, oldProps, newProps, !isEqual(oldProps, newProps));
+
+    return !isEqual(oldProps, newProps);
   }
 
   setProps = (nextProps: Partial<ComponentProps>) => {
