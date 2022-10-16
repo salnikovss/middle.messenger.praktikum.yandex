@@ -2,7 +2,7 @@ export type LinkProps = {
   text: string;
   class?: string;
   to: string;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 export type LinkPropsWithEvents = Omit<LinkProps, 'onClick'> & {

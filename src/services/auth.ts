@@ -9,7 +9,7 @@ type LoginPayload = {
   password: string;
 };
 
-export const login = async (dispatch: Dispatch<AppState>, state: AppState, action: LoginPayload) => {
+export const login = async (dispatch: Dispatch<AppState>, _state: AppState, action: LoginPayload) => {
   dispatch({ isLoading: true });
 
   const response = await authAPI.signin(action);
