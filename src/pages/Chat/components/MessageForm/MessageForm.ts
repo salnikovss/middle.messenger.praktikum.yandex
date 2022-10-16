@@ -59,7 +59,7 @@ export default class MessageForm extends Component {
             }}}
         </div>
         <div class='message-form__send-button'>
-            {{#Button style='${ButtonStyle.ICON}' classes='btn_primary'}}
+            {{#Button style='${ButtonStyle.ICON}' className='btn_primary'}}
               <i class="icon message-form__send-button-icon"></i>
             {{/Button}}
         </div>

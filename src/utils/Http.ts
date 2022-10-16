@@ -13,7 +13,7 @@ enum Method {
 
 type Options = {
   method: Method;
-  data?: Record<string, unknown>;
+  data?: Record<string, unknown> | FormData;
   timeout?: number;
   headers?: Record<string, string>;
 };
@@ -31,7 +31,10 @@ export default class Http {
 
   static get<T>(url: string, options: OptionsWithoutMethod = {}): Promise<Response<T>> {
     const { data } = options;
-    return this._send<T>(data ? `${url}&${queryStringify(data)}` : url, { ...options, method: Method.GET });
+    return this._send<T>(data ? `${url}&${queryStringify(data as Record<string, unknown>)}` : url, {
+      ...options,
+      method: Method.GET,
+    });
   }
 
   static put<T>(url: string, options: OptionsWithoutMethod = {}): Promise<Response<T>> {

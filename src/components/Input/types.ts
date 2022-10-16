@@ -4,6 +4,7 @@ export enum InputType {
   TEL = 'tel',
   NUMBER = 'number',
   EMAIL = 'email',
+  FILE = 'file',
 }
 
 export type InputProps = {

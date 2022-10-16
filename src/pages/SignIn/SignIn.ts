@@ -41,11 +41,7 @@ class SignIn extends Component<SignInProps> {
 
     if (!this.form.hasErrors) {
       const formValues = this.form.getValues();
-
-      this.props.store.dispatch(login, {
-        login: formValues.login,
-        password: formValues.password,
-      });
+      this.props.store.dispatch(login, { login: formValues.login, password: formValues.password });
     }
   }
 

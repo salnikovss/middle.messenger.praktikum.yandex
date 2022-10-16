@@ -2,13 +2,23 @@ import './Modal.scss';
 
 import Component from 'core/Component';
 
-import { ModalProps } from './types';
+import { ModalProps, ModalPropsWithEvents } from './types';
 
-export default class Modal extends Component<ModalProps> {
+export default class Modal extends Component<ModalPropsWithEvents> {
   static componentName = 'Modal';
 
-  constructor(props: ModalProps) {
-    super(props);
+  constructor({ ...rest }: ModalProps) {
+    super({
+      ...rest,
+      events: {
+        click: (e: MouseEvent) => {
+          if ((e.target as HTMLDivElement).classList.contains('modal__backdrop')) {
+            e.preventDefault();
+            this.element?.classList.remove('modal_show');
+          }
+        },
+      },
+    });
   }
 
   render() {
@@ -22,7 +32,7 @@ export default class Modal extends Component<ModalProps> {
             </div>
           {{/if}}
           <div class="modal__body">
-              {{body}}
+              <template data-slot='1'></template>
           </div>
         </div>
         <div class="modal__backdrop"></div>

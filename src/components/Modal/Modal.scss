@@ -7,9 +7,20 @@
   width: 100%;
   height: 100%;
   overflow: auto;
+  opacity: 0;
   display: flex;
+  pointer-events: none;
   align-items: center;
   justify-content: center;
+  z-index: 100;
+
+  &_show {
+    pointer-events: auto;
+    animation-name: fadein;
+    animation-fill-mode: forwards;
+    animation-duration: 0.3s;
+    animation-iteration-count: 1;
+  }
 
   &__backdrop {
     position: absolute;
@@ -22,6 +33,7 @@
   }
 
   &__content {
+    min-width: 340px;
     position: relative;
     z-index: 10;
     padding: 40px 0;

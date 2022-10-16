@@ -47,4 +47,5 @@ export const predefinedRules: ValidationRules = {
     v.regexp({ regexp: regexpPatterns.phone }, 'Пароль должен может содержать знак + и состоять только из цифр'),
   ],
   message: [v.required()],
+  avatar: [v.required()],
 };

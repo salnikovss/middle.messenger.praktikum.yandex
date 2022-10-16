@@ -1,0 +1,24 @@
+.file-input {
+  &__placeholder {
+    position: relative;
+    overflow: hidden;
+    input {
+      cursor: pointer;
+      position: absolute;
+      transform: scale(10);
+      transform-origin: center;
+      opacity: 0;
+    }
+  }
+
+  &__placeholder-text {
+    display: block;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+
+    color: var(--secondaryColor);
+  }
+}

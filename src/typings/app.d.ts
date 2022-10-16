@@ -8,13 +8,13 @@ declare global {
   export type Values<T extends Record<string, unknown>> = T[Keys<T>];
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  export type Indexed = { [key: string]: any };
+  export type Indexed = Record<string, any>;
 
   export type AppState = {
     appIsInitiated: boolean;
     screen: Screens | null;
     isLoading: boolean;
-    loginFormError: string | null;
+    formError: string | null;
     user: UserModel | null;
   };
 

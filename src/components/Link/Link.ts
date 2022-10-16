@@ -14,7 +14,7 @@ export default class Link extends Component<LinkPropsWithEvents> {
         click: (e: MouseEvent) => {
           e.preventDefault();
           if (typeof onClick === 'function') {
-            onClick();
+            onClick(e);
           } else {
             window.router.go(this.props.to);
           }

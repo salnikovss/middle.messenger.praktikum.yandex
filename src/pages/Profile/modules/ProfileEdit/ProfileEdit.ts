@@ -6,6 +6,7 @@ import Component from 'core/Component';
 import registerComponent from 'core/registerComponent';
 import Avatar from 'pages/Profile/components/Avatar';
 import ProfileFormRow from 'pages/Profile/components/ProfileFormRow';
+import { updateProfile } from 'services/user';
 import { Form } from 'utils';
 import { predefinedRules } from 'utils/FormValidator';
 import withStore from 'utils/withStore';
@@ -23,9 +24,7 @@ class ProfileEdit extends Component<ProfileEditProps> {
   public form: Form = new Form({ email, login, first_name, second_name, display_name, phone });
 
   constructor(props: ProfileEditProps) {
-    super(props);
-
-    this.setProps({
+    super({
       ...props,
       onEmailBlur: () => this.form.validate('email'),
       onLoginBlur: () => this.form.validate('login'),
@@ -56,16 +55,18 @@ class ProfileEdit extends Component<ProfileEditProps> {
     e.preventDefault();
     e.stopPropagation();
 
-    // eslint-disable-next-line no-console
-    console.log('Submitted data', this.form.getValues());
-
-    const validationResult = this.form.validate();
-    // eslint-disable-next-line no-console
-    console.log('Validation result', validationResult);
+    this.form.validate();
 
     if (!this.form.hasErrors) {
-      // eslint-disable-next-line no-console
-      console.log('Validation passed. Submitting form....');
+      const { email, first_name, login, phone, second_name, display_name } = this.form.getValues();
+      this.props.store.dispatch(updateProfile, {
+        email,
+        first_name,
+        login,
+        phone,
+        second_name,
+        display_name,
+      });
     }
   }
 
@@ -73,7 +74,7 @@ class ProfileEdit extends Component<ProfileEditProps> {
     if (!this.props.user) {
       //template=hbs
       return `
-        {{#BackButtonWrapper route='${routeConsts.CHAT}'}}
+        {{#BackButtonWrapper route='${routeConsts.PROFILE}'}}
         <div class='profile'>
           Загрузка...
         </div>
@@ -83,10 +84,10 @@ class ProfileEdit extends Component<ProfileEditProps> {
 
     //template=hbs
     return `
-      {{#BackButtonWrapper route='${routeConsts.CHAT}'}}
+      {{#BackButtonWrapper route='${routeConsts.PROFILE}'}}
         <div class='profile'>
             <div class='profile__avatar'>
-                {{{Avatar}}}
+                {{{Avatar editable=true}}}
             </div>
 
             <form class='data__rows-block profile__rows-block-details' method='post'>

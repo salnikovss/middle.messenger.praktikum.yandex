@@ -7,9 +7,10 @@ import registerComponent from 'core/registerComponent';
 import Avatar from 'pages/Profile/components/Avatar';
 import ProfileFormRow from 'pages/Profile/components/ProfileFormRow';
 import { Form } from 'utils';
-import withStore from 'utils/withStore';
 import { predefinedRules } from 'utils/FormValidator';
+import withStore from 'utils/withStore';
 
+import { updatePassword } from '../../../../services/user';
 import { fakeUserData } from '../../../../utils/fakeData';
 import { PasswordChangeProps } from './types';
 
@@ -23,12 +24,13 @@ class PasswordChange extends Component<PasswordChangeProps> {
   public form: Form = new Form({ old_password, new_password, new_password2 });
 
   constructor(props: PasswordChangeProps) {
+    // console.log({ old_password, new_password, new_password2 });
     super({
       ...props,
       user: fakeUserData,
-      onOldPasswordBlur: () => this.form.validate('email'),
-      onNewPasswordBlur: () => this.form.validate('login'),
-      onNewPassword2Blur: () => this.form.validate('first_name'),
+      onOldPasswordBlur: () => this.form.validate('old_password'),
+      onNewPasswordBlur: () => this.form.validate('new_password'),
+      onNewPassword2Blur: () => this.form.validate('new_password2'),
       events: {
         submit: (e: SubmitEvent) => this.onSubmit(e),
       },
@@ -49,23 +51,18 @@ class PasswordChange extends Component<PasswordChangeProps> {
     e.preventDefault();
     e.stopPropagation();
 
-    // eslint-disable-next-line no-console
-    console.log('Submitted data', this.form.getValues());
-
-    const validationResult = this.form.validate();
-    // eslint-disable-next-line no-console
-    console.log('Validation result', validationResult);
+    this.form.validate();
 
     if (!this.form.hasErrors) {
-      // eslint-disable-next-line no-console
-      console.log('Validation passed. Submitting form....');
+      const { old_password: oldPassword, new_password: newPassword } = this.form.getValues();
+      this.props.store.dispatch(updatePassword, { oldPassword, newPassword });
     }
   }
 
   render() {
     //template=hbs
     return `
-      {{#BackButtonWrapper route='${routeConsts.CHAT}'}}
+      {{#BackButtonWrapper route='${routeConsts.PROFILE}'}}
         <div class='profile'>
             <div class='profile__avatar'>{{{Avatar}}}</div>
 

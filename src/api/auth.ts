@@ -18,13 +18,14 @@ export type SignupRequestData = {
 
 type SigninResponseData = Record<string, never> | APIError;
 type SignupResponseData = { id: number } | APIError;
+type UserResponseData = UserDTO | APIError;
 
 export const authAPI = {
   signin: (data: SigninRequestData) => Http.post<SigninResponseData>('auth/signin', { data }),
 
   signup: (data: SignupRequestData) => Http.post<SignupResponseData>('auth/signup', { data }),
 
-  me: () => Http.get<UserDTO | APIError>('auth/user'),
+  me: () => Http.get<UserResponseData>('auth/user'),
 
   logout: () => Http.post('auth/logout'),
 };

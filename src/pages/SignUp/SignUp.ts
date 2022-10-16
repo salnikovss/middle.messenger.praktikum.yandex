@@ -1,12 +1,11 @@
-import { authAPI, SignupRequestData } from 'api/auth';
 import FormGroup from 'components/FormGroup';
 import { routeConsts } from 'config/routes';
 import Component from 'core/Component';
+import { register } from 'services/auth';
 import { Form } from 'utils';
-import withStore from 'utils/withStore';
 import { predefinedRules } from 'utils/FormValidator';
+import withStore from 'utils/withStore';
 
-import apiHasError from '../../utils/apiHasError';
 import { SignUpProps } from './types';
 
 const { first_name, second_name, login, email, password, phone } = predefinedRules;
@@ -47,27 +46,18 @@ class SignUp extends Component<SignUpProps> {
     e.preventDefault();
     e.stopPropagation();
 
-    const formValues = this.form.getValues();
-
     this.form.validate();
 
     if (!this.form.hasErrors) {
-      const { response } = await authAPI.signup(formValues as SignupRequestData);
-
-      console.log('response', response);
-      console.log('apiHasError(response)', apiHasError(response));
-
-      if (apiHasError(response)) {
-        console.log('Api error', response.reason);
-      } else {
-        console.log('user id', response.id);
-        const signinResponse = await authAPI.signin({
-          login: formValues.login,
-          password: formValues.password,
-        });
-        console.log(signinResponse);
-      }
-      // this.props.store.dispatch
+      const { email, first_name, login, password, phone, second_name } = this.form.getValues();
+      this.props.store.dispatch(register, {
+        email,
+        first_name,
+        login,
+        password,
+        phone,
+        second_name,
+      });
     }
   }
 

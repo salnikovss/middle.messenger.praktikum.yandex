@@ -1,3 +1,6 @@
+import cloneDeep from '../utils/cloneDeep';
+import isEqual from '../utils/isEqual';
+import mergeDeep from '../utils/mergeDeep';
 import EventBus from './EventBus';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,15 +25,22 @@ export default class Store<State extends Record<string, any>> extends EventBus {
   }
 
   public set(nextState: Partial<State>) {
-    const prevState = { ...this.state };
+    if (isEqual(this.state, nextState)) {
+      return;
+    }
 
-    this.state = { ...this.state, ...nextState };
+    const prevState = cloneDeep(this.state);
+
+    this.state = mergeDeep(this.state, nextState) as State;
 
     this.emit('changed', prevState, nextState);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dispatch(nextStateOrAction: Partial<State> | Action<State>, payload?: any) {
+  dispatch<T extends Partial<State> | Action<State>>(
+    nextStateOrAction: T,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    payload?: T extends Action<State> ? Parameters<T>[2] : any
+  ) {
     if (typeof nextStateOrAction === 'function') {
       nextStateOrAction(this.dispatch.bind(this), this.state, payload);
     } else {

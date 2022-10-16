@@ -36,10 +36,14 @@
     }
   }
 
-  &:hover {
-    .avatar {
-      &__hover {
-        opacity: 1;
+  button {
+    cursor: pointer;
+
+    &:hover {
+      .avatar {
+        &__hover {
+          opacity: 1;
+        }
       }
     }
   }

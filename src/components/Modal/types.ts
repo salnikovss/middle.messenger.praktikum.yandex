@@ -1,4 +1,9 @@
 export type ModalProps = {
   title?: string;
-  body: string;
+};
+
+export type ModalPropsWithEvents = ModalProps & {
+  events: {
+    click: (e: MouseEvent) => void;
+  };
 };

@@ -7,12 +7,13 @@ export enum ButtonType {
 export enum ButtonStyle {
   PRIMARY = 'primary',
   ICON = 'icon',
+  UNSTYLED = 'unstyled',
 }
 
 export type ButtonProps = {
   type?: ButtonType;
   style?: ButtonStyle;
-  classes?: string;
+  className?: string;
   onClick?: EventListener;
 };
 

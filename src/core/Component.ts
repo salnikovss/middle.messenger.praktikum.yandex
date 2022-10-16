@@ -27,7 +27,7 @@ export default class Component<T extends ComponentProps = Record<string, unknown
 
   protected _element: Nullable<HTMLElement> = null;
   protected _eventBus: IEventBus;
-  protected readonly props: T;
+  public readonly props: T;
   public id = nanoid(6);
   public refs: Record<string, Component<T>> = {};
   protected children: Record<string, Component<T>> = {};
@@ -79,9 +79,14 @@ export default class Component<T extends ComponentProps = Record<string, unknown
   }
 
   componentDidUpdate(oldProps: T, newProps: T): boolean {
-    console.log('componentDidUpdate', this.constructor.name, oldProps, newProps, !isEqual(oldProps, newProps));
+    const hasChanges = !isEqual(oldProps, newProps);
 
-    return !isEqual(oldProps, newProps);
+    if (hasChanges) {
+      // eslint-disable-next-line no-console
+      console.log('componentDidUpdate', this.constructor.name, oldProps, newProps);
+    }
+
+    return hasChanges;
   }
 
   setProps = (nextProps: Partial<ComponentProps>) => {

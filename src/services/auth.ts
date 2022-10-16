@@ -9,28 +9,39 @@ type LoginPayload = {
   password: string;
 };
 
+type RegisterPayload = {
+  login: string;
+  password: string;
+  first_name: string;
+  second_name: string;
+  email: string;
+  phone: string;
+};
+
 export const login = async (dispatch: Dispatch<AppState>, _state: AppState, action: LoginPayload) => {
   dispatch({ isLoading: true });
 
-  const response = await authAPI.signin(action);
+  const { response } = await authAPI.signin(action);
 
   if (apiHasError(response)) {
-    dispatch({ isLoading: false, loginFormError: response.reason });
+    dispatch({ isLoading: false, formError: response.reason });
     return;
   }
 
-  const { response: responseUser } = await authAPI.me();
+  dispatch(fetchUser);
+};
 
-  dispatch({ isLoading: false, loginFormError: null });
+export const register = async (dispatch: Dispatch<AppState>, _state: AppState, action: RegisterPayload) => {
+  dispatch({ isLoading: true });
+
+  const { response } = await authAPI.signup(action);
 
   if (apiHasError(response)) {
-    dispatch(logout);
+    dispatch({ isLoading: false, formError: response.reason });
     return;
   }
 
-  dispatch({ user: transformUser(responseUser as UserModel) });
-
-  window.router.go(routeConsts.PROFILE);
+  dispatch(fetchUser);
 };
 
 export const logout = async (dispatch: Dispatch<AppState>) => {
@@ -41,4 +52,19 @@ export const logout = async (dispatch: Dispatch<AppState>) => {
   dispatch({ isLoading: false, user: null });
 
   window.router.go(routeConsts.SIGNIN);
+};
+
+export const fetchUser = async (dispatch: Dispatch<AppState>) => {
+  const { response: responseUser } = await authAPI.me();
+
+  dispatch({ isLoading: false, formError: null });
+
+  if (apiHasError(responseUser)) {
+    dispatch(logout);
+    return;
+  }
+
+  dispatch({ user: transformUser(responseUser) });
+
+  window.router.go(routeConsts.PROFILE);
 };
