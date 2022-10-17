@@ -16,6 +16,10 @@ export default class FileInput extends Component<FileInputPropsWithEvents> {
     });
   }
 
+  setError(text = '') {
+    this.refs.errorRef.setProps({ text });
+  }
+
   render() {
     //template=hbs
     return `
@@ -25,6 +29,7 @@ export default class FileInput extends Component<FileInputPropsWithEvents> {
             class=class
             style=style
             type='file'
+            accept=accept
             ref='inputRef'
             id='field-{{name}}'
             name='{{name}}'
@@ -37,6 +42,7 @@ export default class FileInput extends Component<FileInputPropsWithEvents> {
             {{/if}}
           </span>
         </div>
+        {{{Error ref='errorRef'}}}
       </div>
     `;
   }

@@ -32,6 +32,7 @@ export const userAPI = {
 
   updateProfile: (data: UpdateProfileRequestData) => Http.put<UpdateProfileResponseData>('user/profile', { data }),
 
-  updateProfileAvatar: (data: UpdateProfileAvatarRequestData) =>
-    Http.put<UpdateProfileAvatarResponseData>('user/profile', { data }),
+  updateProfileAvatar: (data: UpdateProfileAvatarRequestData) => {
+    return Http.put<UpdateProfileAvatarResponseData>('user/profile/avatar', { data, headers: {} });
+  },
 };

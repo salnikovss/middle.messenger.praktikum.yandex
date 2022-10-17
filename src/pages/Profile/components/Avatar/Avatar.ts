@@ -1,5 +1,6 @@
 import './Avatar.scss';
 
+import Modal from 'components/Modal';
 import Component from 'core/Component';
 
 import registerComponent from '../../../../core/registerComponent';
@@ -17,7 +18,7 @@ export default class Avatar extends Component<AvatarProps> {
       editable,
       onClick: (e) => {
         e.preventDefault();
-        this.refs.modalRef.element?.classList.add('modal_show');
+        (this.refs.modalRef as unknown as Modal).open();
       },
     });
   }
@@ -44,7 +45,6 @@ export default class Avatar extends Component<AvatarProps> {
     return `
       <div class='avatar {{#if image}}avatar_filled{{/if}}'>
         <div class='avatar__inner' {{#if image}}style='background-image: url({{image}})'{{/if}}>
-          <div class='avatar__hover'>Загрузить<br/>аватар</div>
         </div>
       </div>
     `;

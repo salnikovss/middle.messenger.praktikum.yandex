@@ -87,7 +87,7 @@ class ProfileEdit extends Component<ProfileEditProps> {
       {{#BackButtonWrapper route='${routeConsts.PROFILE}'}}
         <div class='profile'>
             <div class='profile__avatar'>
-                {{{Avatar editable=true}}}
+                {{{Avatar image=user.avatar editable=true}}}
             </div>
 
             <form class='data__rows-block profile__rows-block-details' method='post'>

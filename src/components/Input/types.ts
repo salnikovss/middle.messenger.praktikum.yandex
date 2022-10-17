@@ -13,6 +13,7 @@ export type InputProps = {
   class?: string;
   value?: string;
   style?: string;
+  accept?: string;
   placeholder?: string;
   onInput?: (e: Event) => void;
   onBlur?: (e: FocusEvent) => void;

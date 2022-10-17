@@ -1,3 +1,9 @@
+import { Store } from 'core';
+
 export type AvatarFormProps = {
-  onClick?: (e: MouseEvent) => void;
+  onFileInputChange: (e: FocusEvent) => void;
+  store: Store<AppState>;
+  events: {
+    submit: (e: SubmitEvent) => void;
+  };
 };

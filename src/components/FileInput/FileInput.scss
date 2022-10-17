@@ -11,6 +11,13 @@
     }
   }
 
+  .error {
+    // width: auto;
+    // position: static;
+    text-align: center;
+    margin: 5px auto 0;
+  }
+
   &__placeholder-text {
     display: block;
     font-style: normal;

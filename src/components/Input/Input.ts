@@ -29,6 +29,7 @@ export default class Input extends Component<InputPropsWithEvents> {
         id='field-{{name}}'
         name='{{name}}'
         value='{{value}}'
+        {{#if accept}}accept='{{accept}}'{{/if}}
         {{#if placeholder}}placeholder='{{placeholder}}'{{/if}}
       />
     `;

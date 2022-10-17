@@ -54,7 +54,7 @@ export default class Http {
   }
 
   private static _send<T>(url: string, options: Options = { method: Method.GET }): Promise<Response<T>> {
-    const { method, data, headers, timeout } = options;
+    const { method, data, headers = { 'Content-Type': 'application/json' }, timeout } = options;
 
     return new Promise((resolve, reject) => {
       let xhrTimeout: number | undefined;
@@ -110,8 +110,9 @@ export default class Http {
 
       if (method === Method.GET || !data) {
         xhr.send();
+      } else if (data instanceof FormData) {
+        xhr.send(data);
       } else {
-        xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify(data));
       }
     });

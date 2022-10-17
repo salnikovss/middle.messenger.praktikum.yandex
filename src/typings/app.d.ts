@@ -15,6 +15,7 @@ declare global {
     screen: Screens | null;
     isLoading: boolean;
     formError: string | null;
+    avatarFormError: string | null;
     user: UserModel | null;
   };
 

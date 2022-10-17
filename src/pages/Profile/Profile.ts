@@ -39,7 +39,7 @@ class Profile extends Component<ProfileProps> {
     return `
       {{#BackButtonWrapper route='${routeConsts.CHAT}'}}
         <div class='profile'>
-            <div class='profile__avatar'>{{{Avatar}}}</div>
+            <div class='profile__avatar'>{{{Avatar image=user.avatar}}}</div>
             <div class='profile__display_name'>{{user.display_name}}</div>
 
             <div class='data__rows-block profile__rows-block-details'>

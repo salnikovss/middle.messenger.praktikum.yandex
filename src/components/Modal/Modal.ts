@@ -14,11 +14,19 @@ export default class Modal extends Component<ModalPropsWithEvents> {
         click: (e: MouseEvent) => {
           if ((e.target as HTMLDivElement).classList.contains('modal__backdrop')) {
             e.preventDefault();
-            this.element?.classList.remove('modal_show');
+            this.close();
           }
         },
       },
     });
+  }
+
+  open() {
+    this.element?.classList.add('modal_show');
+  }
+
+  close() {
+    this.element?.classList.remove('modal_show');
   }
 
   render() {

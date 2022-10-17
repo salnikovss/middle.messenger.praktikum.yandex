@@ -3,5 +3,6 @@ export const defaultState: AppState = {
   isLoading: false,
   screen: null,
   formError: null,
+  avatarFormError: null,
   user: null,
 };

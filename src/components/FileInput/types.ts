@@ -3,6 +3,7 @@ export type FileInputProps = {
   class?: string;
   value?: string;
   style?: string;
+  accept?: string;
   placeholder?: string;
   onChange?: (e: Event) => void;
 };

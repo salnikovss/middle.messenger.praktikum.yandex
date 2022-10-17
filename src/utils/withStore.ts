@@ -1,5 +1,6 @@
 import { Store } from 'core';
 import { ComponentConstructable } from 'core/Component';
+import isEqual from './isEqual';
 
 export type WithStateProps = { store: Store<AppState> };
 
@@ -14,8 +15,7 @@ export default function withStore<P extends WithStateProps>(WrappedBlock: Compon
 
     __onChangeStoreCallback = () => {
       /**
-       * TODO: проверить что стор реально обновлен
-       * и прокидывать не целый стор, а необходимые поля
+       * TODO: прокидывать не целый стор, а необходимые поля
        * с помощью метода mapStateToProps
        */
       // @ts-expect-error this is not typed
