@@ -18,10 +18,6 @@ type RegisterPayload = {
   phone: string;
 };
 
-type FetchUserPayload = {
-  shouldRedirect?: boolean;
-};
-
 export const login = async (dispatch: Dispatch<AppState>, _state: AppState, action: LoginPayload) => {
   dispatch({ isLoading: true });
 

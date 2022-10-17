@@ -64,7 +64,7 @@ export const updateProfileAvatar = async (
   const { response } = await userAPI.updateProfileAvatar(formData);
 
   if (apiHasError(response)) {
-    dispatch({ isLoading: false, formError: response.reason });
+    dispatch({ isLoading: false, avatarFormError: response.reason });
     return;
   }
 

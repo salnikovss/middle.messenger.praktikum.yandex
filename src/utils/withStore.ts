@@ -1,6 +1,5 @@
 import { Store } from 'core';
 import { ComponentConstructable } from 'core/Component';
-import isEqual from './isEqual';
 
 export type WithStateProps = { store: Store<AppState> };
 

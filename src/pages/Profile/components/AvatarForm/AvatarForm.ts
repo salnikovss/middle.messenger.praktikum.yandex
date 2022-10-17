@@ -1,7 +1,6 @@
 import './AvatarForm.scss';
 
 import FormGroup from 'components/FormGroup';
-import Modal from 'components/Modal';
 import Component from 'core/Component';
 import { updateProfileAvatar } from 'services/user';
 import { Form } from 'utils';

@@ -1,7 +1,22 @@
 .file-input {
+  &__filename {
+    display: none;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    color: var(--chatListItemAltColor);
+  }
+
   &__placeholder {
     position: relative;
     overflow: hidden;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     input {
       cursor: pointer;
       position: absolute;
@@ -25,7 +40,18 @@
     font-size: 12px;
     line-height: 16px;
     text-align: center;
-
     color: var(--secondaryColor);
+  }
+
+  &_filled {
+    .file-input {
+      &__filename {
+        display: block;
+      }
+
+      &__placeholder-text {
+        display: none;
+      }
+    }
   }
 }

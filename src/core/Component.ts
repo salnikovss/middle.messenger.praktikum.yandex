@@ -75,6 +75,8 @@ export default class Component<T extends ComponentProps = Record<string, unknown
     if (!response) {
       return;
     }
+
+    this.children = {};
     this._render();
   }
 
