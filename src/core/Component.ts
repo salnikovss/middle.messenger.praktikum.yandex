@@ -83,11 +83,6 @@ export default class Component<T extends ComponentProps = Record<string, unknown
   componentDidUpdate(oldProps: T, newProps: T): boolean {
     const hasChanges = !isEqual(oldProps, newProps);
 
-    if (hasChanges) {
-      // eslint-disable-next-line no-console
-      console.log('componentDidUpdate', this.constructor.name, oldProps, newProps);
-    }
-
     return hasChanges;
   }
 

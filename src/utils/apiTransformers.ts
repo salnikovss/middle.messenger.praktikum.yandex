@@ -8,7 +8,7 @@ export const transformUser = (data: UserDTO): UserModel => {
     first_name: data.first_name,
     second_name: data.second_name,
     display_name: data.display_name,
-    avatar: avatarPrefix + data.avatar,
+    avatar: data.avatar && data.avatar.length > 0 ? avatarPrefix + data.avatar : '',
     phone: data.phone,
     email: data.email,
   };

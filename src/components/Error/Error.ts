@@ -16,6 +16,10 @@ export default class Error extends Component<ErrorProps> {
 
   render() {
     //template=hbs
-    return `<p class='error'>{{#if text}}{{text}}{{/if}}</p>`;
+    return `
+      <p class='error {{className}}'>
+        <span class='error__inner'>{{#if text}}{{text}}{{/if}}</span>
+      </p>
+    `;
   }
 }

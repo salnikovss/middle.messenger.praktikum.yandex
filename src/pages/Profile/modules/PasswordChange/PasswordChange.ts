@@ -33,10 +33,16 @@ class PasswordChange extends Component<PasswordChangeProps> {
         submit: (e: SubmitEvent) => this.onSubmit(e),
       },
     });
+    this.setProps({
+      formError: () => this.props.store?.getState().formError,
+    });
+
+    this._eventBus.on(Component.EVENTS.FLOW_CDM, this.updateFormRefs.bind(this));
+    this._eventBus.on(Component.EVENTS.FLOW_CDU, this.updateFormRefs.bind(this));
   }
 
-  componentDidMount(): void {
-    // Set form refs after compontent has been mounted
+  updateFormRefs(): void {
+    // Set form refs after compontent has been mounted or updated
     const {
       oldPasswordInput: old_password,
       newPasswordInput: new_password,
@@ -65,6 +71,8 @@ class PasswordChange extends Component<PasswordChangeProps> {
             <div class='profile__avatar'>{{{Avatar image=user.avatar}}}</div>
 
             <form class='data__rows-block profile__rows-block-details' method='post'>
+                {{{Error className='error_form' text=formError}}}
+
                 {{{ProfileFormRow label='Текущий пароль' type='${InputType.PASSWORD}' name='oldPassword'
                       placeholder='********************' onBlur=onOldPasswordBlur ref='oldPasswordInput'}}}
 

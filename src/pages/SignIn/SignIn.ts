@@ -25,10 +25,16 @@ class SignIn extends Component<SignInProps> {
         submit: (e: SubmitEvent) => this.onSubmit(e),
       },
     });
+    this.setProps({
+      formError: () => this.props.store?.getState().formError,
+    });
+
+    this._eventBus.on(Component.EVENTS.FLOW_CDM, this.updateFormRefs.bind(this));
+    this._eventBus.on(Component.EVENTS.FLOW_CDU, this.updateFormRefs.bind(this));
   }
 
-  componentDidMount(): void {
-    // Set form refs after compontent has been mounted
+  updateFormRefs(): void {
+    // Set form refs after compontent has been mounted or updated
     const { loginInput: login, passwordInput: password } = this.refs as unknown as Record<string, FormGroup>;
     this.form.setRefs({ login, password });
   }
@@ -50,6 +56,8 @@ class SignIn extends Component<SignInProps> {
     return `
       {{#CenteredBox title='Авторизация'}}
         <form method='post'>
+            {{{Error className='error_form' text=formError}}}
+
             {{{FormGroup label='Имя пользователя' name='login'
                 ref='loginInput' onBlur=onLoginBlur}}}
 

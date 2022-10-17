@@ -62,14 +62,15 @@ export default function initRouter(router: Router, store: Store<AppState>, eleme
     router.use(route.path, () => {
       const isAuthorized = Boolean(store.getState().user);
       const currentScreen = Boolean(store.getState().screen);
+      const additionalProps = { formError: null, isLoading: false };
 
       if (isAuthorized || !route.shouldAuthorized) {
-        store.dispatch({ screen: route.component });
+        store.dispatch({ ...additionalProps, screen: route.component });
         return;
       }
 
       if (!currentScreen) {
-        store.dispatch({ screen: Screens.SignIn });
+        store.dispatch({ ...additionalProps, screen: Screens.SignIn });
       }
     });
   });

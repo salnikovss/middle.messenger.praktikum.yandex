@@ -36,10 +36,16 @@ class ProfileEdit extends Component<ProfileEditProps> {
         submit: (e: SubmitEvent) => this.onSubmit(e),
       },
     });
+    this.setProps({
+      formError: () => this.props.store?.getState().formError,
+    });
+
+    this._eventBus.on(Component.EVENTS.FLOW_CDM, this.updateFormRefs.bind(this));
+    this._eventBus.on(Component.EVENTS.FLOW_CDU, this.updateFormRefs.bind(this));
   }
 
-  componentDidMount(): void {
-    // Set form refs after compontent has been mounted
+  updateFormRefs(): void {
+    // Set form refs after compontent has been mounted or updated
     const {
       firstNameInput: first_name,
       secondNameInput: second_name,
@@ -91,6 +97,8 @@ class ProfileEdit extends Component<ProfileEditProps> {
             </div>
 
             <form class='data__rows-block profile__rows-block-details' method='post'>
+                {{{Error className='error_form' text=formError}}}
+
                 {{{ProfileFormRow label='Email' type='${InputType.EMAIL}' name='email' value=user.email
                       onBlur=onEmailBlur ref='emailInput'}}}
 

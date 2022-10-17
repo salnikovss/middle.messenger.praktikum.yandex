@@ -29,8 +29,6 @@ export const login = async (dispatch: Dispatch<AppState>, _state: AppState, acti
   }
 
   dispatch(fetchUser);
-
-  window.router.go(routeConsts.PROFILE);
 };
 
 export const register = async (dispatch: Dispatch<AppState>, _state: AppState, action: RegisterPayload) => {
@@ -44,8 +42,6 @@ export const register = async (dispatch: Dispatch<AppState>, _state: AppState, a
   }
 
   dispatch(fetchUser);
-
-  window.router.go(routeConsts.PROFILE);
 };
 
 export const logout = async (dispatch: Dispatch<AppState>) => {
@@ -69,4 +65,6 @@ export const fetchUser = async (dispatch: Dispatch<AppState>) => {
   }
 
   dispatch({ user: transformUser(responseUser) });
+
+  window.router.go(routeConsts.PROFILE);
 };

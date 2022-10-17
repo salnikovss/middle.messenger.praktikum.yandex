@@ -10,6 +10,19 @@
   color: var(--dangerColor);
   left: 0;
   right: 0;
+
+  &_form {
+    position: relative;
+    text-align: center;
+
+    .error__inner {
+      transform: translateY(-200%);
+      position: absolute;
+      left: 0;
+      right: 0;
+      width: 100%;
+    }
+  }
 }
 
 .message-form .error {

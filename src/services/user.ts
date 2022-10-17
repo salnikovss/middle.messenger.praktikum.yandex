@@ -69,6 +69,4 @@ export const updateProfileAvatar = async (
   }
 
   dispatch(fetchUser);
-
-  window.router.go(routeConsts.PROFILE);
 };

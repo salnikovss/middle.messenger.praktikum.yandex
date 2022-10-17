@@ -27,10 +27,16 @@ class SignUp extends Component<SignUpProps> {
         submit: (e: SubmitEvent) => this.onSubmit(e),
       },
     });
+    this.setProps({
+      formError: () => this.props.store?.getState().formError,
+    });
+
+    this._eventBus.on(Component.EVENTS.FLOW_CDM, this.updateFormRefs.bind(this));
+    this._eventBus.on(Component.EVENTS.FLOW_CDU, this.updateFormRefs.bind(this));
   }
 
-  componentDidMount(): void {
-    // Set form refs after component has been mounted
+  updateFormRefs(): void {
+    // Set form refs after compontent has been mounted or updated
     const {
       firstNameInput: first_name,
       secondNameInput: second_name,
@@ -66,6 +72,7 @@ class SignUp extends Component<SignUpProps> {
     return `
       {{#CenteredBox title='Регистрация'}}
         <form method='post'>
+            {{{Error className='error_form' text=formError}}}
             {{{FormGroup label='Имя' name='first_name' onBlur=onFirstNameBlur ref='firstNameInput'}}}
             {{{FormGroup label='Фамилия' name='second_name' onBlur=onSecondNameBlur ref='secondNameInput'}}}
             {{{FormGroup label='Имя пользователя' name='login' onBlur=onLoginBlur ref='loginInput'}}}

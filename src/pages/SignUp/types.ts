@@ -7,6 +7,7 @@ export type SignUpProps = {
   onSecondNameBlur: (e: FocusEvent) => void;
   onPasswordBlur: (e: FocusEvent) => void;
   onPhoneBlur: (e: FocusEvent) => void;
+  formError: () => void;
   store: Store<AppState>;
   events: {
     submit: (e: SubmitEvent) => void;

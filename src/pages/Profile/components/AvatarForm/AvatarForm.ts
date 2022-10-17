@@ -24,9 +24,16 @@ class AvatarForm extends Component<AvatarFormProps> {
         submit: (e: SubmitEvent) => this.onSubmit(e),
       },
     });
+    this.setProps({
+      formError: () => this.props.store?.getState().formError,
+    });
+
+    this._eventBus.on(Component.EVENTS.FLOW_CDM, this.updateFormRefs.bind(this));
+    this._eventBus.on(Component.EVENTS.FLOW_CDU, this.updateFormRefs.bind(this));
   }
 
-  componentDidMount(): void {
+  updateFormRefs(): void {
+    // Set form refs after compontent has been mounted or updated
     // Set form refs after compontent has been mounted
     const { fileInputRef } = this.refs as unknown as Record<string, FormGroup>;
     this.form.setRefs({ file: fileInputRef });
@@ -52,6 +59,7 @@ class AvatarForm extends Component<AvatarFormProps> {
     return `
       <div class='avatar-form'>
         <form class='avatar-form__form'>
+          {{{Error className='error_form' text=formError}}}
           {{{FileInput name='file' ref='fileInputRef' type='${InputType.FILE}'
               onChange=onFileInputChange
               accept="image/*" placeholder='Выберите файл<br>на компьютере'}}}
