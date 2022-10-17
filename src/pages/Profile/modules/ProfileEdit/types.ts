@@ -9,6 +9,7 @@ export type ProfileEditProps = {
   onSecondNameBlur: (e: FocusEvent) => void;
   onDisplayNameBlur: (e: FocusEvent) => void;
   onPhoneBlur: (e: FocusEvent) => void;
+  formError: () => Nullable<string>;
   events: {
     submit: (e: SubmitEvent) => void;
   };

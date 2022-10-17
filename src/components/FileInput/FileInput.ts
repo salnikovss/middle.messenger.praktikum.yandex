@@ -1,5 +1,6 @@
 import './FileInput.scss';
 
+import Error from 'components/Error';
 import Component from 'core/Component';
 
 import { FileInputProps, FileInputPropsWithEvents } from './types';
@@ -32,7 +33,7 @@ export default class FileInput extends Component<FileInputPropsWithEvents> {
   }
 
   setError(text = '') {
-    this.refs.errorRef.setProps({ text });
+    (this.refs.errorRef as unknown as Error).setProps({ text });
   }
 
   render() {

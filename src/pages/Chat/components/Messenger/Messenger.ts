@@ -3,6 +3,7 @@ import './Messenger.scss';
 import { ButtonType } from 'components/Button/types';
 import Component from 'core/Component';
 import registerComponent from 'core/registerComponent';
+import withStore from 'utils/withStore';
 
 import { fakeMessages } from '../../../../utils/fakeData';
 import Message from '../Message';
@@ -13,18 +14,24 @@ import { MessengerProps } from './types';
 registerComponent(MessageForm);
 registerComponent(Message);
 
-export default class Messenger extends Component<MessengerProps> {
+class Messenger extends Component<MessengerProps> {
   static componentName = 'Messenger';
 
-  constructor({ chat }: MessengerProps) {
-    super({
-      chat,
-      messages: fakeMessages,
+  constructor(props: MessengerProps) {
+    super({ ...props, messages: fakeMessages });
+    const state = this.props.store.getState();
+    this.setProps({
+      chat: () => {
+        if (state.idParam) {
+          return this.props.store.getState().chats?.find((chat) => chat.id === state.idParam);
+        }
+        return null;
+      },
     });
   }
 
   scrollToBottom() {
-    const objDiv = document.querySelector('.messenger__body');
+    const objDiv = this.element?.querySelector('.messenger__body');
 
     if (objDiv) {
       objDiv.scrollTop = objDiv.scrollHeight;
@@ -36,7 +43,7 @@ export default class Messenger extends Component<MessengerProps> {
   }
 
   render() {
-    if (!this.props.chat) {
+    if (!this.props.store.getState().idParam) {
       //template=hbs
       return `
         <div class='messenger'>
@@ -55,8 +62,9 @@ export default class Messenger extends Component<MessengerProps> {
         <div class='messenger__header'>
           <div class='messenger__chat-info'>
               <span class='messenger__chat-avatar'
-                {{#if chat.avatar}}style='background-image:url({{chat.avatar}})'{{/if}}></span>
-              <span class='messenger__chat-name'>{{chat.name}}</span>
+                {{#if chat.avatar}}style='background-image:url({{chat.avatar}})'{{/if}}>
+              </span>
+              <span class='messenger__chat-name'>{{chat.title}}</span>
           </div>
           <div class='messenger__actions'>
             {{#Button style='${ButtonStyle.ICON}' type='${ButtonType.BUTTON}'
@@ -81,3 +89,5 @@ export default class Messenger extends Component<MessengerProps> {
     `;
   }
 }
+
+export default withStore(Messenger);

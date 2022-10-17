@@ -2,6 +2,7 @@ import Handlebars from 'handlebars';
 import { nanoid } from 'nanoid';
 import log from 'utils/log';
 
+import diffObjectsDeep from '../utils/diffObjectsDeep';
 import isEqual from '../utils/isEqual';
 import EventBus, { IEventBus } from './EventBus';
 
@@ -47,6 +48,17 @@ export default class Component<T extends ComponentProps = Record<string, unknown
     eventBus.emit(Component.EVENTS.INIT, this.props);
   }
 
+  private _checkInDom() {
+    const elementInDOM = document.body.contains(this._element);
+
+    if (elementInDOM) {
+      setTimeout(() => this._checkInDom(), 1000);
+      return;
+    }
+
+    this._eventBus.emit(Component.EVENTS.FLOW_CWU, this.props);
+  }
+
   private _registerEvents(eventBus: IEventBus) {
     eventBus.on(Component.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
@@ -60,6 +72,7 @@ export default class Component<T extends ComponentProps = Record<string, unknown
   }
 
   private _componentDidMount(props: T) {
+    this._checkInDom();
     this.componentDidMount(props);
   }
 
@@ -92,15 +105,14 @@ export default class Component<T extends ComponentProps = Record<string, unknown
         // @ts-ignore
         `%c${this.constructor.componentName} componentDidUpdate`,
         'background: #222; color: #00ff60',
-        oldProps,
-        newProps
+        diffObjectsDeep.map(oldProps, newProps)
       );
     }
 
     return hasChanges;
   }
 
-  setProps = (nextProps: Partial<ComponentProps>) => {
+  setProps = (nextProps: Partial<T>) => {
     if (!nextProps) {
       return;
     }

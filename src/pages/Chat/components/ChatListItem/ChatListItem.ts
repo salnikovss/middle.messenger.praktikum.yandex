@@ -10,15 +10,13 @@ import { ChatListItemProps, ChatListItemPropsWithEvents } from './types';
 class ChatListItem extends Component<ChatListItemPropsWithEvents> {
   static componentName = 'ChatListItem';
 
-  constructor({ onClick, activeChatId, chat, ...rest }: ChatListItemProps) {
+  constructor({ onClick, chat, ...rest }: ChatListItemProps) {
     super({
       ...rest,
       chat,
-      activeChatId,
-      selected: activeChatId === chat.id,
       events: {
         click: () => {
-          if (this.props.activeChatId !== this.props.chat.id && onClick) {
+          if (this.props.store.getState().idParam !== this.props.chat.id && onClick) {
             onClick(this.props.chat.id);
           }
         },

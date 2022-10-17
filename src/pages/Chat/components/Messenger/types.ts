@@ -1,7 +1,10 @@
+import { Store } from 'core';
+
 import MessageForm from '../MessageForm';
 
 export type MessengerProps = {
-  chat: ChatModel;
+  store: Store<AppState>;
+  chat?: () => Nullable<ChatModel> | undefined;
   messages?: MessageModel[];
   messageForm?: MessageForm;
 };
