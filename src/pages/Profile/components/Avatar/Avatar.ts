@@ -23,12 +23,16 @@ export default class Avatar extends Component<AvatarProps> {
     });
   }
 
+  componentDidUpdate(oldProps: AvatarProps, newProps: AvatarProps): boolean {
+    return !this.props.editable && super.componentDidUpdate(oldProps, newProps);
+  }
+
   render() {
     if (this.props.editable) {
       //template=hbs
       return `
         <div class='avatar {{#if image}}avatar_filled{{/if}}'>
-          {{#Button style='${ButtonStyle.UNSTYLED}' class='avatar__box' onClick=onClick  ref='inRef'}}
+          {{#Button style='${ButtonStyle.UNSTYLED}' class='avatar__box' onClick=onClick}}
             <div class='avatar__inner' {{#if image}}style='background-image: url({{image}})'{{/if}}>
               <div class='avatar__hover'>Загрузить<br/>аватар</div>
             </div>

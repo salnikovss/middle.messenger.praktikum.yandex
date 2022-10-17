@@ -7,13 +7,14 @@
   --secondaryColorDarken: #11836d;
   --lightColor: #e2e2e4;
   --darkColor: #343a4f;
+  --chatListItemDateColor: #717790;
+  --chatListItemAltColor: #9898b0;
   --scrollbarBgColor: var(--primaryColor);
   --scrollbarThumbColor: var(--secondaryColor);
   --scrollbarWidth: 6px;
   --scrollbarBorder: 0 solid var(--scrollbarBgColor);
   --scrollbarBorderRadius: calc(var(--scrollbarWidth) / 4);
-  --chatListItemDateColor: #717790;
-  --chatListItemAltColor: #9898b0;
+  --modalWindowPadding: 20px;
 }
 
 html,

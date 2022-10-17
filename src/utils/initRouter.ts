@@ -26,6 +26,11 @@ const routes = [
     shouldAuthorized: true,
   },
   {
+    path: routeConsts.CHAT + '/:id',
+    component: Screens.Chat,
+    shouldAuthorized: true,
+  },
+  {
     path: routeConsts.PROFILE,
     component: Screens.Profile,
     shouldAuthorized: true,
@@ -59,10 +64,14 @@ const routes = [
 
 export default function initRouter(router: Router, store: Store<AppState>, elementId: string) {
   routes.forEach((route) => {
-    router.use(route.path, () => {
+    router.use(route.path, (routeParams?: Record<string, unknown>) => {
       const isAuthorized = Boolean(store.getState().user);
       const currentScreen = Boolean(store.getState().screen);
-      const additionalProps = { formError: null, isLoading: false };
+      const additionalProps = {
+        formError: null,
+        isLoading: false,
+        idParam: routeParams?.idParam as number,
+      };
 
       if (isAuthorized || !route.shouldAuthorized) {
         store.dispatch({ ...additionalProps, screen: route.component });
@@ -82,7 +91,7 @@ export default function initRouter(router: Router, store: Store<AppState>, eleme
 
     if (prevState.screen !== nextState.screen) {
       const Page = getScreenComponent(nextState.screen);
-      renderDOM(new Page({}), elementId);
+      renderDOM(new Page({ idParam: nextState.idParam }), elementId);
       document.title = `${Page.componentName} / Messenger App`;
     }
   });

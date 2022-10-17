@@ -1,4 +1,4 @@
-import { apiHost } from 'config/app';
+import { APIHOST } from 'config/app';
 
 import { buildPath } from './buildPath';
 import queryStringify from './queryStringify';
@@ -27,7 +27,7 @@ type Response<T> = {
 };
 
 export default class Http {
-  public static baseUrl = apiHost;
+  public static baseUrl = APIHOST;
 
   static get<T>(url: string, options: OptionsWithoutMethod = {}): Promise<Response<T>> {
     const { data } = options;

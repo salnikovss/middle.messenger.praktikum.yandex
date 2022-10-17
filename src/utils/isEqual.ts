@@ -1,17 +1,16 @@
 import isObject from './isObject';
 
-export default function isEqual(a: object, b: object): boolean {
-  if (Object.keys(a).length !== Object.keys(b).length) {
+export default function isEqual(object1: Record<string, unknown>, object2: Record<string, unknown>) {
+  const keys1 = Object.keys(object1);
+  const keys2 = Object.keys(object2);
+  if (keys1.length !== keys2.length) {
     return false;
   }
-
-  for (const aKey in a) {
-    const aV = a[aKey as keyof typeof a];
-    const bV = b[aKey as keyof typeof b];
-
-    if (isObject(aV) && isObject(bV)) {
-      return isEqual(aV, bV);
-    } else if (aV !== bV) {
+  for (const key of keys1) {
+    const val1 = object1[key];
+    const val2 = object2[key];
+    const areObjects = isObject(val1) && isObject(val2);
+    if ((areObjects && !isEqual(val1, val2)) || (!areObjects && val1 !== val2)) {
       return false;
     }
   }

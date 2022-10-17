@@ -1,7 +1,8 @@
 import { userAPI } from 'api/user';
 import { routeConsts } from 'config/routes';
 import type { Dispatch } from 'core';
-import { apiHasError, transformUser } from 'utils';
+import apiHasError from 'utils/apiHasError';
+import { transformUser } from 'utils/apiTransformers';
 
 import { fetchUser } from './auth';
 
@@ -68,5 +69,5 @@ export const updateProfileAvatar = async (
     return;
   }
 
-  dispatch(fetchUser);
+  dispatch(fetchUser, { redirectTo: null });
 };

@@ -3,12 +3,22 @@ import { MessageAuthor, MessageStatus, MessageType } from 'pages/Chat/components
 declare global {
   //Chat
   export type ChatModel = {
-    id: string;
-    name: string;
-    alt: string;
-    lastMessageTime: string;
-    unreadMessages: number;
-    avatar: string | null;
+    id: number;
+    title: string;
+    avatar: string;
+    unread_count: number;
+    last_message?: {
+      user: {
+        first_name: string;
+        second_name: string;
+        avatar: string;
+        email: string;
+        login: string;
+        phone: string;
+      };
+      time: string;
+      content: string;
+    };
   };
 
   // User

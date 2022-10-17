@@ -1,10 +1,13 @@
 import './ChatListItem.scss';
 
-import Component from 'core/Component';
+import { Component } from 'core';
+import withStore from 'utils/withStore';
 
+import isEqual from '../../../../utils/isEqual';
+import simplifyDate from '../../../../utils/simplifyDate';
 import { ChatListItemProps, ChatListItemPropsWithEvents } from './types';
 
-export default class ChatListItem extends Component<ChatListItemPropsWithEvents> {
+class ChatListItem extends Component<ChatListItemPropsWithEvents> {
   static componentName = 'ChatListItem';
 
   constructor({ onClick, activeChatId, chat, ...rest }: ChatListItemProps) {
@@ -15,17 +18,29 @@ export default class ChatListItem extends Component<ChatListItemPropsWithEvents>
       selected: activeChatId === chat.id,
       events: {
         click: () => {
-          if (this.props.activeChatId !== this.props.chat.id) {
-            if (onClick) {
-              onClick(this.props.chat.id as string);
-            }
+          if (this.props.activeChatId !== this.props.chat.id && onClick) {
+            onClick(this.props.chat.id);
           }
         },
       },
     });
+
+    this.setProps({
+      selected: () => chat.id === this.props.store.getState().idParam,
+    });
+  }
+
+  componentDidUpdate(oldProps: ChatListItemPropsWithEvents, newProps: ChatListItemPropsWithEvents): boolean {
+    return (
+      oldProps.selected != newProps.selected ||
+      !isEqual(oldProps.chat.last_message || {}, newProps.chat.last_message || {})
+    );
   }
 
   render() {
+    const { last_message } = this.props.chat;
+    const date = last_message?.time ? simplifyDate(last_message.time) : null;
+
     //template=hbs
     return `
       <div class='chat-list-item {{#if selected}}chat-list-item_selected{{/if}}' data-id='{{chat.id}}'>
@@ -36,15 +51,19 @@ export default class ChatListItem extends Component<ChatListItemPropsWithEvents>
 
         <div class='chat-list-item__data'>
           <div class='chat-list-item__row'>
-              <p class='chat-list-item__name'>{{chat.name}}</p>
-              <time class='chat-list-item__date' datetime="{{chat.lastMessageTime}}">{{chat.lastMessageTime}}</time>
+              <p class='chat-list-item__name'>{{chat.title}}</p>
+              {{#if chat.last_message}}
+              <time class='chat-list-item__date' datetime="{{chat.last_message.time}}">
+                ${date}
+              </time>
+              {{/if}}
           </div>
 
           <div class='chat-list-item__row chat-list-item__row_full-height'>
-              <p class='chat-list-item__alt'>{{chat.alt}}</p>
+              <p class='chat-list-item__alt'>{{chat.last_message.content}}</p>
               <p class='chat-list-item__unread-count'>
-                  {{#if chat.unreadMessages}}
-                      <span>{{chat.unreadMessages}}</span>
+                  {{#if chat.unread_count}}
+                      <span>{{chat.unread_count}}</span>
                   {{/if}}
               </p>
           </div>
@@ -53,3 +72,5 @@ export default class ChatListItem extends Component<ChatListItemPropsWithEvents>
     `;
   }
 }
+
+export default withStore(ChatListItem);

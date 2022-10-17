@@ -15,6 +15,7 @@ export const regexpPatterns = {
 };
 
 export const predefinedRules: ValidationRules = {
+  chet_title: [v.required()],
   first_name: [
     v.required(),
     v.regexp({ regexp: regexpPatterns.firstLastName }, 'Имя должно содержать только буквы, без пробелов'),

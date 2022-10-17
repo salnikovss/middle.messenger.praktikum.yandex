@@ -8,6 +8,7 @@ import Input from 'components/Input';
 import Textarea from 'components/Textarea';
 import Router from 'core/Router';
 import { initApp } from 'services/initApp';
+import log from 'utils/log';
 
 import Button from './components/Button';
 import FormGroup from './components/FormGroup';
@@ -39,8 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.store = store;
 
   store.on('changed', (_prevState, nextState) => {
-    // eslint-disable-next-line no-console
-    console.log('%cstore updated', 'background: #222; color: #bada55', nextState);
+    log('%cstore updated', 'background: #222; color: #bada55', nextState);
   });
 
   initRouter(router, store, '#app');

@@ -1,7 +1,7 @@
 import './Message.scss';
 
 import Component from 'core/Component';
-import { getTime } from 'utils';
+import getTime from 'utils/getTime';
 import nl2br from 'utils/nl2br';
 
 import { MessageProps } from './types';

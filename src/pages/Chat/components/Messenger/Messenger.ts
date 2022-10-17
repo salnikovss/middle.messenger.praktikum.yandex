@@ -24,8 +24,11 @@ export default class Messenger extends Component<MessengerProps> {
   }
 
   scrollToBottom() {
-    const objDiv = document.getElementsByClassName('messenger__body');
-    objDiv[0].scrollTop = objDiv[0].scrollHeight;
+    const objDiv = document.querySelector('.messenger__body');
+
+    if (objDiv) {
+      objDiv.scrollTop = objDiv.scrollHeight;
+    }
   }
 
   componentDidMount() {

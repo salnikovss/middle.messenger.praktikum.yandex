@@ -2,7 +2,7 @@ import FormGroup from 'components/FormGroup';
 import { routeConsts } from 'config/routes';
 import Component from 'core/Component';
 import { register } from 'services/auth';
-import { Form } from 'utils';
+import Form from 'utils/Form';
 import { predefinedRules } from 'utils/FormValidator';
 import withStore from 'utils/withStore';
 

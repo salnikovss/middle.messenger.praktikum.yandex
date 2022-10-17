@@ -3,7 +3,7 @@ import { InputType } from 'components/Input';
 import { routeConsts } from 'config/routes';
 import Component from 'core/Component';
 import { login } from 'services/auth';
-import { Form } from 'utils';
+import Form from 'utils/Form';
 import withStore from 'utils/withStore';
 
 import { predefinedRules } from '../../utils/FormValidator/predefinedRules';

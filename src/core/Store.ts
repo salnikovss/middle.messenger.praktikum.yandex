@@ -38,8 +38,7 @@ export default class Store<State extends Record<string, any>> extends EventBus {
 
   dispatch<T extends Partial<State> | Action<State>>(
     nextStateOrAction: T,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    payload?: T extends Action<State> ? Parameters<T>[2] : any
+    payload?: T extends Action<State> ? Parameters<T>[2] : unknown
   ) {
     if (typeof nextStateOrAction === 'function') {
       nextStateOrAction(this.dispatch.bind(this), this.state, payload);

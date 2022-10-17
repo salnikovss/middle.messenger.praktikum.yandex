@@ -1,7 +1,10 @@
+import { Store } from 'core';
+
 export type ChatListItemProps = {
   chat: ChatModel;
-  activeChatId?: string;
-  onClick?: (chatId: string) => void;
+  activeChatId?: number;
+  store: Store<AppState>;
+  onClick?: (chatId: number) => void;
 };
 
 export type ChatListItemPropsWithEvents = Omit<ChatListItemProps, 'onClick'> & {

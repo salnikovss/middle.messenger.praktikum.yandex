@@ -6,7 +6,7 @@ import Component from 'core/Component';
 import registerComponent from 'core/registerComponent';
 import Avatar from 'pages/Profile/components/Avatar';
 import ProfileFormRow from 'pages/Profile/components/ProfileFormRow';
-import { Form } from 'utils';
+import Form from 'utils/Form';
 import { predefinedRules } from 'utils/FormValidator';
 import withStore from 'utils/withStore';
 import withUser from 'utils/withUser';

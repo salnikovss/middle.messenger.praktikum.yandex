@@ -12,11 +12,14 @@ declare global {
 
   export type AppState = {
     appIsInitiated: boolean;
-    screen: Screens | null;
+    screen: Nullable<Screens>;
     isLoading: boolean;
-    formError: string | null;
-    avatarFormError: string | null;
-    user: UserModel | null;
+    isChatsLoading: boolean;
+    formError: Nullable<string>;
+    avatarFormError: Nullable<string>;
+    user: Nullable<UserModel>;
+    chats: Nullable<ChatModel[]>;
+    idParam: Nullable<number>;
   };
 
   interface Window {

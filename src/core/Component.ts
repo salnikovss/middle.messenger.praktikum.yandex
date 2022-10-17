@@ -1,5 +1,6 @@
 import Handlebars from 'handlebars';
 import { nanoid } from 'nanoid';
+import log from 'utils/log';
 
 import isEqual from '../utils/isEqual';
 import EventBus, { IEventBus } from './EventBus';
@@ -17,6 +18,8 @@ export type ComponentConstructable<T extends Record<string, unknown>> = {
 };
 
 export default class Component<T extends ComponentProps = Record<string, unknown>> {
+  static componentName: string;
+
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -82,6 +85,17 @@ export default class Component<T extends ComponentProps = Record<string, unknown
 
   componentDidUpdate(oldProps: T, newProps: T): boolean {
     const hasChanges = !isEqual(oldProps, newProps);
+
+    if (hasChanges) {
+      log(
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        `%c${this.constructor.componentName} componentDidUpdate`,
+        'background: #222; color: #00ff60',
+        oldProps,
+        newProps
+      );
+    }
 
     return hasChanges;
   }

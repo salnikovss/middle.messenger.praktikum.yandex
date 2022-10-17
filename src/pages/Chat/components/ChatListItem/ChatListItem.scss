@@ -27,6 +27,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
 
   &__row {
@@ -44,6 +45,8 @@
     line-height: 13px;
     color: var(--lightColor);
     margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &__date {
@@ -56,6 +59,8 @@
     margin-bottom: 4px;
     color: var(--chatListItemDateColor);
     align-self: flex-start;
+    flex-shrink: 0;
+    margin-left: 5px;
   }
 
   &__alt {

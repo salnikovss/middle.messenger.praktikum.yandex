@@ -1,6 +1,7 @@
 import { authAPI } from 'api/auth';
 import type { Dispatch } from 'core';
-import { apiHasError, transformUser } from 'utils';
+import apiHasError from 'utils/apiHasError';
+import { transformUser } from 'utils/apiTransformers';
 
 import { routeConsts } from '../config/routes';
 
@@ -16,6 +17,10 @@ type RegisterPayload = {
   second_name: string;
   email: string;
   phone: string;
+};
+
+type FetchUserPayload = {
+  redirectTo: Nullable<string>;
 };
 
 export const login = async (dispatch: Dispatch<AppState>, _state: AppState, action: LoginPayload) => {
@@ -54,7 +59,13 @@ export const logout = async (dispatch: Dispatch<AppState>) => {
   window.router.go(routeConsts.SIGNIN);
 };
 
-export const fetchUser = async (dispatch: Dispatch<AppState>) => {
+export const fetchUser = async (
+  dispatch: Dispatch<AppState>,
+  _state: AppState,
+  { redirectTo }: FetchUserPayload = {
+    redirectTo: routeConsts.PROFILE,
+  }
+) => {
   const { response: responseUser } = await authAPI.me();
 
   dispatch({ isLoading: false, formError: null });
@@ -66,5 +77,7 @@ export const fetchUser = async (dispatch: Dispatch<AppState>) => {
 
   dispatch({ user: transformUser(responseUser) });
 
-  window.router.go(routeConsts.PROFILE);
+  if (redirectTo) {
+    window.router.go(redirectTo);
+  }
 };

@@ -2,20 +2,16 @@ import Route from './Route';
 
 export default class Router {
   static __instance: Nullable<Router>;
-  // routes: Route[] = [];
-  private routes: Record<string, () => void> = {};
+  private routes: Record<string, (routeParams?: Record<string, unknown>) => void> = {};
   private isStarted = false;
 
   history = window.history;
   _currentRoute: Nullable<Route> = null;
-  // _rootQuery!: string;
 
   constructor() {
-    // constructor(rootQuery: string) {
     if (Router.__instance) {
       return Router.__instance;
     }
-    // this._rootQuery = rootQuery;
 
     Router.__instance = this;
   }
@@ -24,20 +20,6 @@ export default class Router {
     this.routes[hash] = callback;
     return this;
   }
-
-  // use_(
-  //   pathname: string,
-  //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //   component: ComponentConstructable<Record<string, any>>,
-  //   props: Record<string, unknown> = {},
-  //   needAuth = true
-  // ) {
-  //   const route = new Route(pathname, component, { initialProps: props, rootQuery: this._rootQuery, needAuth });
-
-  //   this.routes.push(route);
-
-  //   return this;
-  // }
 
   start() {
     if (!this.isStarted) {
@@ -49,15 +31,18 @@ export default class Router {
     }
   }
 
-  _onRoute(pathname: string) {
-    // const { pathname } = window.location;
-
-    // const route = this.getRoute(pathname);
-
-    // if (!route) {
-    //   return;
-    // }
+  private _onRoute(pathname: string) {
     const found = Object.entries(this.routes).some(([routePath, callback]) => {
+      const hasIdParameter = routePath.includes(':id');
+      if (hasIdParameter) {
+        const routeWithoutIdParameter = routePath.replace(':id', '');
+        const possibleIdParameter = parseInt(pathname.replace(routeWithoutIdParameter, ''));
+        if (possibleIdParameter > 0) {
+          callback({ idParam: Number(possibleIdParameter) });
+          return true;
+        }
+      }
+
       if (routePath === pathname) {
         callback();
         return true;
@@ -68,13 +53,6 @@ export default class Router {
     if (!found && this.routes['*']) {
       this.routes['*']();
     }
-
-    // if (this._currentRoute && this._currentRoute !== route) {
-    //   this._currentRoute.leave();
-    // }
-
-    // this._currentRoute = route;
-    // route.render();
   }
 
   go(pathname: string) {
@@ -89,8 +67,4 @@ export default class Router {
   forward() {
     this.history.forward();
   }
-
-  // getRoute(pathname: string) {
-  //   return this.routes.find((route) => route.match(pathname));
-  // }
 }

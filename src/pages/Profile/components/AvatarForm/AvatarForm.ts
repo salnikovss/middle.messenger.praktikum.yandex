@@ -3,10 +3,11 @@ import './AvatarForm.scss';
 import FormGroup from 'components/FormGroup';
 import Component from 'core/Component';
 import { updateProfileAvatar } from 'services/user';
-import { Form } from 'utils';
+import Form from 'utils/Form';
 import withStore from 'utils/withStore';
 
 import { predefinedRules } from '../../../../utils/FormValidator/predefinedRules';
+import isEqual from '../../../../utils/isEqual';
 import { InputType } from './../../../../components/Input/types';
 import { AvatarFormProps } from './types';
 
@@ -34,9 +35,12 @@ class AvatarForm extends Component<AvatarFormProps> {
 
   updateFormRefs(): void {
     // Set form refs after compontent has been mounted or updated
-    // Set form refs after compontent has been mounted
     const { fileInputRef } = this.refs as unknown as Record<string, FormGroup>;
     this.form.setRefs({ file: fileInputRef });
+  }
+
+  componentDidUpdate(oldProps: AvatarFormProps, newProps: AvatarFormProps): boolean {
+    return !isEqual(oldProps.store as Indexed, newProps.store as Indexed);
   }
 
   async onSubmit(e: SubmitEvent) {
