@@ -5,12 +5,14 @@ import { APIError, ChatDTO, UserDTO } from './types';
 type CreateRequestData = { title: string };
 type DeleteRequestData = { chatId: number };
 type AddUsersRequestData = { users: number[]; chatId: number };
-type GetUsersRequestData = { id: number };
+type DeleteUsersRequestData = { users: number[]; chatId: number };
+type GetUsersRequestData = { chatId: number };
 
 type ListResponseData = ChatDTO[] | APIError;
 type CreateResponseData = { id: number } | APIError;
 type DeleteResponseData = { userId: number; result: { id: number; title: string; avatar: string } } | APIError;
 type AddUsersResponseData = never | APIError;
+type DeleteUsersResponseData = never | APIError;
 type GetUsersResponseData = UserDTO[] | APIError;
 
 export const chatAPI = {
@@ -22,5 +24,7 @@ export const chatAPI = {
 
   addUsers: (data: AddUsersRequestData) => Http.put<AddUsersResponseData>('chats/users', { data }),
 
-  getUsers: (data: GetUsersRequestData) => Http.get<GetUsersResponseData>(`chats/${data.id}/users`, { data }),
+  deleteUsers: (data: DeleteUsersRequestData) => Http.delete<DeleteUsersResponseData>('chats/users', { data }),
+
+  getUsers: (data: GetUsersRequestData) => Http.get<GetUsersResponseData>(`chats/${data.chatId}/users`),
 };

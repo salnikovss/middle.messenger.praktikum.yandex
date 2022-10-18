@@ -1,3 +1,4 @@
+import Modal from 'components/Modal';
 import { Store } from 'core';
 
 import MessageForm from '../MessageForm';
@@ -12,4 +13,5 @@ export type MessengerProps = {
   onAddUserClick: (e: MouseEvent) => void;
   closeAddUserToChatModal: () => void;
   onDeleteUserClick: (e: MouseEvent) => void;
+  onDeleteUserModalShow: (modal: Modal) => void;
 };

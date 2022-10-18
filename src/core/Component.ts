@@ -2,7 +2,6 @@ import Handlebars from 'handlebars';
 import { nanoid } from 'nanoid';
 import log from 'utils/log';
 
-import diffObjectsDeep from '../utils/diffObjectsDeep';
 import isEqual from '../utils/isEqual';
 import EventBus, { IEventBus } from './EventBus';
 
@@ -105,7 +104,8 @@ export default class Component<T extends ComponentProps = Record<string, unknown
         // @ts-ignore
         `%c${this.constructor.componentName} componentDidUpdate`,
         'background: #222; color: #00ff60',
-        diffObjectsDeep.map(oldProps, newProps)
+        oldProps,
+        newProps
       );
     }
 
@@ -213,6 +213,7 @@ export default class Component<T extends ComponentProps = Record<string, unknown
       },
       set: (target: Record<string, unknown>, prop: string, value) => {
         const oldProps = { ...target };
+
         if (typeof target === 'object') {
           target[prop] = value;
         }

@@ -7,7 +7,7 @@ import { ModalProps, ModalPropsWithEvents } from './types';
 export default class Modal extends Component<ModalPropsWithEvents> {
   static componentName = 'Modal';
 
-  constructor({ ...rest }: ModalProps) {
+  constructor({ onShow, onClose, ...rest }: ModalProps) {
     super({
       ...rest,
       events: {
@@ -19,13 +19,22 @@ export default class Modal extends Component<ModalPropsWithEvents> {
         },
       },
     });
+
+    if (onShow) {
+      this._eventBus.on('modalShow', onShow?.bind(this, this));
+    }
+    if (onClose) {
+      this._eventBus.on('modalShow', onClose?.bind(this, this));
+    }
   }
 
   open() {
+    this._eventBus.emit('modalShow', { modal: this });
     this.element?.classList.add('modal_show');
   }
 
   close() {
+    this._eventBus.emit('modalClose', { modal: this });
     this.element?.classList.remove('modal_show');
   }
 

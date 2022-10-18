@@ -219,7 +219,9 @@ img {
   &__item-icon {
     background: var(--secondaryColor);
     padding: 2px;
-    width: auto;
+    width: 17px;
+    height: 17px;
+    text-align: center;
     display: block;
     border-radius: 8px;
     transition: background-color 0.2s ease-in-out;

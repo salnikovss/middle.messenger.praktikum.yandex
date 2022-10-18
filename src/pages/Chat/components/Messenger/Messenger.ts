@@ -1,20 +1,22 @@
 import './Messenger.scss';
 
-import { ButtonType } from 'components/Button/types';
 import Modal from 'components/Modal';
 import Component from 'core/Component';
 import registerComponent from 'core/registerComponent';
-import { deleteChat } from 'services/chat';
+import { deleteChat, deleteUsersFromChat } from 'services/chat';
+import { transformUser } from 'utils/apiTransformers';
+import isEqual from 'utils/isEqual';
 import withStore from 'utils/withStore';
 
+import { chatAPI } from '../../../../api/chat';
+import { UserDTO } from '../../../../api/types';
 import ConfirmationModal from '../../../../components/ConfirmationModal/ConfirmationModal';
 import { fakeMessages } from '../../../../utils/fakeData';
-import isEqual from '../../../../utils/isEqual';
 import AddUserForm from '../AddUserForm';
 import DeleteUserForm from '../DeleteUserForm';
 import Message from '../Message';
 import MessageForm from '../MessageForm';
-import { ButtonStyle } from './../../../../components/Button/types';
+import { ButtonStyle, ButtonType } from './../../../../components/Button/types';
 import { MessengerProps } from './types';
 
 registerComponent(AddUserForm);
@@ -35,7 +37,7 @@ class Messenger extends Component<MessengerProps> {
       },
       onDeleteUserClick: (e) => {
         e.preventDefault();
-        (this.refs.deleteUserToChatModalRef as unknown as Modal).open();
+        (this.refs.deleteUserFromChatModalRef as unknown as Modal).open();
       },
       onAddUserClick: (e) => {
         e.preventDefault();
@@ -51,7 +53,40 @@ class Messenger extends Component<MessengerProps> {
           store.dispatch(deleteChat, { chatId });
         }
       },
+      onDeleteUserModalShow: async (modal) => {
+        const chatId = this.props.store.getState().idParam;
+
+        if (chatId) {
+          const { response } = await chatAPI.getUsers({ chatId });
+          if (response) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            (this.refs.deleteUserFormRef as unknown as DeleteUserForm).setProps({
+              chatUsers: (response as UserDTO[])
+                .filter((user) => user.role !== 'admin')
+                .map((user) => transformUser(user))
+                .map((user) => {
+                  return {
+                    ...user,
+                    onClick: () => {
+                      const userId = user.id;
+                      const chatId = this.props.store.getState().idParam;
+                      if (chatId) {
+                        this.props.store.dispatch(
+                          deleteUsersFromChat,
+                          { users: [userId], chatId },
+                          modal.close.bind(modal)
+                        );
+                      }
+                    },
+                  };
+                }),
+            });
+          }
+        }
+      },
     });
+
     this.setProps({
       chat: () => {
         const state = this.props.store.getState();
@@ -63,24 +98,14 @@ class Messenger extends Component<MessengerProps> {
     });
 
     this.props.store.on('changed', (prevState: AppState, nextState: AppState) => {
-      // console.log(prevState.idParam, nextState.idParam, prevState.idParam !== nextState.idParam);
-
       if (prevState.idParam !== nextState.idParam) {
-        // console.log(this);
-
         this.scrollToBottom();
       }
     });
-
-    // this._eventBus.on(Component.EVENTS.FLOW_CDM, this.scrollToBottom.bind(this));
-    //  this._eventBus.on(Component.EVENTS.FLOW_CDU, this.updateFormRefs.bind(this));
   }
 
   componentDidUpdate(oldProps: MessengerProps, newProps: MessengerProps): boolean {
-    const oldChat = oldProps.chat && oldProps.chat();
-    const newChat = newProps.chat && newProps.chat();
-
-    return !isEqual(oldChat || {}, newChat || {});
+    return !isEqual({ idParam: oldProps.chat }, { idParam: newProps.chat });
   }
 
   scrollToBottom() {
@@ -91,9 +116,9 @@ class Messenger extends Component<MessengerProps> {
     }
   }
 
-  // componentDidMount() {
-  //   this.scrollToBottom();
-  // }
+  componentDidMount() {
+    this.scrollToBottom();
+  }
 
   render() {
     const chat = this.props.chat && this.props.chat();
@@ -164,10 +189,10 @@ class Messenger extends Component<MessengerProps> {
 
         {{#Modal title='Добавить пользователя в чат' ref='addUserToChatModalRef'}}
           {{{AddUserForm closeModal=closeAddUserToChatModal}}}
-          {{/Modal}}
+        {{/Modal}}
 
-        {{#Modal title='Удалить пользователя из чата' ref='deleteUserToChatModalRef'}}
-          {{{DeleteUserForm closeModal=closeAddUserToChatModal}}}
+        {{#Modal title='Удалить пользователя из чата' ref='deleteUserFromChatModalRef' onShow=onDeleteUserModalShow}}
+          {{{DeleteUserForm closeModal=closeAddUserToChatModal ref='deleteUserFormRef'}}}
         {{/Modal}}
       </div>
     `;

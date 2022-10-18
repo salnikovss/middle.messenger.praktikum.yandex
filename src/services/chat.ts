@@ -115,3 +115,25 @@ export async function addUsersToChat(
     successCallback();
   }
 }
+export async function deleteUsersFromChat(
+  dispatch: Dispatch<AppState>,
+  _state: AppState,
+  action: AddUsersToChatPayload,
+  successCallback?: () => void
+) {
+  dispatch({ isLoading: true, formError: null });
+
+  const { response } = await chatAPI.deleteUsers(action);
+
+  if (apiHasError(response)) {
+    log('Add users to chat error', response);
+    dispatch({ isLoading: false, formError: response.reason });
+    return;
+  }
+
+  dispatch({ isLoading: false, formSuccess: 'Чат создан' });
+
+  if (typeof successCallback === 'function') {
+    successCallback();
+  }
+}

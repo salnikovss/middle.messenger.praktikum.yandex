@@ -7,9 +7,10 @@ export type FoundUsersProp = UserModel & {
 export type AddUserFormProps = {
   closeModal?: () => void;
   store: Store<AppState>;
+  foundUsers?: UserModel[] ,
   onLoginBlur: (e: FocusEvent) => void;
   formError: () => void;
-  foundUsers?: Nullable<() => FoundUsersProp[] | undefined>;
+  // foundUsers?: FoundUsersProp[] | undefined;
   events: {
     submit: (e: SubmitEvent) => void;
   };

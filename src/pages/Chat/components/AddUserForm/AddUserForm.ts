@@ -5,13 +5,15 @@ import FormGroup from 'components/FormGroup';
 import Component from 'core/Component';
 import { addUsersToChat } from 'services/chat';
 import Form from 'utils/Form';
+import log from 'utils/log';
 import withStore from 'utils/withStore';
 
-import { searchUserByLogin } from '../../../../services/user';
+import { userAPI } from '../../../../api/user';
+import apiHasError from '../../../../utils/apiHasError';
+import { transformUser } from '../../../../utils/apiTransformers';
 import { predefinedRules } from '../../../../utils/FormValidator/predefinedRules';
-import isEqual from '../../../../utils/isEqual';
 import { ButtonStyle } from './../../../../components/Button/types';
-import { AddUserFormProps, FoundUsersProp } from './types';
+import { AddUserFormProps } from './types';
 
 class AddUserForm extends Component<AddUserFormProps> {
   static componentName = 'AddUserForm';
@@ -29,10 +31,6 @@ class AddUserForm extends Component<AddUserFormProps> {
     });
     this.setProps({
       formError: () => this.props.store?.getState().formError,
-      foundUsers: () =>
-        this.props.store?.getState().foundUsers?.map((user) => {
-          return { ...user, onClick: () => this.onAddClick(user.id) } as FoundUsersProp;
-        }),
     });
 
     this._eventBus.on(Component.EVENTS.FLOW_CDM, this.updateFormRefs.bind(this));
@@ -44,6 +42,7 @@ class AddUserForm extends Component<AddUserFormProps> {
     if (chatId) {
       this.props.store.dispatch(addUsersToChat, { users: [userId], chatId }, () => {
         this.props.closeModal && this.props.closeModal();
+        this.props.store.dispatch({ foundUsers: null });
       });
     }
   };
@@ -62,26 +61,30 @@ class AddUserForm extends Component<AddUserFormProps> {
 
     if (!this.form.hasErrors) {
       const formValues = this.form.getValues();
-      this.props.store.dispatch(searchUserByLogin, { login: formValues.login });
+
+      // this.props.store.dispatch(searchUserByLogin, { login: formValues.login });
+      const { response } = await userAPI.search({ login: formValues.login });
+      if (apiHasError(response)) {
+        log('Search user error', response);
+        this.props.store.dispatch({ isLoading: false, formError: response.reason });
+      } else {
+        const foundUsers = response
+          .map((user) => transformUser(user))
+          .map((user) => {
+            return {
+              ...user,
+              onClick: () => this.onAddClick(user.id),
+            };
+          });
+
+        this.setProps({ foundUsers });
+      }
     }
   }
 
-  componentDidUpdate(oldProps: AddUserFormProps, newProps: AddUserFormProps): boolean {
-    const oldFoundUsers = oldProps.foundUsers && oldProps.foundUsers();
-    const newFoundUsers = newProps.foundUsers && newProps.foundUsers();
-
-    const oldFormError = oldProps.formError && oldProps.formError();
-    const newFormError = newProps.formError && newProps.formError();
-
-    return !isEqual(
-      { foundUsers: oldFoundUsers, formError: oldFormError },
-      { foundUsers: newFoundUsers, formError: newFormError }
-    );
-  }
-
   render() {
-    const foundUsers = this.props.foundUsers && this.props.foundUsers();
-    const showUsersSearchResults = Array.isArray(foundUsers) ? foundUsers.length : false;
+    const foundUsers = this.props.foundUsers;
+    const showUsersSearchResult = Array.isArray(foundUsers) ? foundUsers.length : false;
 
     //template=hbs
     return `
@@ -93,6 +96,7 @@ class AddUserForm extends Component<AddUserFormProps> {
                 style='lighter' ref='loginInput' onBlur=onLoginBlur}}}
 
             {{#Button}}Найти{{/Button}}
+        </form>
         </form>
 
         {{#if foundUsers}}
@@ -113,7 +117,7 @@ class AddUserForm extends Component<AddUserFormProps> {
           </ul>
         {{/if}}
         ${
-          showUsersSearchResults === 0
+          showUsersSearchResult === 0
             ? `<p class='found-users-list__not-found'>Пользователи с таким логином не найдены</p>`
             : ''
         }
