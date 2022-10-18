@@ -7,4 +7,6 @@ export type MessengerProps = {
   chat?: () => Nullable<ChatModel> | undefined;
   messages?: MessageModel[];
   messageForm?: MessageForm;
+  onDeleteChatClick: (e: MouseEvent) => void;
+  onDeleteChatConfirm: () => void;
 };

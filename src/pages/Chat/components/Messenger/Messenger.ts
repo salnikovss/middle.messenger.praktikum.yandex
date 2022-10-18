@@ -3,8 +3,10 @@ import './Messenger.scss';
 import { ButtonType } from 'components/Button/types';
 import Component from 'core/Component';
 import registerComponent from 'core/registerComponent';
+import { deleteChat } from 'services/chat';
 import withStore from 'utils/withStore';
 
+import ConfirmationModal from '../../../../components/ConfirmationModal/ConfirmationModal';
 import { fakeMessages } from '../../../../utils/fakeData';
 import Message from '../Message';
 import MessageForm from '../MessageForm';
@@ -18,7 +20,21 @@ class Messenger extends Component<MessengerProps> {
   static componentName = 'Messenger';
 
   constructor(props: MessengerProps) {
-    super({ ...props, messages: fakeMessages });
+    super({
+      ...props,
+      messages: fakeMessages,
+      onDeleteChatClick: (e) => {
+        e.preventDefault();
+        (this.refs.deleteChatModalRef as unknown as ConfirmationModal).open();
+      },
+      onDeleteChatConfirm: () => {
+        const { store } = this.props;
+        const chatId = store.getState().idParam;
+        if (chatId) {
+          store.dispatch(deleteChat, { chatId });
+        }
+      },
+    });
     this.setProps({
       chat: () => {
         const state = this.props.store.getState();
@@ -85,9 +101,16 @@ class Messenger extends Component<MessengerProps> {
                 <span class="dot"></span><span class="dot"></span><span class="dot"></span>
             {{/Button}}
             <div class="dropdown__items">
-              {{{Link class='dropdown__item' text='<i class="i i_plus"></i><span>Добавить пользователя</span>'}}}
+              {{{Link
+                class='dropdown__item'
+                text='<i class="i i_plus"></i><span>Добавить пользователя</span>'
+              }}}
               {{{Link class='dropdown__item' text='<i class="i i_cross"></i><span>Удалить пользователя</span>'}}}
-              {{{Link class='dropdown__item' text='<i class="i i_trash"></i><span>Удалить чат</span>'}}}
+              {{{Link
+                class='dropdown__item'
+                text='<i class="i i_trash"></i><span>Удалить чат</span>'
+                onClick=onDeleteChatClick
+              }}}
             </div>
           </div>
         </div>
@@ -103,6 +126,12 @@ class Messenger extends Component<MessengerProps> {
         <div class='messenger__footer'>
             {{{MessageForm}}}
         </div>
+
+        {{{ConfirmationModal
+            title='Вы уверены что хотите удалить этот чат?'
+            ref='deleteChatModalRef'
+            onConfirm=onDeleteChatConfirm
+        }}}
       </div>
     `;
   }

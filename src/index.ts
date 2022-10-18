@@ -2,6 +2,7 @@ import './index.scss';
 
 import BackButtonWrapper from 'components/BackButtonWrapper';
 import CenteredBox from 'components/CenteredBox';
+import ConfirmationModal from 'components/ConfirmationModal';
 import { default as ErrorComponent } from 'components/Error';
 import FileInput from 'components/FileInput';
 import Input from 'components/Input';
@@ -29,6 +30,7 @@ function registerComponents() {
   registerComponent(CenteredBox);
   registerComponent(BackButtonWrapper);
   registerComponent(Modal);
+  registerComponent(ConfirmationModal);
 }
 
 document.addEventListener('DOMContentLoaded', () => {

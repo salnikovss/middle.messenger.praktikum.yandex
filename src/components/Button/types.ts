@@ -6,6 +6,7 @@ export enum ButtonType {
 
 export enum ButtonStyle {
   PRIMARY = 'primary',
+  DANGER = 'danger',
   ICON = 'icon',
   UNSTYLED = 'unstyled',
 }

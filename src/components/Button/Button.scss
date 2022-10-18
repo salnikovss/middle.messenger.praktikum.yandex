@@ -38,4 +38,13 @@
       background: var(--secondaryColorDarken);
     }
   }
+
+  &_danger {
+    background: var(--dangerColor);
+    color: var(--lightColor);
+
+    &:hover {
+      background: var(--dangerColorDarken);
+    }
+  }
 }

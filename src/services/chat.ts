@@ -10,6 +10,10 @@ type CreateChatPayload = {
   title: string;
 };
 
+type DeleteChatPayload = {
+  chatId: number;
+};
+
 export const getChats = async (dispatch: Dispatch<AppState>) => {
   dispatch({ isLoading: true, formError: null });
   const { response } = await chatAPI.list();
@@ -54,11 +58,32 @@ export async function createChat(
   //   chatId: createdChatId,
   //   chats: chatsResponse,
   // });
-  dispatch({
-    chats: chatsResponse,
-  });
+  dispatch({ chats: chatsResponse, isChatsLoading: false });
 
   if (typeof successCallback === 'function') {
     successCallback();
   }
+}
+
+export async function deleteChat(dispatch: Dispatch<AppState>, _state: AppState, action: DeleteChatPayload) {
+  dispatch({ isLoading: true, isChatsLoading: true, formError: null });
+
+  const { response } = await chatAPI.delete(action);
+
+  if (apiHasError(response)) {
+    log('Delete chat error', response);
+    dispatch({ isLoading: false, isChatsLoading: false, formError: response.reason });
+    return;
+  }
+
+  const { response: chatsResponse } = await chatAPI.list();
+  if (apiHasError(chatsResponse)) {
+    log('Fetch chat list error', response);
+    dispatch({ isLoading: false, isChatsLoading: false, formError: chatsResponse.reason });
+    return;
+  }
+
+  window.router.go(routeConsts.CHAT);
+
+  dispatch({ chats: chatsResponse, isChatsLoading: false });
 }
