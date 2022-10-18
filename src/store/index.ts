@@ -4,8 +4,10 @@ export const defaultState: AppState = {
   isChatsLoading: false,
   screen: null,
   formError: null,
+  formSuccess: null,
   avatarFormError: null,
   user: null,
   chats: null,
   idParam: null,
+  foundUsers: null
 };

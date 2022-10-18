@@ -32,7 +32,7 @@ export default class Modal extends Component<ModalPropsWithEvents> {
   render() {
     //template=hbs
     return `
-      <div class='modal'>
+      <div class='modal custom-scrollbar'>
         <div class="modal__content">
           {{#if title}}
             <div class="modal__head">

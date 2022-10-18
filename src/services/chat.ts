@@ -14,6 +14,11 @@ type DeleteChatPayload = {
   chatId: number;
 };
 
+type AddUsersToChatPayload = {
+  users: number[];
+  chatId: number;
+};
+
 export const getChats = async (dispatch: Dispatch<AppState>) => {
   dispatch({ isLoading: true, formError: null });
   const { response } = await chatAPI.list();
@@ -58,7 +63,7 @@ export async function createChat(
   //   chatId: createdChatId,
   //   chats: chatsResponse,
   // });
-  dispatch({ chats: chatsResponse, isChatsLoading: false });
+  dispatch({ chats: chatsResponse, isLoading: false, isChatsLoading: false, formSuccess: 'Чат создан' });
 
   if (typeof successCallback === 'function') {
     successCallback();
@@ -85,5 +90,28 @@ export async function deleteChat(dispatch: Dispatch<AppState>, _state: AppState,
 
   window.router.go(routeConsts.CHAT);
 
-  dispatch({ chats: chatsResponse, isChatsLoading: false });
+  dispatch({ chats: chatsResponse, isChatsLoading: false, formSuccess: 'Чат удален' });
+}
+
+export async function addUsersToChat(
+  dispatch: Dispatch<AppState>,
+  _state: AppState,
+  action: AddUsersToChatPayload,
+  successCallback?: () => void
+) {
+  dispatch({ isLoading: true, formError: null });
+
+  const { response } = await chatAPI.addUsers(action);
+
+  if (apiHasError(response)) {
+    log('Add users to chat error', response);
+    dispatch({ isLoading: false, formError: response.reason });
+    return;
+  }
+
+  dispatch({ isLoading: false, formSuccess: 'Чат создан' });
+
+  if (typeof successCallback === 'function') {
+    successCallback();
+  }
 }

@@ -11,6 +11,7 @@ export type UserDTO = {
   avatar: string;
   phone: string;
   email: string;
+  role?: string;
 };
 
 export type ChatLastMessageDTO = {

@@ -1,6 +1,6 @@
 import { APIHOST } from 'config/app';
 
-import { buildPath } from './buildPath';
+import buildPath from './buildPath';
 import queryStringify from './queryStringify';
 
 enum Method {

@@ -15,6 +15,7 @@ export const regexpPatterns = {
 };
 
 export const predefinedRules: ValidationRules = {
+  search_login: [v.required()],
   chet_title: [v.required()],
   first_name: [
     v.required(),

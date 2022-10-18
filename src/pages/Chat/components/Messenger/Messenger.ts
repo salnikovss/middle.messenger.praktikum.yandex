@@ -1,6 +1,7 @@
 import './Messenger.scss';
 
 import { ButtonType } from 'components/Button/types';
+import Modal from 'components/Modal';
 import Component from 'core/Component';
 import registerComponent from 'core/registerComponent';
 import { deleteChat } from 'services/chat';
@@ -8,11 +9,16 @@ import withStore from 'utils/withStore';
 
 import ConfirmationModal from '../../../../components/ConfirmationModal/ConfirmationModal';
 import { fakeMessages } from '../../../../utils/fakeData';
+import isEqual from '../../../../utils/isEqual';
+import AddUserForm from '../AddUserForm';
+import DeleteUserForm from '../DeleteUserForm';
 import Message from '../Message';
 import MessageForm from '../MessageForm';
 import { ButtonStyle } from './../../../../components/Button/types';
 import { MessengerProps } from './types';
 
+registerComponent(AddUserForm);
+registerComponent(DeleteUserForm);
 registerComponent(MessageForm);
 registerComponent(Message);
 
@@ -26,6 +32,17 @@ class Messenger extends Component<MessengerProps> {
       onDeleteChatClick: (e) => {
         e.preventDefault();
         (this.refs.deleteChatModalRef as unknown as ConfirmationModal).open();
+      },
+      onDeleteUserClick: (e) => {
+        e.preventDefault();
+        (this.refs.deleteUserToChatModalRef as unknown as Modal).open();
+      },
+      onAddUserClick: (e) => {
+        e.preventDefault();
+        (this.refs.addUserToChatModalRef as unknown as Modal).open();
+      },
+      closeAddUserToChatModal: () => {
+        (this.refs.addUserToChatModalRef as unknown as Modal).close();
       },
       onDeleteChatConfirm: () => {
         const { store } = this.props;
@@ -57,6 +74,13 @@ class Messenger extends Component<MessengerProps> {
 
     // this._eventBus.on(Component.EVENTS.FLOW_CDM, this.scrollToBottom.bind(this));
     //  this._eventBus.on(Component.EVENTS.FLOW_CDU, this.updateFormRefs.bind(this));
+  }
+
+  componentDidUpdate(oldProps: MessengerProps, newProps: MessengerProps): boolean {
+    const oldChat = oldProps.chat && oldProps.chat();
+    const newChat = newProps.chat && newProps.chat();
+
+    return !isEqual(oldChat || {}, newChat || {});
   }
 
   scrollToBottom() {
@@ -104,8 +128,13 @@ class Messenger extends Component<MessengerProps> {
               {{{Link
                 class='dropdown__item'
                 text='<i class="i i_plus"></i><span>Добавить пользователя</span>'
+                onClick=onAddUserClick
               }}}
-              {{{Link class='dropdown__item' text='<i class="i i_cross"></i><span>Удалить пользователя</span>'}}}
+              {{{Link
+                class='dropdown__item'
+                text='<i class="i i_cross"></i><span>Удалить пользователя</span>'
+                onClick=onDeleteUserClick
+              }}}
               {{{Link
                 class='dropdown__item'
                 text='<i class="i i_trash"></i><span>Удалить чат</span>'
@@ -132,6 +161,14 @@ class Messenger extends Component<MessengerProps> {
             ref='deleteChatModalRef'
             onConfirm=onDeleteChatConfirm
         }}}
+
+        {{#Modal title='Добавить пользователя в чат' ref='addUserToChatModalRef'}}
+          {{{AddUserForm closeModal=closeAddUserToChatModal}}}
+          {{/Modal}}
+
+        {{#Modal title='Удалить пользователя из чата' ref='deleteUserToChatModalRef'}}
+          {{{DeleteUserForm closeModal=closeAddUserToChatModal}}}
+        {{/Modal}}
       </div>
     `;
   }

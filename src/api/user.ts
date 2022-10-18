@@ -21,18 +21,31 @@ type UpdateProfileRequestData = {
   phone: string;
 };
 
+type SearchRequestData = {
+  login: string;
+};
+
 type UpdateProfileAvatarRequestData = FormData;
 
-type UpdatePasswordResponseData = APIError;
+type UpdatePasswordResponseData = never | APIError;
 type UpdateProfileResponseData = UserDTO | APIError;
 type UpdateProfileAvatarResponseData = UserDTO | APIError;
+type SearchResponseData = UserDTO[] | APIError;
 
 export const userAPI = {
-  updatePassword: (data: UpdatePasswordRequestData) => Http.put<UpdatePasswordResponseData>('user/password', { data }),
+  updatePassword: (data: UpdatePasswordRequestData) => {
+    return Http.put<UpdatePasswordResponseData>('user/password', { data });
+  },
 
-  updateProfile: (data: UpdateProfileRequestData) => Http.put<UpdateProfileResponseData>('user/profile', { data }),
+  updateProfile: (data: UpdateProfileRequestData) => {
+    return Http.put<UpdateProfileResponseData>('user/profile', { data });
+  },
 
   updateProfileAvatar: (data: UpdateProfileAvatarRequestData) => {
     return Http.put<UpdateProfileAvatarResponseData>('user/profile/avatar', { data, headers: {} });
+  },
+
+  search: (data: SearchRequestData) => {
+    return Http.post<SearchResponseData>('user/search', { data });
   },
 };

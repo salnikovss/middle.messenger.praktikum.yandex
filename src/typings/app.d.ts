@@ -16,10 +16,12 @@ declare global {
     isLoading: boolean;
     isChatsLoading: boolean;
     formError: Nullable<string>;
+    formSuccess: Nullable<string>;
     avatarFormError: Nullable<string>;
     user: Nullable<UserModel>;
     chats: Nullable<ChatModel[]>;
     idParam: Nullable<number>;
+    foundUsers: Nullable<UserModel[]>;
   };
 
   interface Window {

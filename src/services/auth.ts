@@ -24,7 +24,7 @@ type FetchUserPayload = {
 };
 
 export const login = async (dispatch: Dispatch<AppState>, _state: AppState, action: LoginPayload) => {
-  dispatch({ isLoading: true });
+  dispatch({ isLoading: true, formSuccess: null, formError: null,  });
 
   const { response } = await authAPI.signin(action);
 
@@ -37,7 +37,7 @@ export const login = async (dispatch: Dispatch<AppState>, _state: AppState, acti
 };
 
 export const register = async (dispatch: Dispatch<AppState>, _state: AppState, action: RegisterPayload) => {
-  dispatch({ isLoading: true });
+  dispatch({ isLoading: true, formSuccess: null, formError: null,  });
 
   const { response } = await authAPI.signup(action);
 
@@ -50,7 +50,7 @@ export const register = async (dispatch: Dispatch<AppState>, _state: AppState, a
 };
 
 export const logout = async (dispatch: Dispatch<AppState>) => {
-  dispatch({ isLoading: true });
+  dispatch({ isLoading: true, formSuccess: null, formError: null,  });
 
   await authAPI.logout();
 
