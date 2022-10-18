@@ -13,10 +13,7 @@ export default function withStore<P extends WithStateProps>(WrappedBlock: Compon
     }
 
     __onChangeStoreCallback = () => {
-      /**
-       * TODO: прокидывать не целый стор, а необходимые поля
-       * с помощью метода mapStateToProps
-       */
+      // TODO: прокидывать не целый стор, а необходимые поля с помощью метода mapStateToProps
       // @ts-expect-error this is not typed
       this.setProps({ ...this.props, store: window.store });
     };

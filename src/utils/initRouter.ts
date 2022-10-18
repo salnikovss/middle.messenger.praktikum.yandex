@@ -7,8 +7,8 @@ import { getScreenComponent, Screens } from './screenList';
 const routes = [
   {
     path: routeConsts.HOME,
-    component: Screens.SignIn,
-    shouldAuthorized: false,
+    component: Screens.Chat,
+    shouldAuthorized: true,
   },
   {
     path: routeConsts.SIGNUP,

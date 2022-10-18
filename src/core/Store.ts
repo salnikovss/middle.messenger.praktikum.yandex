@@ -4,10 +4,10 @@ import mergeDeep from '../utils/mergeDeep';
 import EventBus from './EventBus';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Dispatch<State> = (nextStateOrAction: Partial<State> | Action<State>, payload?: any) => void;
+export type Dispatch<State> = (nextStateOrAction: Partial<State> | Action<State>, payload?: unknown) => void;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Action<State> = (dispatch: Dispatch<State>, state: State, payload: any) => void;
+export type Action<State> = (dispatch: Dispatch<State>, state: State, payload: any, ...rest: any[]) => void;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default class Store<State extends Record<string, any>> extends EventBus {
@@ -38,10 +38,15 @@ export default class Store<State extends Record<string, any>> extends EventBus {
 
   dispatch<T extends Partial<State> | Action<State>>(
     nextStateOrAction: T,
-    payload?: T extends Action<State> ? Parameters<T>[2] : unknown
-  ) {
+    payload?: T extends Action<State> ? Parameters<T>[2] : unknown,
+    ...rest: unknown[]
+  ): void {
     if (typeof nextStateOrAction === 'function') {
-      nextStateOrAction(this.dispatch.bind(this), this.state, payload);
+      if (Array.isArray(rest)) {
+        nextStateOrAction(this.dispatch.bind(this), this.state, payload, ...rest);
+      } else {
+        nextStateOrAction(this.dispatch.bind(this), this.state, payload);
+      }
     } else {
       this.set({ ...this.state, ...nextStateOrAction });
     }

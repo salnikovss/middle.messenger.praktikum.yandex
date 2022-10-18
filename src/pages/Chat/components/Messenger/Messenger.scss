@@ -46,8 +46,10 @@
         margin-top: 3px;
       }
     }
+  }
 
-    &:focus {
+  &__actions:hover {
+    .messenger__dots-button {
       background: #353a51;
 
       .dot {

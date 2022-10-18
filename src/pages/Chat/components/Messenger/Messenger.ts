@@ -19,15 +19,28 @@ class Messenger extends Component<MessengerProps> {
 
   constructor(props: MessengerProps) {
     super({ ...props, messages: fakeMessages });
-    const state = this.props.store.getState();
     this.setProps({
       chat: () => {
+        const state = this.props.store.getState();
         if (state.idParam) {
-          return this.props.store.getState().chats?.find((chat) => chat.id === state.idParam);
+          return state.chats?.find((chat) => chat.id === state.idParam);
         }
         return null;
       },
     });
+
+    this.props.store.on('changed', (prevState: AppState, nextState: AppState) => {
+      // console.log(prevState.idParam, nextState.idParam, prevState.idParam !== nextState.idParam);
+
+      if (prevState.idParam !== nextState.idParam) {
+        // console.log(this);
+
+        this.scrollToBottom();
+      }
+    });
+
+    // this._eventBus.on(Component.EVENTS.FLOW_CDM, this.scrollToBottom.bind(this));
+    //  this._eventBus.on(Component.EVENTS.FLOW_CDU, this.updateFormRefs.bind(this));
   }
 
   scrollToBottom() {
@@ -38,19 +51,19 @@ class Messenger extends Component<MessengerProps> {
     }
   }
 
-  componentDidMount() {
-    this.scrollToBottom();
-  }
+  // componentDidMount() {
+  //   this.scrollToBottom();
+  // }
 
   render() {
-    if (!this.props.store.getState().idParam) {
+    const chat = this.props.chat && this.props.chat();
+
+    if (!chat) {
       //template=hbs
       return `
         <div class='messenger'>
           <div class='messenger__empty messenger__empty_centered'>
-            <p class='messenger__alert'>
-              Выберите чат чтобы отправить сообщение
-            </p>
+            <p class='messenger__alert'>Выберите чат чтобы отправить сообщение</p>
           </div>
         </div>
       `;
@@ -62,15 +75,20 @@ class Messenger extends Component<MessengerProps> {
         <div class='messenger__header'>
           <div class='messenger__chat-info'>
               <span class='messenger__chat-avatar'
-                {{#if chat.avatar}}style='background-image:url({{chat.avatar}})'{{/if}}>
+                ${chat.avatar && `style='background-image:url(${chat.avatar})'`}>
               </span>
-              <span class='messenger__chat-name'>{{chat.title}}</span>
+              <span class='messenger__chat-name'>${chat.title}</span>
           </div>
-          <div class='messenger__actions'>
+          <div class='messenger__actions dropdown'>
             {{#Button style='${ButtonStyle.ICON}' type='${ButtonType.BUTTON}'
-              className='messenger__dots-button'}}
+              className='messenger__dots-button dropdown__toggler'}}
                 <span class="dot"></span><span class="dot"></span><span class="dot"></span>
             {{/Button}}
+            <div class="dropdown__items">
+              {{{Link class='dropdown__item' text='<i class="i i_plus"></i><span>Добавить пользователя</span>'}}}
+              {{{Link class='dropdown__item' text='<i class="i i_cross"></i><span>Удалить пользователя</span>'}}}
+              {{{Link class='dropdown__item' text='<i class="i i_trash"></i><span>Удалить чат</span>'}}}
+            </div>
           </div>
         </div>
         <div class='messenger__body custom-scrollbar'>

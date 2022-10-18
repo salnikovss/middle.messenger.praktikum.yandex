@@ -16,15 +16,17 @@ class ChatList extends Component<ChatListProps> {
   constructor(props: ChatListProps) {
     super(props);
 
-    const { chats } = this.props.store.getState();
     this.setProps({
       chats: () =>
-        chats?.map((chat) => {
-          return {
-            ...chat,
-            onClick: (chatId: number) => this.onClick(chatId),
-          } as unknown as ChatListItemProps;
-        }),
+        this.props.store
+          .getState()
+          .chats?.filter((chat) => !this.props.filter || chat.title.search(this.props.filter) > -1)
+          .map((chat) => {
+            return {
+              ...chat,
+              onClick: (chatId: number) => this.onClick(chatId),
+            } as unknown as ChatListItemProps;
+          }),
     });
   }
 

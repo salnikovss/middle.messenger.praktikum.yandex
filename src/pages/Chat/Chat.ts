@@ -26,6 +26,11 @@ class Chat extends Component<ChatProps> {
         e.preventDefault();
         (this.refs.addChatModalRef as unknown as Modal).open();
       },
+      onSearch: (searchTerm) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        (this.refs.chatlistRef as unknown as ChatList).setProps({ filter: searchTerm });
+      },
     });
   }
 
@@ -39,10 +44,10 @@ class Chat extends Component<ChatProps> {
             {{{Link text='Профиль' class='chat__top-link chat__profile-link' to='${routeConsts.PROFILE}' }}}
           </div>
           <div class='chat__search-box'>
-            {{{SearchBox}}}
+            {{{SearchBox onSearch=onSearch}}}
           </div>
           <div class='chat__chat-list custom-scrollbar'>
-              {{{ChatList}}}
+              {{{ChatList ref='chatlistRef'}}}
           </div>
         </aside>
         <div class='chat__right-pane'>

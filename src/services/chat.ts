@@ -21,7 +21,12 @@ export const getChats = async (dispatch: Dispatch<AppState>) => {
   dispatch({ isLoading: false, chats });
 };
 
-export async function createChat(dispatch: Dispatch<AppState>, _state: AppState, action: CreateChatPayload) {
+export async function createChat(
+  dispatch: Dispatch<AppState>,
+  _state: AppState,
+  action: CreateChatPayload,
+  successCallback?: () => void
+) {
   dispatch({ isLoading: true, isChatsLoading: true, formError: null });
 
   const { response } = await chatAPI.create(action);
@@ -52,4 +57,8 @@ export async function createChat(dispatch: Dispatch<AppState>, _state: AppState,
   dispatch({
     chats: chatsResponse,
   });
+
+  if (typeof successCallback === 'function') {
+    successCallback();
+  }
 }
