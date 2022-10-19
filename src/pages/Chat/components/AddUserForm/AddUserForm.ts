@@ -62,7 +62,6 @@ class AddUserForm extends Component<AddUserFormProps> {
     if (!this.form.hasErrors) {
       const formValues = this.form.getValues();
 
-      // this.props.store.dispatch(searchUserByLogin, { login: formValues.login });
       const { response } = await userAPI.search({ login: formValues.login });
       if (apiHasError(response)) {
         log('Search user error', response);
@@ -89,7 +88,7 @@ class AddUserForm extends Component<AddUserFormProps> {
     //template=hbs
     return `
       <div class='add-user-form'>
-        <form>
+        <form class='add-user-form__form'>
             {{{Error className='error_form' text=formError}}}
 
             {{{FormGroup label='Имя пользователя' name='login'
@@ -97,24 +96,30 @@ class AddUserForm extends Component<AddUserFormProps> {
 
             {{#Button}}Найти{{/Button}}
         </form>
-        </form>
 
         {{#if foundUsers}}
-          <ul class='found-users-list'>
-          {{#each foundUsers}}
-            <li class='found-users-list__item'>
-              {{#Button
-                type='${ButtonType.BUTTON}'
-                style='${ButtonStyle.UNSTYLED}'
-                onClick=this.onClick
-                className='found-users-list__item-button'
-              }}
-                <span class='found-users-list__item-login'>{{this.login}}</span>
-                <span class='found-users-list__item-icon'>+</span>
-              {{/Button}}
-            </li>
-          {{/each}}
-          </ul>
+          <div class='found-users-list found-users-list_max-height-250 custom-scrollbar'>
+            <ul class='found-users-list__inner'>
+            {{#each foundUsers}}
+              <li class='found-users-list__item'>
+                {{#Button
+                  type='${ButtonType.BUTTON}'
+                  style='${ButtonStyle.UNSTYLED}'
+                  onClick=this.onClick
+                  className='found-users-list__item-button'
+                }}
+                  <span class='found-users-list__item-avatar'>
+                      <span class='found-users-list__item-avatar-image'
+                          {{#if this.avatar}}style='background-image:url({{this.avatar}})'{{/if}}>
+                      </span>
+                  </span>
+                  <span class='found-users-list__item-login'>{{this.login}}</span>
+                  <i class='i i_plus'></i>
+                {{/Button}}
+              </li>
+            {{/each}}
+            </ul>
+          </div>
         {{/if}}
         ${
           showUsersSearchResult === 0

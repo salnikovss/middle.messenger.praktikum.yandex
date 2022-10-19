@@ -1,5 +1,3 @@
-import './DeleteUserForm.scss';
-
 import { ButtonType } from 'components/Button/types';
 import Component from 'core/Component';
 import { deleteUsersFromChat } from 'services/chat';
@@ -20,10 +18,6 @@ class DeleteUserForm extends Component<DeleteUserFormProps> {
     }
   };
 
-  // componentDidUpdate(oldProps: CreateChatFormProps, newProps: CreateChatFormProps): boolean {
-  //   return oldProps.formError !== newProps.formError;
-  // }
-
   render() {
     const foundUsers = this.props.chatUsers;
 
@@ -31,23 +25,30 @@ class DeleteUserForm extends Component<DeleteUserFormProps> {
 
     //template=hbs
     return `
-      <div class='add-user-form'>
+      <div class='delete-user-form'>
         {{#if chatUsers}}
-          <ul class='found-users-list'>
-          {{#each chatUsers}}
-            <li class='found-users-list__item'>
-              {{#Button
-                type='${ButtonType.BUTTON}'
-                style='${ButtonStyle.UNSTYLED}'
-                onClick=this.onClick
-                className='found-users-list__item-button'
-              }}
-                <span class='found-users-list__item-login'>{{this.login}}</span>
-                <span class='found-users-list__item-icon'>-</span>
-              {{/Button}}
-            </li>
-          {{/each}}
-          </ul>
+          <div class='found-users-list custom-scrollbar'>
+            <ul class='found-users-list__inner'>
+            {{#each chatUsers}}
+              <li class='found-users-list__item'>
+                {{#Button
+                  type='${ButtonType.BUTTON}'
+                  style='${ButtonStyle.UNSTYLED}'
+                  onClick=this.onClick
+                  className='found-users-list__item-button'
+                }}
+                  <span class='found-users-list__item-avatar'>
+                      <span class='found-users-list__item-avatar-image'
+                          {{#if this.avatar}}style='background-image:url({{this.avatar}})'{{/if}}>
+                      </span>
+                  </span>
+                  <span class='found-users-list__item-login'>{{this.login}}</span>
+                  <i class='i i_trash'></i>
+                {{/Button}}
+              </li>
+            {{/each}}
+            </ul>
+          </div>
         {{/if}}
         ${
           showChatUsersResult === 0

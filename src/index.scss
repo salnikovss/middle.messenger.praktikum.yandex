@@ -200,14 +200,37 @@ img {
 }
 
 .found-users-list {
-  margin-bottom: 0;
-  padding-left: 0;
   font-size: 12px;
+
+  &__inner {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    border-top: 1px solid #343a4f;
+  }
+
+  &__item {
+    list-style: none;
+  }
 
   &__not-found {
     font-size: 12px;
     margin-top: 12px;
     text-align: center;
+  }
+
+  &__item-avatar {
+    margin-right: 10px;
+  }
+
+  &__item-avatar-image {
+    display: block;
+    width: 47px;
+    height: 47px;
+    overflow: hidden;
+    border-radius: 50%;
+    background: #343a4f no-repeat 50% 50%;
+    background-size: cover;
   }
 
   &__item-login {
@@ -216,40 +239,41 @@ img {
     transition: color 0.2s ease-in-out;
   }
 
-  &__item-icon {
-    background: var(--secondaryColor);
-    padding: 2px;
-    width: 17px;
-    height: 17px;
-    text-align: center;
-    display: block;
-    border-radius: 8px;
-    transition: background-color 0.2s ease-in-out;
-  }
-
-  &__item-button {
+  .found-users-list__item-button {
     cursor: pointer;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin: 0;
     color: #fff;
+    padding: 10px 32px;
+    border-bottom: 1px solid #343a4f;
 
     &:hover {
-      .found-users-list__item-login {
-        color: var(--secondaryColor);
-      }
+      background: var(--secondaryColor);
 
-      .found-users-list__item-icon {
-        background-color: var(--secondaryColorDarken);
+      .i_plus {
+        background-image: url(../static/images/plus_white.svg);
       }
     }
   }
 
-  &__item {
-    list-style: none;
+  &_max-height-250 {
+    border-top: 1px solid #343a4f;
+    border-bottom: 1px solid #343a4f;
+    max-height: 250px;
+    overflow: auto;
 
-    + .found-users-list__item {
-      margin-top: 8px;
+    .found-users-list {
+      &__inner {
+        border: none;
+      }
+
+      &__item:last-child {
+        .found-users-list__item-button {
+          border: none;
+        }
+      }
     }
   }
 }
