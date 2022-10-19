@@ -118,6 +118,7 @@ export async function addUsersToChat(
     successCallback();
   }
 }
+
 export async function deleteUsersFromChat(
   dispatch: Dispatch<AppState>,
   _state: AppState,

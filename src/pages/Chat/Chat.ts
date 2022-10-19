@@ -31,6 +31,9 @@ class Chat extends Component<ChatProps> {
         // @ts-ignore
         (this.refs.chatlistRef as unknown as ChatList).setProps({ filter: searchTerm });
       },
+      closeAddChatModal: () => {
+        (this.refs.addChatModalRef as unknown as Modal).close();
+      },
     });
   }
 
@@ -55,7 +58,7 @@ class Chat extends Component<ChatProps> {
         </div>
 
         {{#Modal title='Создать чат' ref='addChatModalRef'}}
-            {{{CreateChatForm}}}
+            {{{CreateChatForm closeModal=closeAddChatModal}}}
         {{/Modal}}
       </div>
     `;
