@@ -21,5 +21,8 @@ export const transformChat = (data: ChatDTO): ChatModel => {
     avatar: data.avatar,
     unread_count: data.unread_count,
     last_message: data.last_message,
+
+    messages: [],
+    chatUsers: [],
   };
 };

@@ -4,6 +4,8 @@ import Modal from 'components/Modal';
 import { routeConsts } from 'config/routes';
 import { registerComponent } from 'core';
 import Component from 'core/Component';
+import { initAllChats } from 'services/messages';
+import withStore from 'utils/withStore';
 
 import ChatList from './components/ChatList';
 import CreateChatForm from './components/CreateChatForm';
@@ -37,6 +39,14 @@ class Chat extends Component<ChatProps> {
     });
   }
 
+  componentDidMount(): void {
+    this.props.store.dispatch(initAllChats);
+  }
+
+  componentDidUpdate(): boolean {
+    return false;
+  }
+
   render() {
     //template=hbs
     return `
@@ -65,4 +75,4 @@ class Chat extends Component<ChatProps> {
   }
 }
 
-export default Chat;
+export default withStore(Chat);

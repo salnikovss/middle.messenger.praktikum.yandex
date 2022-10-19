@@ -30,12 +30,12 @@ export const getChats = async (dispatch: Dispatch<AppState>) => {
   dispatch({ isLoading: false, chats });
 };
 
-export async function createChat(
+export const createChat = async (
   dispatch: Dispatch<AppState>,
   _state: AppState,
   action: CreateChatPayload,
   successCallback?: () => void
-) {
+) => {
   dispatch({ isLoading: true, isChatsLoading: true, formError: null });
 
   const { response } = await chatAPI.create(action);
@@ -58,11 +58,7 @@ export async function createChat(
     window.router.go(`${routeConsts.CHAT}/${createdChatId}`);
   }
 
-  // TODO: websocket
-  // dispatch(connectOneChat.bind(this), {
-  //   chatId: createdChatId,
-  //   chats: chatsResponse,
-  // });
+  // TODO: connect to websocket
 
   const chats = chatsResponse.map((chat) => transformChat(chat));
   dispatch({ chats, isLoading: false, isChatsLoading: false, formSuccess: 'Чат создан' });
@@ -70,9 +66,9 @@ export async function createChat(
   if (typeof successCallback === 'function') {
     successCallback();
   }
-}
+};
 
-export async function deleteChat(dispatch: Dispatch<AppState>, _state: AppState, action: DeleteChatPayload) {
+export const deleteChat = async (dispatch: Dispatch<AppState>, _state: AppState, action: DeleteChatPayload) => {
   dispatch({ isLoading: true, isChatsLoading: true, formError: null });
 
   const { response } = await chatAPI.delete(action);
@@ -94,14 +90,14 @@ export async function deleteChat(dispatch: Dispatch<AppState>, _state: AppState,
 
   const chats = chatsResponse.map((chat) => transformChat(chat));
   dispatch({ chats, isChatsLoading: false, formSuccess: 'Чат удален' });
-}
+};
 
-export async function addUsersToChat(
+export const addUsersToChat = async (
   dispatch: Dispatch<AppState>,
   _state: AppState,
   action: AddUsersToChatPayload,
   successCallback?: () => void
-) {
+) => {
   dispatch({ isLoading: true, formError: null });
 
   const { response } = await chatAPI.addUsers(action);
@@ -117,14 +113,14 @@ export async function addUsersToChat(
   if (typeof successCallback === 'function') {
     successCallback();
   }
-}
+};
 
-export async function deleteUsersFromChat(
+export const deleteUsersFromChat = async (
   dispatch: Dispatch<AppState>,
   _state: AppState,
   action: AddUsersToChatPayload,
   successCallback?: () => void
-) {
+) => {
   dispatch({ isLoading: true, formError: null });
 
   const { response } = await chatAPI.deleteUsers(action);
@@ -140,4 +136,4 @@ export async function deleteUsersFromChat(
   if (typeof successCallback === 'function') {
     successCallback();
   }
-}
+};

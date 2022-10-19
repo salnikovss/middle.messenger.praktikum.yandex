@@ -5,6 +5,7 @@ import MessageForm from '../MessageForm';
 
 export type MessengerProps = {
   store: Store<AppState>;
+  user: UserModel;
   chat?: () => Nullable<ChatModel> | undefined;
   messages?: MessageModel[];
   messageForm?: MessageForm;

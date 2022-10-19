@@ -6,9 +6,11 @@ export type MessageAuthor = {
 };
 
 export enum MessageType {
-  TEXT = 'text',
-  IMAGE = 'image',
+  TEXT = 'message',
+  FILE = 'file',
+  PONG = 'pong',
 }
+
 export enum MessageStatus {
   SENT = 'sent',
   READ = 'read',

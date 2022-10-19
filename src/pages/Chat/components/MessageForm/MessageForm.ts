@@ -4,15 +4,20 @@ import FormGroup from 'components/FormGroup';
 import Component from 'core/Component';
 import Form from 'utils/Form';
 import { predefinedRules } from 'utils/FormValidator';
+import withStore from 'utils/withStore';
 
+import { sendMessage } from '../../../../services/messages';
+import { MessageType } from '../Message/types';
 import { ButtonStyle } from './../../../../components/Button/types';
+import { MessageFormProps } from './types';
 
-export default class MessageForm extends Component {
+class MessageForm extends Component<MessageFormProps> {
   static componentName = 'MessageForm';
   public form: Form = new Form({ message: predefinedRules.message });
 
-  constructor() {
+  constructor(props: MessageFormProps) {
     super({
+      ...props,
       onMessageBlur: () => this.form.validate('message'),
       events: {
         submit: (e: SubmitEvent) => this.onSubmit(e),
@@ -22,7 +27,7 @@ export default class MessageForm extends Component {
 
   componentDidMount(): void {
     // Set form refs after compontent has been mounted
-    const { messageInput: message } = this.refs as Record<string, FormGroup>;
+    const { messageInput: message } = this.refs as unknown as Record<string, FormGroup>;
     this.form.setRefs({ message });
   }
 
@@ -30,16 +35,15 @@ export default class MessageForm extends Component {
     e.preventDefault();
     e.stopPropagation();
 
-    // eslint-disable-next-line no-console
-    console.log('Submitted data', this.form.getValues());
+    this.form.validate();
+    const chatId = this.props.store.getState().idParam;
 
-    const validationResult = this.form.validate();
-    // eslint-disable-next-line no-console
-    console.log('Validation result', validationResult);
-
-    if (!this.form.hasErrors) {
-      // eslint-disable-next-line no-console
-      console.log('Validation passed. Submitting form....');
+    if (!this.form.hasErrors && chatId) {
+      this.props.store.dispatch(sendMessage, {
+        chatId,
+        message: this.form.getValues().message,
+        messageType: MessageType.TEXT,
+      });
     }
   }
 
@@ -54,7 +58,7 @@ export default class MessageForm extends Component {
         </div>
         <div class='message-form__input-container'>
             {{{FormGroup class='message-form__input' name='message'
-                placeholder='Сообщение...' textarea=true
+                placeholder='Сообщение...'
                 onBlur=onMessageBlur ref='messageInput'
             }}}
         </div>
@@ -67,3 +71,5 @@ export default class MessageForm extends Component {
     `;
   }
 }
+
+export default withStore(MessageForm);

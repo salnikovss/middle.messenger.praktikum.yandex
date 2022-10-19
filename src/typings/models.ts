@@ -1,4 +1,4 @@
-import { MessageAuthor, MessageStatus, MessageType } from 'pages/Chat/components/Message';
+import { MessageType } from 'pages/Chat/components/Message';
 
 declare global {
   //Chat
@@ -15,10 +15,16 @@ declare global {
         email: string;
         login: string;
         phone: string;
+        from_me?: boolean;
       };
       time: string;
       content: string;
     };
+
+    socket?: WebSocket;
+    token?: string;
+    chatUsers: UserModel[];
+    messages: MessageModel[];
   };
 
   // User
@@ -34,14 +40,32 @@ declare global {
   };
 
   // Message
+  // export type MessageModel = {
+  //   fromMe?: boolean;
+  //   author?: MessageAuthor;
+  //   dateTime: Date;
+  //   type: MessageType;
+  //   body?: string;
+  //   image?: string;
+  //   status?: MessageStatus;
+  // };
+
   export type MessageModel = {
-    fromMe?: boolean;
-    author?: MessageAuthor;
-    dateTime: Date;
+    chat_id: number;
+    time: string;
     type: MessageType;
-    body?: string;
-    image?: string;
-    status?: MessageStatus;
+    user_id: number;
+    content: string;
+    from_me?: boolean;
+    file?: {
+      id: number;
+      user_id: number;
+      path: string;
+      filename: string;
+      content_type: string;
+      content_size: number;
+      upload_date: string;
+    };
   };
 }
 

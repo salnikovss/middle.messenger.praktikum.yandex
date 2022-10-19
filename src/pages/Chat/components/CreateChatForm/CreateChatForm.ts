@@ -46,8 +46,6 @@ class CreateChatForm extends Component<CreateChatFormProps> {
     if (!this.form.hasErrors) {
       const formValues = this.form.getValues();
       this.props.store.dispatch(createChat, { title: formValues.title }, () => {
-        console.log('success', this.props.closeModal);
-
         this.props.closeModal && this.props.closeModal();
       });
     }

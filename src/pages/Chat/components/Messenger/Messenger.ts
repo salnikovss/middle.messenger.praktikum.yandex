@@ -12,18 +12,18 @@ import withStore from 'utils/withStore';
 import { chatAPI } from '../../../../api/chat';
 import { UserDTO } from '../../../../api/types';
 import ConfirmationModal from '../../../../components/ConfirmationModal/ConfirmationModal';
-import { fakeMessages } from '../../../../utils/fakeData';
+import withUser from '../../../../utils/withUser';
 import AddUserForm from '../AddUserForm';
 import DeleteUserForm from '../DeleteUserForm';
-import Message from '../Message';
 import MessageForm from '../MessageForm';
+import Messages from '../Messages';
 import { ButtonStyle, ButtonType } from './../../../../components/Button/types';
 import { MessengerProps } from './types';
 
 registerComponent(AddUserForm);
 registerComponent(DeleteUserForm);
 registerComponent(MessageForm);
-registerComponent(Message);
+registerComponent(Messages);
 
 class Messenger extends Component<MessengerProps> {
   static componentName = 'Messenger';
@@ -31,7 +31,6 @@ class Messenger extends Component<MessengerProps> {
   constructor(props: MessengerProps) {
     super({
       ...props,
-      messages: fakeMessages,
       onDeleteChatClick: (e) => {
         e.preventDefault();
         (this.refs.deleteChatModalRef as unknown as ConfirmationModal).open();
@@ -97,30 +96,10 @@ class Messenger extends Component<MessengerProps> {
         return null;
       },
     });
-
-    this.props.store.on('changed', (prevState: AppState, nextState: AppState) => {
-      if (prevState.idParam !== nextState.idParam) {
-        setTimeout(() => {
-          this.scrollToBottom();
-        }, 100);
-      }
-    });
   }
 
   componentDidUpdate(oldProps: MessengerProps, newProps: MessengerProps): boolean {
     return !isEqual({ idParam: oldProps.chat }, { idParam: newProps.chat });
-  }
-
-  scrollToBottom() {
-    const objDiv = this.element?.querySelector('.messenger__body');
-
-    if (objDiv) {
-      objDiv.scrollTop = objDiv.scrollHeight;
-    }
-  }
-
-  componentDidMount() {
-    this.scrollToBottom();
   }
 
   render() {
@@ -173,11 +152,7 @@ class Messenger extends Component<MessengerProps> {
         </div>
         <div class='messenger__body custom-scrollbar'>
           <div class='messenger__inner'>
-            <div class='messenger__message-list'>
-              {{#each messages}}
-                {{{Message item=this}}}
-              {{/each}}
-            </div>
+            {{{Messages className='messenger__message-list'}}}
           </div>
         </div>
         <div class='messenger__footer'>
@@ -202,4 +177,4 @@ class Messenger extends Component<MessengerProps> {
   }
 }
 
-export default withStore(Messenger);
+export default withStore(withUser(Messenger));

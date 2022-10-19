@@ -65,7 +65,7 @@
   }
 
   &_type- {
-    &text {
+    &message {
       background: #4c546f;
       padding: 8px 12px 20px;
 
@@ -76,7 +76,7 @@
       }
     }
 
-    &image {
+    &file {
       .message {
         &__meta {
           padding: 2px 7px;

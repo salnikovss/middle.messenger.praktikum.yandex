@@ -48,7 +48,7 @@ export default class Store<State extends Record<string, any>> extends EventBus {
         nextStateOrAction(this.dispatch.bind(this), this.state, payload);
       }
     } else {
-      this.set({ ...this.state, ...nextStateOrAction });
+      this.set(cloneDeep({ ...this.state, ...nextStateOrAction }) as Partial<State>);
     }
   }
 }

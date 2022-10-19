@@ -40,6 +40,12 @@ export default function cloneDeep<T extends object = object>(obj: T) {
     }
 
     // Handle:
+    // * WebSocket
+    if (item instanceof WebSocket) {
+      return item;
+    }
+
+    // Handle:
     // * Map
     if (item instanceof Map) {
       const copy = new Map();
