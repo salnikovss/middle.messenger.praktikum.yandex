@@ -1,8 +1,6 @@
 import { ChatDTO, UserDTO } from 'api/types';
 import { AVATARPREFIX } from 'config/app';
 
-import escapeHtml from './escapeHtml';
-
 export const transformUser = (data: UserDTO): UserModel => {
   return {
     id: data.id,
@@ -19,7 +17,7 @@ export const transformUser = (data: UserDTO): UserModel => {
 export const transformChat = (data: ChatDTO): ChatModel => {
   return {
     id: data.id,
-    title: escapeHtml(data.title),
+    title: data.title,
     avatar: data.avatar,
     unread_count: data.unread_count,
     last_message: data.last_message,

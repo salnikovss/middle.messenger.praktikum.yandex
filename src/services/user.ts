@@ -80,21 +80,25 @@ export const updateProfileAvatar = async (
   dispatch(fetchUser, { redirectTo: null });
 };
 
-export const searchUserByLogin = async (
-  dispatch: Dispatch<AppState>,
-  _state: AppState,
-  action: SearchUserByLoginPayload
-) => {
-  dispatch({ isLoading: true, formSuccess: null, formError: null });
+export const searchUsersByLogin = async (action: SearchUserByLoginPayload): Promise<UserModel[]> => {
+  return new Promise((resolve, reject) => {
+    return userAPI.search(action).then(({ response }) => {
+      if (apiHasError(response)) {
+        log('Search user error', response);
+        reject(response.reason);
+      } else {
+        const foundUsers = response.map((user) => transformUser(user));
+        resolve(foundUsers);
+      }
+    });
 
-  const { response } = await userAPI.search(action);
-  if (apiHasError(response)) {
-    log('Search user error', response);
-    dispatch({ isLoading: false, formError: response.reason });
-    return;
-  }
-
-  const foundUsers = response.map((user) => transformUser(user));
-
-  dispatch({ isLoading: false, foundUsers, formSuccess: 'Пользователи успешно загружены' });
+    // const { response } = await userAPI.search(action);
+    // if (apiHasError(response)) {
+    //   log('Search user error', response);
+    //   reject(response.reason);
+    // } else {
+    //   const foundUsers = response.map((user) => transformUser(user));
+    //   resolve(foundUsers);
+    // }
+  });
 };

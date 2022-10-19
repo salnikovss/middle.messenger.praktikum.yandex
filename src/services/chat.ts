@@ -63,7 +63,9 @@ export async function createChat(
   //   chatId: createdChatId,
   //   chats: chatsResponse,
   // });
-  dispatch({ chats: chatsResponse, isLoading: false, isChatsLoading: false, formSuccess: 'Чат создан' });
+
+  const chats = chatsResponse.map((chat) => transformChat(chat));
+  dispatch({ chats, isLoading: false, isChatsLoading: false, formSuccess: 'Чат создан' });
 
   if (typeof successCallback === 'function') {
     successCallback();
@@ -90,7 +92,8 @@ export async function deleteChat(dispatch: Dispatch<AppState>, _state: AppState,
 
   window.router.go(routeConsts.CHAT);
 
-  dispatch({ chats: chatsResponse, isChatsLoading: false, formSuccess: 'Чат удален' });
+  const chats = chatsResponse.map((chat) => transformChat(chat));
+  dispatch({ chats, isChatsLoading: false, formSuccess: 'Чат удален' });
 }
 
 export async function addUsersToChat(

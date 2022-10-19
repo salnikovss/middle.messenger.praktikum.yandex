@@ -5,6 +5,7 @@ import Component from 'core/Component';
 import registerComponent from 'core/registerComponent';
 import { deleteChat, deleteUsersFromChat } from 'services/chat';
 import { transformUser } from 'utils/apiTransformers';
+import htmlEntities from 'utils/htmlEntities';
 import isEqual from 'utils/isEqual';
 import withStore from 'utils/withStore';
 
@@ -99,7 +100,9 @@ class Messenger extends Component<MessengerProps> {
 
     this.props.store.on('changed', (prevState: AppState, nextState: AppState) => {
       if (prevState.idParam !== nextState.idParam) {
-        this.scrollToBottom();
+        setTimeout(() => {
+          this.scrollToBottom();
+        }, 100);
       }
     });
   }
@@ -142,7 +145,7 @@ class Messenger extends Component<MessengerProps> {
               <span class='messenger__chat-avatar'
                 ${chat.avatar && `style='background-image:url(${chat.avatar})'`}>
               </span>
-              <span class='messenger__chat-name'>${chat.title}</span>
+              <span class='messenger__chat-name'>${htmlEntities(chat.title)}</span>
           </div>
           <div class='messenger__actions dropdown'>
             {{#Button style='${ButtonStyle.ICON}' type='${ButtonType.BUTTON}'

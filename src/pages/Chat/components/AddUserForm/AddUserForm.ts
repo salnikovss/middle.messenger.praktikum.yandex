@@ -4,13 +4,11 @@ import { ButtonType } from 'components/Button/types';
 import FormGroup from 'components/FormGroup';
 import Component from 'core/Component';
 import { addUsersToChat } from 'services/chat';
+import { searchUsersByLogin } from 'services/user';
 import Form from 'utils/Form';
 import log from 'utils/log';
 import withStore from 'utils/withStore';
 
-import { userAPI } from '../../../../api/user';
-import apiHasError from '../../../../utils/apiHasError';
-import { transformUser } from '../../../../utils/apiTransformers';
 import { predefinedRules } from '../../../../utils/FormValidator/predefinedRules';
 import { ButtonStyle } from './../../../../components/Button/types';
 import { AddUserFormProps } from './types';
@@ -62,21 +60,20 @@ class AddUserForm extends Component<AddUserFormProps> {
     if (!this.form.hasErrors) {
       const formValues = this.form.getValues();
 
-      const { response } = await userAPI.search({ login: formValues.login });
-      if (apiHasError(response)) {
-        log('Search user error', response);
-        this.props.store.dispatch({ isLoading: false, formError: response.reason });
-      } else {
-        const foundUsers = response
-          .map((user) => transformUser(user))
-          .map((user) => {
-            return {
-              ...user,
-              onClick: () => this.onAddClick(user.id),
-            };
-          });
+      try {
+        const users = await searchUsersByLogin({ login: formValues.login });
+        const foundUsers = users.map((user) => {
+          return {
+            ...user,
+            onClick: () => this.onAddClick(user.id),
+          };
+        });
 
         this.setProps({ foundUsers });
+      } catch (error) {
+        if (error instanceof Error) {
+          log(error.message);
+        }
       }
     }
   }
