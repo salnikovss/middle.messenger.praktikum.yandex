@@ -1,5 +1,3 @@
-import './Messages.scss';
-
 import { Component } from 'core';
 import registerComponent from 'core/registerComponent';
 import isEqual from 'utils/isEqual';
