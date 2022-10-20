@@ -5,10 +5,10 @@ import { Component } from 'core';
 import registerComponent from 'core/registerComponent';
 import withStore from 'utils/withStore';
 
+import { markAsRead } from '../../../../services/messages';
 import ChatListItem from '../ChatListItem';
 import { ChatListItemProps } from '../ChatListItem/types';
 import { ChatListProps } from './types';
-import { markAsRead } from '../../../../services/messages';
 
 registerComponent(ChatListItem);
 class ChatList extends Component<ChatListProps> {

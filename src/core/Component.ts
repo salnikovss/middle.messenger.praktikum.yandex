@@ -1,11 +1,9 @@
 import Handlebars from 'handlebars';
 import { nanoid } from 'nanoid';
-import log from 'utils/log';
 
+import cloneDeep from '../utils/cloneDeep';
 import isEqual from '../utils/isEqual';
 import EventBus, { IEventBus } from './EventBus';
-import cloneDeep from '../utils/cloneDeep';
-import Store from './Store';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ComponentEventHandler = (...args: any) => void;

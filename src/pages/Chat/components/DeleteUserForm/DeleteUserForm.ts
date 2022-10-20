@@ -4,8 +4,8 @@ import { deleteUsersFromChat } from 'services/chat';
 import withStore from 'utils/withStore';
 
 import { ButtonStyle } from '../../../../components/Button/types';
-import { DeleteUserFormProps } from './types';
 import isEqual from '../../../../utils/isEqual';
+import { DeleteUserFormProps } from './types';
 
 class DeleteUserForm extends Component<DeleteUserFormProps> {
   static componentName = 'DeleteUserForm';
