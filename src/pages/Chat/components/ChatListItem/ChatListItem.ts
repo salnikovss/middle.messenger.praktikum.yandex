@@ -51,9 +51,9 @@ class ChatListItem extends Component<ChatListItemPropsWithEvents> {
           <div class='chat-list-item__row'>
               <p class='chat-list-item__name'>{{chat.title}}</p>
               {{#if chat.last_message}}
-              <time class='chat-list-item__date' datetime="{{chat.last_message.time}}">
-                ${date}
-              </time>
+                <time class='chat-list-item__date' datetime="{{chat.last_message.time}}">
+                  ${date}
+                </time>
               {{/if}}
           </div>
 

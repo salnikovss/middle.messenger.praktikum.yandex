@@ -8,17 +8,17 @@ declare global {
     avatar: string;
     unread_count: number;
     last_message?: {
-      user: {
+      user?: {
         first_name: string;
         second_name: string;
         avatar: string;
         email: string;
         login: string;
         phone: string;
-        from_me?: boolean;
       };
       time: string;
       content: string;
+      from_me?: boolean;
     };
 
     socket?: WebSocket;
@@ -37,19 +37,10 @@ declare global {
     email: string;
     phone: string;
     avatar: string;
+    role?: string;
   };
 
   // Message
-  // export type MessageModel = {
-  //   fromMe?: boolean;
-  //   author?: MessageAuthor;
-  //   dateTime: Date;
-  //   type: MessageType;
-  //   body?: string;
-  //   image?: string;
-  //   status?: MessageStatus;
-  // };
-
   export type MessageModel = {
     chat_id: number;
     time: string;
@@ -57,6 +48,7 @@ declare global {
     user_id: number;
     content: string;
     from_me?: boolean;
+    is_read: boolean;
     file?: {
       id: number;
       user_id: number;
@@ -66,6 +58,7 @@ declare global {
       content_size: number;
       upload_date: string;
     };
+    user?: UserModel;
   };
 }
 

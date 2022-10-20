@@ -2,11 +2,12 @@ import './ConfirmationModal.scss';
 
 import Modal from 'components/Modal';
 import Component from 'core/Component';
+import withStore from 'utils/withStore';
 
 import { ButtonStyle } from './../Button/types';
 import { ConfirmationModalProps } from './types';
 
-export default class ConfirmationModal extends Component<ConfirmationModalProps> {
+class ConfirmationModal extends Component<ConfirmationModalProps> {
   static componentName = 'ConfirmationModal';
 
   constructor({ buttonNoText, buttonYesText, onCancel, onConfirm, ...rest }: ConfirmationModalProps) {
@@ -21,12 +22,15 @@ export default class ConfirmationModal extends Component<ConfirmationModalProps>
         }
         this.close();
       },
+    });
+
+    this.setProps({
+      formError: () => this.props.store?.getState().formError,
       onConfirm: (e) => {
         e.preventDefault();
         if (typeof onConfirm === 'function') {
           onConfirm(e);
         }
-        this.close();
       },
     });
   }
@@ -44,6 +48,7 @@ export default class ConfirmationModal extends Component<ConfirmationModalProps>
     return `
       {{#Modal title=title ref='modalRef'}}
         <div class='confirmation-modal'>
+          {{{Error className='error_form' text=formError}}}
           {{#Button className='confirmation-modal__btn' onClick=onCancel}}
             {{buttonNoText}}
           {{/Button}}
@@ -55,3 +60,5 @@ export default class ConfirmationModal extends Component<ConfirmationModalProps>
     `;
   }
 }
+
+export default withStore(ConfirmationModal);

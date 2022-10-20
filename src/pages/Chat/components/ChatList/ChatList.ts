@@ -8,6 +8,7 @@ import withStore from 'utils/withStore';
 import ChatListItem from '../ChatListItem';
 import { ChatListItemProps } from '../ChatListItem/types';
 import { ChatListProps } from './types';
+import { markAsRead } from '../../../../services/messages';
 
 registerComponent(ChatListItem);
 class ChatList extends Component<ChatListProps> {
@@ -31,6 +32,7 @@ class ChatList extends Component<ChatListProps> {
   }
 
   onClick = (chatId: number) => {
+    this.props.store.dispatch(markAsRead, { chatId });
     window.router.go(`${routeConsts.CHAT}/${chatId}`);
   };
 

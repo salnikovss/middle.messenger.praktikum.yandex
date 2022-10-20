@@ -1,9 +1,4 @@
-export type MessageProps = { item: MessageModel };
-
-export type MessageAuthor = {
-  avatar?: Nullable<string>;
-  name: string;
-};
+export type MessageProps = { item: MessageModel & { user?: UserModel } };
 
 export enum MessageType {
   TEXT = 'message',

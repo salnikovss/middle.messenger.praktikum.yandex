@@ -5,6 +5,7 @@ import withStore from 'utils/withStore';
 
 import { ButtonStyle } from '../../../../components/Button/types';
 import { DeleteUserFormProps } from './types';
+import isEqual from '../../../../utils/isEqual';
 
 class DeleteUserForm extends Component<DeleteUserFormProps> {
   static componentName = 'DeleteUserForm';
@@ -18,16 +19,19 @@ class DeleteUserForm extends Component<DeleteUserFormProps> {
     }
   };
 
+  componentDidUpdate(oldProps: DeleteUserFormProps, newProps: DeleteUserFormProps): boolean {
+    return !isEqual({ chatUsers: oldProps.chatUsers }, { chatUsers: newProps.chatUsers });
+  }
+
   render() {
     const foundUsers = this.props.chatUsers;
-
     const showChatUsersResult = Array.isArray(foundUsers) ? foundUsers.length : false;
 
     //template=hbs
     return `
       <div class='delete-user-form'>
         {{#if chatUsers}}
-          <div class='found-users-list custom-scrollbar'>
+          <div class='found-users-list found-users-list_max-height-250 custom-scrollbar'>
             <ul class='found-users-list__inner'>
             {{#each chatUsers}}
               <li class='found-users-list__item'>

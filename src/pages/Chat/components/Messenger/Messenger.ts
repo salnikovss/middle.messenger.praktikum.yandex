@@ -4,14 +4,11 @@ import Modal from 'components/Modal';
 import Component from 'core/Component';
 import registerComponent from 'core/registerComponent';
 import { deleteChat, deleteUsersFromChat } from 'services/chat';
-import { transformUser } from 'utils/apiTransformers';
 import htmlEntities from 'utils/htmlEntities';
 import isEqual from 'utils/isEqual';
 import withStore from 'utils/withStore';
 
-import { chatAPI } from '../../../../api/chat';
 import { UserDTO } from '../../../../api/types';
-import ConfirmationModal from '../../../../components/ConfirmationModal/ConfirmationModal';
 import withUser from '../../../../utils/withUser';
 import AddUserForm from '../AddUserForm';
 import DeleteUserForm from '../DeleteUserForm';
@@ -33,6 +30,7 @@ class Messenger extends Component<MessengerProps> {
       ...props,
       onDeleteChatClick: (e) => {
         e.preventDefault();
+        // @ts-expect-error error because ConfirmationModal wrapped by withStore
         (this.refs.deleteChatModalRef as unknown as ConfirmationModal).open();
       },
       onDeleteUserClick: (e) => {
@@ -50,39 +48,45 @@ class Messenger extends Component<MessengerProps> {
         const { store } = this.props;
         const chatId = store.getState().idParam;
         if (chatId) {
-          store.dispatch(deleteChat, { chatId });
+          store.dispatch(deleteChat, { chatId }, () => {
+            // @ts-expect-error error because ConfirmationModal wrapped by withStore
+            (this.refs.deleteChatModalRef as unknown as ConfirmationModal).close();
+          });
         }
       },
       onDeleteUserModalShow: async (modal) => {
         const chatId = this.props.store.getState().idParam;
 
-        if (chatId) {
-          const { response } = await chatAPI.getUsers({ chatId });
-          if (response) {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            (this.refs.deleteUserFormRef as unknown as DeleteUserForm).setProps({
-              chatUsers: (response as UserDTO[])
-                .filter((user) => user.role !== 'admin')
-                .map((user) => transformUser(user))
-                .map((user) => {
-                  return {
-                    ...user,
-                    onClick: () => {
-                      const userId = user.id;
-                      const chatId = this.props.store.getState().idParam;
-                      if (chatId) {
-                        this.props.store.dispatch(
-                          deleteUsersFromChat,
-                          { users: [userId], chatId },
-                          modal.close.bind(modal)
-                        );
-                      }
-                    },
-                  };
-                }),
-            });
-          }
+        if (!chatId) {
+          return;
+        }
+        const chat = this.props.store.getState().chats?.find((chat) => chat.id === chatId);
+        if (!chat) {
+          return;
+        }
+        if (chat.chatUsers) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          (this.refs.deleteUserFormRef as unknown as DeleteUserForm).setProps({
+            chatUsers: (chat.chatUsers as UserDTO[])
+              .filter((user) => user.role !== 'admin')
+              .map((user) => {
+                return {
+                  ...user,
+                  onClick: () => {
+                    const userId = user.id;
+                    const chatId = this.props.store.getState().idParam;
+                    if (chatId) {
+                      this.props.store.dispatch(
+                        deleteUsersFromChat,
+                        { users: [userId], chatId },
+                        modal.close.bind(modal)
+                      );
+                    }
+                  },
+                };
+              }),
+          });
         }
       },
     });
@@ -99,7 +103,7 @@ class Messenger extends Component<MessengerProps> {
   }
 
   componentDidUpdate(oldProps: MessengerProps, newProps: MessengerProps): boolean {
-    return !isEqual({ idParam: oldProps.chat }, { idParam: newProps.chat });
+    return !isEqual({ chat: oldProps.chat }, { chat: newProps.chat });
   }
 
   render() {

@@ -11,6 +11,7 @@ export const transformUser = (data: UserDTO): UserModel => {
     avatar: data.avatar && data.avatar.length > 0 ? AVATARPREFIX + data.avatar : '',
     phone: data.phone,
     email: data.email,
+    role: data.role,
   };
 };
 

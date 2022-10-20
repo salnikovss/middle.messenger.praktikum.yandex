@@ -2,6 +2,7 @@ import './Messages.scss';
 
 import { Component } from 'core';
 import registerComponent from 'core/registerComponent';
+import isEqual from 'utils/isEqual';
 import withStore from 'utils/withStore';
 
 import Message from '../Message/Message';
@@ -14,17 +15,14 @@ class Messages extends Component<MessagesProps> {
   constructor(props: MessagesProps) {
     super(props);
 
-    this.setProps({
-      messages: () => {
-        const state = this.props.store.getState();
-        if (state.idParam) {
-          return state.chats
-            ?.find((chat) => chat.id === state.idParam)
-            ?.messages?.sort((a, b) => +new Date(a.time) - +new Date(b.time));
-        }
-        return null;
-      },
-    });
+    const state = this.props.store.getState();
+    if (state.idParam) {
+      this.setProps({
+        messages: state.chats
+          ?.find((chat) => chat.id === state.idParam)
+          ?.messages?.sort((a, b) => +new Date(a.time) - +new Date(b.time)),
+      });
+    }
   }
 
   scrollToBottom() {
@@ -33,6 +31,10 @@ class Messages extends Component<MessagesProps> {
     if (objDiv) {
       objDiv.scrollTop = objDiv.scrollHeight;
     }
+  }
+
+  componentDidUpdate(oldProps: MessagesProps, newProps: MessagesProps): boolean {
+    return !isEqual({ messages: oldProps.messages }, { messages: newProps.messages });
   }
 
   componentDidMount() {

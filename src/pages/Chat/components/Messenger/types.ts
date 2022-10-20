@@ -1,13 +1,13 @@
 import Modal from 'components/Modal';
 import { Store } from 'core';
 
-import MessageForm from '../MessageForm';
-
 export type MessengerProps = {
   store: Store<AppState>;
   user: UserModel;
+  chatId: number;
   chat?: () => Nullable<ChatModel> | undefined;
   messages?: MessageModel[];
+  // @ts-expect-error error because MessageForm wrapped by withStore
   messageForm?: MessageForm;
   onDeleteChatConfirm: () => void;
   onDeleteChatClick: (e: MouseEvent) => void;

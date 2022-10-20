@@ -1,10 +1,11 @@
 import type { Dispatch } from 'core';
 import apiHasError from 'utils/apiHasError';
-import { transformChat } from 'utils/apiTransformers';
+import { transformChat, transformUser } from 'utils/apiTransformers';
 import log from 'utils/log';
 
 import { chatAPI } from '../api/chat';
 import { routeConsts } from '../config/routes';
+import { initChat } from './messages';
 
 type CreateChatPayload = {
   title: string;
@@ -26,13 +27,14 @@ export const getChats = async (dispatch: Dispatch<AppState>) => {
     dispatch({ isLoading: false });
     return;
   }
+
   const chats = response.map((chat) => transformChat(chat));
   dispatch({ isLoading: false, chats });
 };
 
 export const createChat = async (
   dispatch: Dispatch<AppState>,
-  _state: AppState,
+  state: AppState,
   action: CreateChatPayload,
   successCallback?: () => void
 ) => {
@@ -58,18 +60,32 @@ export const createChat = async (
     window.router.go(`${routeConsts.CHAT}/${createdChatId}`);
   }
 
-  // TODO: connect to websocket
+  const chats = state.chats;
+  const newChat = chatsResponse.find((chat) => chat.id === createdChatId);
+  if (newChat) {
+    chats?.unshift(transformChat(newChat));
+  }
 
-  const chats = chatsResponse.map((chat) => transformChat(chat));
-  dispatch({ chats, isLoading: false, isChatsLoading: false, formSuccess: 'Чат создан' });
+  dispatch(initChat, {
+    chatId: createdChatId,
+    chats,
+    isLoading: false,
+    isChatsLoading: false,
+    formSuccess: 'Чат создан',
+  });
 
   if (typeof successCallback === 'function') {
     successCallback();
   }
 };
 
-export const deleteChat = async (dispatch: Dispatch<AppState>, _state: AppState, action: DeleteChatPayload) => {
-  dispatch({ isLoading: true, isChatsLoading: true, formError: null });
+export const deleteChat = async (
+  dispatch: Dispatch<AppState>,
+  state: AppState,
+  action: DeleteChatPayload,
+  successCallback?: () => void
+) => {
+  dispatch({ isLoading: true, isChatsLoading: true, formError: null, formSuccess: null });
 
   const { response } = await chatAPI.delete(action);
 
@@ -79,22 +95,24 @@ export const deleteChat = async (dispatch: Dispatch<AppState>, _state: AppState,
     return;
   }
 
-  const { response: chatsResponse } = await chatAPI.list();
-  if (apiHasError(chatsResponse)) {
-    log('Fetch chat list error', response);
-    dispatch({ isLoading: false, isChatsLoading: false, formError: chatsResponse.reason });
-    return;
-  }
-
   window.router.go(routeConsts.CHAT);
 
-  const chats = chatsResponse.map((chat) => transformChat(chat));
+  const chatToDelete = state.chats?.find((chat) => chat.id === action.chatId);
+  if (chatToDelete && chatToDelete.socket instanceof WebSocket) {
+    chatToDelete.socket.close(1000, 'Chat has been deleted');
+  }
+
+  const chats = state.chats?.filter((chat) => chat.id !== action.chatId);
   dispatch({ chats, isChatsLoading: false, formSuccess: 'Чат удален' });
+
+  if (typeof successCallback === 'function') {
+    successCallback();
+  }
 };
 
 export const addUsersToChat = async (
   dispatch: Dispatch<AppState>,
-  _state: AppState,
+  state: AppState,
   action: AddUsersToChatPayload,
   successCallback?: () => void
 ) => {
@@ -108,7 +126,18 @@ export const addUsersToChat = async (
     return;
   }
 
-  dispatch({ isLoading: false, formSuccess: 'Чат создан' });
+  const chats = state.chats;
+  const chat = chats?.find((chat) => chat.id === action.chatId);
+  if (chat) {
+    const { response } = await chatAPI.getUsers({ chatId: chat.id });
+    if (apiHasError(response)) {
+      log('Get chat users error', response.reason);
+    } else {
+      chat.chatUsers = response.map((user) => transformUser(user));
+    }
+  }
+
+  dispatch({ chats, isLoading: false, formSuccess: 'Пользователь добавлен в чат' });
 
   if (typeof successCallback === 'function') {
     successCallback();
@@ -117,11 +146,15 @@ export const addUsersToChat = async (
 
 export const deleteUsersFromChat = async (
   dispatch: Dispatch<AppState>,
-  _state: AppState,
+  state: AppState,
   action: AddUsersToChatPayload,
   successCallback?: () => void
 ) => {
-  dispatch({ isLoading: true, formError: null });
+  if (action.users.length === 0) {
+    return;
+  }
+
+  dispatch({ isLoading: true, formError: null, formSuccess: null });
 
   const { response } = await chatAPI.deleteUsers(action);
 
@@ -131,7 +164,13 @@ export const deleteUsersFromChat = async (
     return;
   }
 
-  dispatch({ isLoading: false, formSuccess: 'Чат создан' });
+  const chats = state.chats;
+  const chat = chats?.find((chat) => chat.id === action.chatId);
+  if (chat) {
+    chat.chatUsers = chat.chatUsers.filter((user) => !action.users.includes(user.id));
+  }
+
+  dispatch({ chats, isLoading: false, formSuccess: 'Пользователь удален из чата' });
 
   if (typeof successCallback === 'function') {
     successCallback();

@@ -4,6 +4,8 @@ import log from 'utils/log';
 
 import isEqual from '../utils/isEqual';
 import EventBus, { IEventBus } from './EventBus';
+import cloneDeep from '../utils/cloneDeep';
+import Store from './Store';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ComponentEventHandler = (...args: any) => void;
@@ -91,25 +93,21 @@ export default class Component<T extends ComponentProps = Record<string, unknown
       return;
     }
 
+    // log(
+    //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //   // @ts-ignore
+    //   `%c${this.constructor.componentName} componentDidUpdate`,
+    //   'background: #222; color: #00ff60',
+    //   oldProps,
+    //   newProps
+    // );
+
     this.children = {};
     this._render();
   }
 
   componentDidUpdate(oldProps: T, newProps: T): boolean {
-    const hasChanges = !isEqual(oldProps, newProps);
-
-    if (hasChanges) {
-      log(
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        `%c${this.constructor.componentName} componentDidUpdate`,
-        'background: #222; color: #00ff60',
-        oldProps,
-        newProps
-      );
-    }
-
-    return hasChanges;
+    return !isEqual(oldProps, newProps);
   }
 
   setProps = (nextProps: Partial<T>) => {
@@ -212,13 +210,17 @@ export default class Component<T extends ComponentProps = Record<string, unknown
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set: (target: Record<string, unknown>, prop: string, value) => {
-        const oldProps = { ...target };
-
-        if (typeof target === 'object') {
-          target[prop] = value;
+        let oldProps;
+        try {
+          oldProps = cloneDeep(target);
+        } catch (error) {
+          oldProps = { ...target };
         }
 
-        this._eventBus.emit(Component.EVENTS.FLOW_CDU, oldProps, target);
+        if (typeof target === 'object' && target[prop] !== value) {
+          target[prop] = value;
+          this._eventBus.emit(Component.EVENTS.FLOW_CDU, oldProps, target);
+        }
         return true;
       },
       deleteProperty: () => {
