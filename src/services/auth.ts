@@ -3,7 +3,7 @@ import type { Dispatch } from 'core';
 import apiHasError from 'utils/apiHasError';
 import { transformUser } from 'utils/apiTransformers';
 
-import { routeConsts } from '../config/routes';
+import { ROUTE_PATHS } from '../config/routes';
 
 type LoginPayload = {
   login: string;
@@ -56,14 +56,14 @@ export const logout = async (dispatch: Dispatch<AppState>) => {
 
   dispatch({ isLoading: false, user: null });
 
-  window.router.go(routeConsts.SIGNIN);
+  window.router.go(ROUTE_PATHS.SIGNIN);
 };
 
 export const fetchUser = async (
   dispatch: Dispatch<AppState>,
   _state: AppState,
   { redirectTo }: FetchUserPayload = {
-    redirectTo: routeConsts.PROFILE,
+    redirectTo: ROUTE_PATHS.PROFILE,
   }
 ) => {
   const { response: responseUser } = await authAPI.me();

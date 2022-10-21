@@ -19,12 +19,12 @@ export default function withUser<P extends WithUserProps>(WrappedBlock: Componen
     };
 
     componentDidMount(props: P) {
-      super.componentDidMount(props);
+      super.componentDidMount && super.componentDidMount(props);
       window.store.on('changed', this.__onChangeUserCallback);
     }
 
     componentWillUnmount() {
-      super.componentWillUnmount();
+      super.componentWillUnmount && super.componentWillUnmount();
       window.store.off('changed', this.__onChangeUserCallback);
     }
   } as ComponentConstructable<Omit<P, 'user'>>;

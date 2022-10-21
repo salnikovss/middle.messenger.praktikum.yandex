@@ -14,8 +14,8 @@
   }
 
   &__alert {
-    font-weight: 500;
-    font-size: 12px;
+    font-weight: var(--baseFontWeight);
+    font-size: var(--baseFontSize);
     line-height: 12px;
     text-align: center;
     color: #fff;

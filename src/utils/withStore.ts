@@ -18,12 +18,12 @@ export default function withStore<P extends WithStateProps>(WrappedBlock: Compon
     };
 
     componentDidMount(props: P) {
-      super.componentDidMount(props);
+      super.componentDidMount && super.componentDidMount(props);
       window.store.on('changed', this.__onChangeStoreCallback);
     }
 
     componentWillUnmount() {
-      super.componentWillUnmount();
+      super.componentWillUnmount && super.componentWillUnmount();
       window.store.off('changed', this.__onChangeStoreCallback);
     }
   } as ComponentConstructable<Omit<P, 'store'>>;

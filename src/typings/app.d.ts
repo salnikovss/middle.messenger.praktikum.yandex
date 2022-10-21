@@ -24,10 +24,14 @@ declare global {
     foundUsers: Nullable<UserModel[]>;
   };
 
+  export type RouteEntry = {
+    path: string;
+    component: string;
+    shouldAuthorized: boolean;
+  };
+
   interface Window {
     router: Router;
     store: Store;
   }
 }
-
-export {};

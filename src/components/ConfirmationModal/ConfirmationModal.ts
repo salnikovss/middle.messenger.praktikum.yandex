@@ -36,11 +36,11 @@ class ConfirmationModal extends Component<ConfirmationModalProps> {
   }
 
   open() {
-    (this.refs.modalRef as unknown as Modal).open();
+    this.refs.modalRef instanceof Modal && this.refs.modalRef.open();
   }
 
   close() {
-    (this.refs.modalRef as unknown as Modal).close();
+    this.refs.modalRef instanceof Modal && this.refs.modalRef.close();
   }
 
   render() {

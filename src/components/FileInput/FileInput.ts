@@ -33,7 +33,7 @@ export default class FileInput extends Component<FileInputPropsWithEvents> {
   }
 
   setError(text = '') {
-    (this.refs.errorRef as unknown as Error).setProps({ text });
+    this.refs.errorRef instanceof Error && this.refs.errorRef.setProps({ text });
   }
 
   render() {

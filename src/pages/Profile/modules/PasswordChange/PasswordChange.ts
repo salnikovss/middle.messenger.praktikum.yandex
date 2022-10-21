@@ -1,7 +1,7 @@
 import '../../Profile.scss';
 
 import { InputType } from 'components/Input';
-import { routeConsts } from 'config/routes';
+import { ROUTE_PATHS } from 'config/routes';
 import Component from 'core/Component';
 import registerComponent from 'core/registerComponent';
 import Avatar from 'pages/Profile/components/Avatar';
@@ -37,8 +37,8 @@ class PasswordChange extends Component<PasswordChangeProps> {
       formError: () => this.props.store?.getState().formError,
     });
 
-    this._eventBus.on(Component.EVENTS.FLOW_CDM, this.updateFormRefs.bind(this));
-    this._eventBus.on(Component.EVENTS.FLOW_CDU, this.updateFormRefs.bind(this));
+    this._eventBus.on(Component.EVENTS.COMPONENT_DID_MOUNT, this.updateFormRefs.bind(this));
+    this._eventBus.on(Component.EVENTS.COMPONENT_DID_UPDATE, this.updateFormRefs.bind(this));
   }
 
   updateFormRefs(): void {
@@ -66,7 +66,7 @@ class PasswordChange extends Component<PasswordChangeProps> {
   render() {
     //template=hbs
     return `
-      {{#BackButtonWrapper route='${routeConsts.PROFILE}'}}
+      {{#BackButtonWrapper route='${ROUTE_PATHS.PROFILE}'}}
         <div class='profile'>
             <div class='profile__avatar'>{{{Avatar image=user.avatar}}}</div>
 

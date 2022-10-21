@@ -4,7 +4,7 @@ import { transformChat, transformUser } from 'utils/apiTransformers';
 import log from 'utils/log';
 
 import { chatAPI } from '../api/chat';
-import { routeConsts } from '../config/routes';
+import { ROUTE_PATHS } from '../config/routes';
 import { initChat } from './messages';
 
 type CreateChatPayload = {
@@ -57,7 +57,7 @@ export const createChat = async (
 
   const createdChatId = response?.id;
   if (createdChatId) {
-    window.router.go(`${routeConsts.CHAT}/${createdChatId}`);
+    window.router.go(`${ROUTE_PATHS.CHAT}/${createdChatId}`);
   }
 
   const chats = state.chats;
@@ -95,7 +95,7 @@ export const deleteChat = async (
     return;
   }
 
-  window.router.go(routeConsts.CHAT);
+  window.router.go(ROUTE_PATHS.CHAT);
 
   const chatToDelete = state.chats?.find((chat) => chat.id === action.chatId);
   if (chatToDelete && chatToDelete.socket instanceof WebSocket) {

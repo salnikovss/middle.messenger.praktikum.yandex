@@ -1,7 +1,7 @@
 import './Chat.scss';
 
 import Modal from 'components/Modal';
-import { routeConsts } from 'config/routes';
+import { ROUTE_PATHS } from 'config/routes';
 import { registerComponent } from 'core';
 import Component from 'core/Component';
 import { initAllChats } from 'services/messages';
@@ -26,15 +26,14 @@ class Chat extends Component<ChatProps> {
       ...props,
       onAddChatClick: (e) => {
         e.preventDefault();
-        (this.refs.addChatModalRef as unknown as Modal).open();
+        this.refs.modalRef instanceof Modal && this.refs.modalRef.open();
       },
       onSearch: (searchTerm) => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        (this.refs.chatlistRef as unknown as ChatList).setProps({ filter: searchTerm });
+        // @ts-expect-error error because ChatList wrapped by withStore
+        (this.refs.chatlistRef as ChatList).setProps({ filter: searchTerm });
       },
       closeAddChatModal: () => {
-        (this.refs.addChatModalRef as unknown as Modal).close();
+        this.refs.modalRef instanceof Modal && this.refs.modalRef.close();
       },
     });
   }
@@ -54,7 +53,7 @@ class Chat extends Component<ChatProps> {
         <aside class='chat__left-pane'>
           <div class='chat__top-links'>
             {{{Link text='Создать чат' class='chat__top-link' onClick=onAddChatClick }}}
-            {{{Link text='Профиль' class='chat__top-link chat__profile-link' to='${routeConsts.PROFILE}' }}}
+            {{{Link text='Профиль' class='chat__top-link chat__profile-link' to='${ROUTE_PATHS.PROFILE}' }}}
           </div>
           <div class='chat__search-box'>
             {{{SearchBox onSearch=onSearch}}}

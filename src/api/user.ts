@@ -1,5 +1,6 @@
 import Http from 'utils/Http';
 
+import { API_ENDPOINTS } from '../config/app';
 import { APIError, UserDTO } from './types';
 
 export type SigninRequestData = {
@@ -34,18 +35,18 @@ type SearchResponseData = UserDTO[] | APIError;
 
 export const userAPI = {
   updatePassword: (data: UpdatePasswordRequestData) => {
-    return Http.put<UpdatePasswordResponseData>('user/password', { data });
+    return Http.put<UpdatePasswordResponseData>(API_ENDPOINTS.USER.UPDATE_PASSWORD, { data });
   },
 
   updateProfile: (data: UpdateProfileRequestData) => {
-    return Http.put<UpdateProfileResponseData>('user/profile', { data });
+    return Http.put<UpdateProfileResponseData>(API_ENDPOINTS.USER.UPDATE_PROFILE, { data });
   },
 
   updateProfileAvatar: (data: UpdateProfileAvatarRequestData) => {
-    return Http.put<UpdateProfileAvatarResponseData>('user/profile/avatar', { data, headers: {} });
+    return Http.put<UpdateProfileAvatarResponseData>(API_ENDPOINTS.USER.UPDATE_PROFILE_AVATAR, { data, headers: {} });
   },
 
   search: (data: SearchRequestData) => {
-    return Http.post<SearchResponseData>('user/search', { data });
+    return Http.post<SearchResponseData>(API_ENDPOINTS.USER.SEARCH, { data });
   },
 };

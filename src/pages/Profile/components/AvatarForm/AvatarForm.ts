@@ -29,8 +29,8 @@ class AvatarForm extends Component<AvatarFormProps> {
       formError: () => this.props.store?.getState().formError,
     });
 
-    this._eventBus.on(Component.EVENTS.FLOW_CDM, this.updateFormRefs.bind(this));
-    this._eventBus.on(Component.EVENTS.FLOW_CDU, this.updateFormRefs.bind(this));
+    this._eventBus.on(Component.EVENTS.COMPONENT_DID_MOUNT, this.updateFormRefs.bind(this));
+    this._eventBus.on(Component.EVENTS.COMPONENT_DID_UPDATE, this.updateFormRefs.bind(this));
   }
 
   updateFormRefs(): void {

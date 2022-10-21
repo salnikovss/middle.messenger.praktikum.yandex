@@ -2,8 +2,8 @@
   resize: none;
   width: 100%;
   font-family: inherit;
-  font-weight: 500;
-  font-size: 12px;
+  font-weight: var(--baseFontWeight);
+  font-size: var(--baseFontSize);
   line-height: 12px;
   border: none;
   background: transparent;

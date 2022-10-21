@@ -1,8 +1,7 @@
 .file-input {
   &__filename {
     display: none;
-    font-style: normal;
-    font-weight: 500;
+    font-weight: var(--baseFontWeight);
     font-size: 14px;
     line-height: 16px;
     text-align: center;
@@ -27,17 +26,14 @@
   }
 
   .error {
-    // width: auto;
-    // position: static;
     text-align: center;
     margin: 5px auto 0;
   }
 
   &__placeholder-text {
     display: block;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
+    font-weight: var(--baseFontWeight);
+    font-size: var(--baseFontSize);
     line-height: 16px;
     text-align: center;
     color: var(--secondaryColor);

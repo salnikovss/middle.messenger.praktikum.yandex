@@ -1,5 +1,6 @@
 import Http from 'utils/Http';
 
+import { API_ENDPOINTS } from '../config/app';
 import { APIError, ChatDTO, UserDTO } from './types';
 
 type CreateRequestData = { title: string };
@@ -18,17 +19,18 @@ type GetUsersResponseData = UserDTO[] | APIError;
 type GetTokenResponseData = { token: string } | APIError;
 
 export const chatAPI = {
-  list: () => Http.get<ListResponseData>('chats'),
+  list: () => Http.get<ListResponseData>(API_ENDPOINTS.CHAT.LIST),
 
-  create: (data: CreateRequestData) => Http.post<CreateResponseData>('chats', { data }),
+  create: (data: CreateRequestData) => Http.post<CreateResponseData>(API_ENDPOINTS.CHAT.CREATE, { data }),
 
-  delete: (data: DeleteRequestData) => Http.delete<DeleteResponseData>('chats', { data }),
+  delete: (data: DeleteRequestData) => Http.delete<DeleteResponseData>(API_ENDPOINTS.CHAT.DELETE, { data }),
 
-  addUsers: (data: AddUsersRequestData) => Http.put<AddUsersResponseData>('chats/users', { data }),
+  addUsers: (data: AddUsersRequestData) => Http['post']<AddUsersResponseData>(API_ENDPOINTS.CHAT.ADD_USERS, { data }),
 
-  deleteUsers: (data: DeleteUsersRequestData) => Http.delete<DeleteUsersResponseData>('chats/users', { data }),
+  deleteUsers: (data: DeleteUsersRequestData) =>
+    Http.delete<DeleteUsersResponseData>(API_ENDPOINTS.CHAT.DELETE_USERS, { data }),
 
-  getUsers: (data: GetUsersRequestData) => Http.get<GetUsersResponseData>(`chats/${data.chatId}/users`),
+  getUsers: (data: GetUsersRequestData) => Http.get<GetUsersResponseData>(API_ENDPOINTS.CHAT.GET_USERS(data.chatId)),
 
-  getToken: (data: GetTokenRequestData) => Http.post<GetTokenResponseData>(`chats/token/${data.id}`),
+  getToken: (data: GetTokenRequestData) => Http.post<GetTokenResponseData>(API_ENDPOINTS.CHAT.GET_TOKEN(data.id)),
 };

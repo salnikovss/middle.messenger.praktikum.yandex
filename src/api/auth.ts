@@ -1,3 +1,4 @@
+import { API_ENDPOINTS } from 'config/app';
 import Http from 'utils/Http';
 
 import { APIError, UserDTO } from './types';
@@ -21,11 +22,11 @@ type SignupResponseData = { id: number } | APIError;
 type UserResponseData = UserDTO | APIError;
 
 export const authAPI = {
-  signin: (data: SigninRequestData) => Http.post<SigninResponseData>('auth/signin', { data }),
+  signin: (data: SigninRequestData) => Http.post<SigninResponseData>(API_ENDPOINTS.AUTH.SIGNIN, { data }),
 
-  signup: (data: SignupRequestData) => Http.post<SignupResponseData>('auth/signup', { data }),
+  signup: (data: SignupRequestData) => Http.post<SignupResponseData>(API_ENDPOINTS.AUTH.SIGNUP, { data }),
 
-  me: () => Http.get<UserResponseData>('auth/user'),
+  me: () => Http.get<UserResponseData>(API_ENDPOINTS.AUTH.ME),
 
-  logout: () => Http.post('auth/logout'),
+  logout: () => Http.post(API_ENDPOINTS.AUTH.LOGOUT),
 };

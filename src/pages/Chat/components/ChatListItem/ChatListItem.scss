@@ -50,8 +50,7 @@
   }
 
   &__date {
-    font-style: normal;
-    font-weight: 500;
+    font-weight: var(--baseFontWeight);
     font-size: 9px;
     line-height: 13px;
     text-align: right;
@@ -66,9 +65,8 @@
   &__alt {
     text-overflow: ellipsis;
     overflow: hidden;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
+    font-weight: var(--baseFontWeight);
+    font-size: var(--baseFontSize);
     line-height: 15px;
     color: var(--chatListItemAltColor);
     margin-bottom: 0;
@@ -90,7 +88,7 @@
       min-width: 20px;
       border-radius: 50%;
       background: var(--secondaryColor);
-      font-weight: 500;
+      font-weight: var(--baseFontWeight);
       font-size: 11px;
       text-align: center;
       color: #fff;

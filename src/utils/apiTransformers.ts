@@ -1,5 +1,5 @@
 import { ChatDTO, UserDTO } from 'api/types';
-import { AVATARPREFIX } from 'config/app';
+import { AVATAR_PREFIX } from 'config/app';
 
 export const transformUser = (data: UserDTO): UserModel => {
   return {
@@ -8,7 +8,7 @@ export const transformUser = (data: UserDTO): UserModel => {
     first_name: data.first_name,
     second_name: data.second_name,
     display_name: data.display_name,
-    avatar: data.avatar && data.avatar.length > 0 ? AVATARPREFIX + data.avatar : '',
+    avatar: data.avatar && data.avatar.length > 0 ? AVATAR_PREFIX + data.avatar : '',
     phone: data.phone,
     email: data.email,
     role: data.role,

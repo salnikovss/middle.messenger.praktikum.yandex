@@ -1,6 +1,6 @@
 import './ChatList.scss';
 
-import { routeConsts } from 'config/routes';
+import { ROUTE_PATHS } from 'config/routes';
 import { Component } from 'core';
 import registerComponent from 'core/registerComponent';
 import withStore from 'utils/withStore';
@@ -33,7 +33,7 @@ class ChatList extends Component<ChatListProps> {
 
   onClick = (chatId: number) => {
     this.props.store.dispatch(markAsRead, { chatId });
-    window.router.go(`${routeConsts.CHAT}/${chatId}`);
+    window.router.go(`${ROUTE_PATHS.CHAT}/${chatId}`);
   };
 
   render() {

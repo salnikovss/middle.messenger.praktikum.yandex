@@ -1,4 +1,10 @@
-export { default as Component } from './Component';
+export {
+  default as Component,
+  ComponentConstructable,
+  ComponentEventHandler,
+  ComponentEvents,
+  ComponentProps,
+} from './Component';
 export { default as EventBus } from './EventBus';
 export { default as registerComponent } from './registerComponent';
 export { default as renderDOM } from './renderDOM';

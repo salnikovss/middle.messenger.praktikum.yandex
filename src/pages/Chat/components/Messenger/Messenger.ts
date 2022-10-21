@@ -35,14 +35,14 @@ class Messenger extends Component<MessengerProps> {
       },
       onDeleteUserClick: (e) => {
         e.preventDefault();
-        (this.refs.deleteUserFromChatModalRef as unknown as Modal).open();
+        this.refs.deleteUserFromChatModalRef instanceof Modal && this.refs.deleteUserFromChatModalRef.open();
       },
       onAddUserClick: (e) => {
         e.preventDefault();
-        (this.refs.addUserToChatModalRef as unknown as Modal).open();
+        this.refs.addUserToChatModalRef instanceof Modal && this.refs.addUserToChatModalRef.open();
       },
       closeAddUserToChatModal: () => {
-        (this.refs.addUserToChatModalRef as unknown as Modal).close();
+        this.refs.addUserToChatModalRef instanceof Modal && this.refs.addUserToChatModalRef.close();
       },
       onDeleteChatConfirm: () => {
         const { store } = this.props;
@@ -65,8 +65,7 @@ class Messenger extends Component<MessengerProps> {
           return;
         }
         if (chat.chatUsers) {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
+          // @ts-expect-error error because DeleteUserForm wrapped by withStore
           (this.refs.deleteUserFormRef as unknown as DeleteUserForm).setProps({
             chatUsers: (chat.chatUsers as UserDTO[])
               .filter((user) => user.role !== 'admin')

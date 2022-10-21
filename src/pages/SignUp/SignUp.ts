@@ -1,5 +1,5 @@
 import FormGroup from 'components/FormGroup';
-import { routeConsts } from 'config/routes';
+import { ROUTE_PATHS } from 'config/routes';
 import Component from 'core/Component';
 import { register } from 'services/auth';
 import Form from 'utils/Form';
@@ -31,8 +31,8 @@ class SignUp extends Component<SignUpProps> {
       formError: () => this.props.store?.getState().formError,
     });
 
-    this._eventBus.on(Component.EVENTS.FLOW_CDM, this.updateFormRefs.bind(this));
-    this._eventBus.on(Component.EVENTS.FLOW_CDU, this.updateFormRefs.bind(this));
+    this._eventBus.on(Component.EVENTS.COMPONENT_DID_MOUNT, this.updateFormRefs.bind(this));
+    this._eventBus.on(Component.EVENTS.COMPONENT_DID_UPDATE, this.updateFormRefs.bind(this));
   }
 
   updateFormRefs(): void {
@@ -81,7 +81,7 @@ class SignUp extends Component<SignUpProps> {
             {{{FormGroup label='Номер телефона' type='tel' name='phone' onBlur=onPhoneBlur ref='phoneInput'}}}
             {{#Button}}Зарегистрироваться{{/Button}}
         </form>
-        {{{Link to="${routeConsts.SIGNIN}" text='Уже зарегистрированы?' class='text-center d-block mt-1'}}}
+        {{{Link to="${ROUTE_PATHS.SIGNIN}" text='Уже зарегистрированы?' class='text-center d-block mt-1'}}}
       {{/CenteredBox}}
     `;
   }

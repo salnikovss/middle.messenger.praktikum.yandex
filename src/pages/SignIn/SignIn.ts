@@ -1,6 +1,6 @@
 import FormGroup from 'components/FormGroup';
 import { InputType } from 'components/Input';
-import { routeConsts } from 'config/routes';
+import { ROUTE_PATHS } from 'config/routes';
 import Component from 'core/Component';
 import { login } from 'services/auth';
 import Form from 'utils/Form';
@@ -29,8 +29,8 @@ class SignIn extends Component<SignInProps> {
       formError: () => this.props.store?.getState().formError,
     });
 
-    this._eventBus.on(Component.EVENTS.FLOW_CDM, this.updateFormRefs.bind(this));
-    this._eventBus.on(Component.EVENTS.FLOW_CDU, this.updateFormRefs.bind(this));
+    this._eventBus.on(Component.EVENTS.COMPONENT_DID_MOUNT, this.updateFormRefs.bind(this));
+    this._eventBus.on(Component.EVENTS.COMPONENT_DID_UPDATE, this.updateFormRefs.bind(this));
   }
 
   updateFormRefs(): void {
@@ -66,7 +66,7 @@ class SignIn extends Component<SignInProps> {
 
             {{#Button}}Войти{{/Button}}
         </form>
-        {{{Link to='${routeConsts.SIGNUP}' text='Регистрация' class='text-center d-block mt-1'}}}
+        {{{Link to='${ROUTE_PATHS.SIGNUP}' text='Регистрация' class='text-center d-block mt-1'}}}
       {{/CenteredBox}}
     `;
   }

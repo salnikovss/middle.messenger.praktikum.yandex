@@ -1,4 +1,6 @@
 :root {
+  --baseFontSize: 12px;
+  --baseFontWeight: 500;
   --primaryColor: #252838;
   --primaryColorLighten: #292c3e;
   --primaryColorDarken: #212432;
@@ -173,9 +175,8 @@ img {
     display: flex;
     align-items: center;
     list-style: none;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
+    font-weight: var(--baseFontWeight);
+    font-size: var(--baseFontSize);
     line-height: 14px;
     color: var(--lightColor);
     white-space: nowrap;
@@ -201,7 +202,7 @@ img {
 }
 
 .found-users-list {
-  font-size: 12px;
+  font-size: var(--baseFontSize);
 
   &__inner {
     margin-top: 0;
@@ -215,7 +216,7 @@ img {
   }
 
   &__not-found {
-    font-size: 12px;
+    font-size: var(--baseFontSize);
     margin-top: 12px;
     text-align: center;
   }

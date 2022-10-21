@@ -1,23 +1,22 @@
 import './index.scss';
 
 import BackButtonWrapper from 'components/BackButtonWrapper';
+import Button from 'components/Button';
 import CenteredBox from 'components/CenteredBox';
 import ConfirmationModal from 'components/ConfirmationModal';
 import { default as ErrorComponent } from 'components/Error';
 import FileInput from 'components/FileInput';
+import FormGroup from 'components/FormGroup';
 import Input from 'components/Input';
+import Link from 'components/Link';
+import Modal from 'components/Modal/Modal';
 import Textarea from 'components/Textarea';
+import { ROUTES } from 'config/routes';
+import { registerComponent, Store } from 'core';
 import Router from 'core/Router';
 import { initApp } from 'services/initApp';
+import { defaultState } from 'store';
 import log from 'utils/log';
-
-import Button from './components/Button';
-import FormGroup from './components/FormGroup';
-import Link from './components/Link';
-import Modal from './components/Modal/Modal';
-import { registerComponent, Store } from './core';
-import { defaultState } from './store';
-import initRouter from './utils/initRouter';
 
 function registerComponents() {
   registerComponent(Link);
@@ -45,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     log('%cstore updated', 'background: #222; color: #bada55', nextState);
   });
 
-  initRouter(router, store, '#app');
+  router.init(ROUTES, store, '#app');
 
   store.dispatch(initApp);
 });

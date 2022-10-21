@@ -4,7 +4,7 @@
 
   &__label {
     display: block;
-    font-weight: 500;
+    font-weight: var(--baseFontWeight);
     font-size: 9px;
     line-height: 9px;
     color: var(--chatListItemAltColor);

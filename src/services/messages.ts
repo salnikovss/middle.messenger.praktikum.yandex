@@ -1,4 +1,4 @@
-import { WEBSOCKETHOST } from 'config/app';
+import { WEBSOCKET_HOST } from 'config/app';
 import { Dispatch } from 'core';
 import { MessageType } from 'pages/Chat/components/Message';
 import { transformUser } from 'utils/apiTransformers';
@@ -62,23 +62,29 @@ export const initAllChats = async (dispatch: Dispatch<AppState>, state: AppState
 
   const updatedChats = await Promise.all(
     chats.map(async (chat) => {
-      const { response } = await chatAPI.getToken({ id: chat.id });
-      if (apiHasError(response)) {
-        log(`Get chat ws token error. Chat id: ${chat.id}`, response);
-      } else {
-        chat.token = response.token;
+      if (!chat.token) {
+        const { response } = await chatAPI.getToken({ id: chat.id });
+        if (apiHasError(response)) {
+          log(`Get chat ws token error. Chat id: ${chat.id}`, response);
+        } else {
+          chat.token = response.token;
+        }
       }
 
-      const { response: getUsersResponse } = await chatAPI.getUsers({ chatId: chat.id });
-      if (apiHasError(getUsersResponse)) {
-        log('Get chat users error', getUsersResponse.reason);
-      } else {
-        chat.chatUsers = getUsersResponse.map((user) => transformUser(user));
+      if (!chat.chatUsers) {
+        const { response: getUsersResponse } = await chatAPI.getUsers({ chatId: chat.id });
+        if (apiHasError(getUsersResponse)) {
+          log('Get chat users error', getUsersResponse.reason);
+        } else {
+          chat.chatUsers = getUsersResponse.map((user) => transformUser(user));
+        }
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const socket = await initChatSocket(dispatch, state, { token: chat.token!, chatId: chat.id });
-      chat.socket = socket;
+      if (!chat.socket) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const socket = await initChatSocket(dispatch, state, { token: chat.token!, chatId: chat.id });
+        chat.socket = socket;
+      }
 
       return chat;
     })
@@ -92,7 +98,7 @@ export const initChatSocket = async (
   state: AppState,
   { chatId, token }: InitChatSocketPayload
 ): Promise<WebSocket> => {
-  const socket = await openWebSocketConnection(`${WEBSOCKETHOST}/ws/chats/${state.user?.id}/${chatId}/${token}`);
+  const socket = await openWebSocketConnection(`${WEBSOCKET_HOST}/ws/chats/${state.user?.id}/${chatId}/${token}`);
 
   socket.send(JSON.stringify({ content: '0', type: 'get old' }));
 

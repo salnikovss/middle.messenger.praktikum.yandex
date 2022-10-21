@@ -27,8 +27,8 @@
     padding-top: 8px;
     padding-bottom: 8px;
     font-family: inherit;
-    font-size: 12px;
-    font-weight: 500;
+    font-size: var(--baseFontSize);
+    font-weight: var(--baseFontWeight);
     line-height: 12px;
   }
 

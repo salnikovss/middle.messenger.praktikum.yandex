@@ -10,7 +10,6 @@
   }
 
   &__display_name {
-    font-style: normal;
     font-weight: 700;
     font-size: 16px;
     line-height: 16px;
@@ -41,8 +40,7 @@
   }
 
   &__rows-row {
-    font-style: normal;
-    font-weight: 500;
+    font-weight: var(--baseFontWeight);
     font-size: 13px;
     line-height: 13px;
     display: flex;
@@ -65,7 +63,7 @@
     border: none;
     outline: none;
     background: none;
-    font-weight: 500;
+    font-weight: var(--baseFontWeight);
     font-size: 13px;
     line-height: 13px;
     padding-bottom: 10px;

@@ -1,5 +1,5 @@
-import Component, { ComponentConstructable } from './Component';
-import renderDOM from './renderDOM';
+import { Component, ComponentConstructable } from 'core';
+import { renderDOM } from 'core';
 
 type RouteConfig = {
   initialProps?: Record<string, unknown>;
@@ -24,23 +24,12 @@ export default class Route {
     }
   }
 
-  leave() {
-    if (this._component) {
-      this._component.hide();
-    }
-  }
-
   match(pathname: string) {
     return pathname === this._pathname;
   }
 
   render() {
-    // if (!this._component) {
     this._component = new this._componentClass(this.config.initialProps ?? {});
-    // } else {
-    //   this._component.show();
-    // }
-
     renderDOM(this._component, this.config.rootQuery);
   }
 }

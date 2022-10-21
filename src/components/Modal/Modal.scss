@@ -48,8 +48,7 @@
   }
 
   &__title {
-    font-style: normal;
-    font-weight: 500;
+    font-weight: var(--baseFontWeight);
     font-size: 15px;
     line-height: 20px;
     text-align: center;

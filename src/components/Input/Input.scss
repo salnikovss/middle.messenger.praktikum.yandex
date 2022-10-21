@@ -4,7 +4,7 @@
   border: 1px solid var(--primaryColor);
   background-color: var(--primaryColor);
   padding: 10px 16px;
-  font-weight: 500;
+  font-weight: var(--baseFontWeight);
   font-size: 13px;
   line-height: 13px;
   color: var(--lightColor);

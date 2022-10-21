@@ -1,6 +1,5 @@
+import { ComponentConstructable } from 'core';
 import Handlebars, { HelperOptions } from 'handlebars';
-
-import { ComponentConstructable } from './Component';
 
 export default function registerComponent<Props extends Record<string, unknown>>(
   Component: ComponentConstructable<Props>

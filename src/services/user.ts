@@ -1,5 +1,5 @@
 import { userAPI } from 'api/user';
-import { routeConsts } from 'config/routes';
+import { ROUTE_PATHS } from 'config/routes';
 import type { Dispatch } from 'core';
 import apiHasError from 'utils/apiHasError';
 import { transformUser } from 'utils/apiTransformers';
@@ -42,7 +42,7 @@ export const updateProfile = async (dispatch: Dispatch<AppState>, _state: AppSta
 
   dispatch({ user: transformUser(response), formSuccess: 'Профиль успешно обновлен' });
 
-  window.router.go(routeConsts.PROFILE);
+  window.router.go(ROUTE_PATHS.PROFILE);
 };
 
 export const updatePassword = async (dispatch: Dispatch<AppState>, _state: AppState, action: UpdatePasswordPayload) => {
@@ -56,7 +56,7 @@ export const updatePassword = async (dispatch: Dispatch<AppState>, _state: AppSt
     return;
   }
 
-  window.router.go(routeConsts.PROFILE);
+  window.router.go(ROUTE_PATHS.PROFILE);
 };
 
 export const updateProfileAvatar = async (

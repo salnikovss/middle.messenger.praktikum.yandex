@@ -1,12 +1,11 @@
 import { ComponentConstructable } from 'core/Component';
 import Chat from 'pages/Chat';
+import { ErrorPage404, ErrorPage500 } from 'pages/ErrorPage/ErrorPage';
 import Profile from 'pages/Profile';
 import PasswordChange from 'pages/Profile/modules/PasswordChange';
 import ProfileEdit from 'pages/Profile/modules/ProfileEdit';
 import SignIn from 'pages/SignIn';
 import SignUp from 'pages/SignUp';
-
-import { ErrorPage404, ErrorPage500 } from '../pages/ErrorPage/ErrorPage';
 
 export enum Screens {
   Chat = 'Chat',

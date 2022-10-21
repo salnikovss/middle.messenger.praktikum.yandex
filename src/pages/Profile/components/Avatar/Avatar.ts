@@ -1,11 +1,11 @@
 import './Avatar.scss';
 
+import { ButtonStyle } from 'components/Button/types';
 import Modal from 'components/Modal';
 import Component from 'core/Component';
+import registerComponent from 'core/registerComponent';
 
-import registerComponent from '../../../../core/registerComponent';
 import AvatarForm from '../AvatarForm';
-import { ButtonStyle } from './../../../../components/Button/types';
 import { AvatarProps } from './types';
 
 registerComponent(AvatarForm);
@@ -18,7 +18,7 @@ export default class Avatar extends Component<AvatarProps> {
       editable,
       onClick: (e) => {
         e.preventDefault();
-        (this.refs.modalRef as unknown as Modal).open();
+        this.refs.modalRef instanceof Modal && this.refs.modalRef.open();
       },
     });
   }
