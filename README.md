@@ -1,4 +1,4 @@
-[Ссылка Pull Request](https://github.com/salnikovss/middle.messenger.praktikum.yandex/pull/2)
+[Ссылка Pull Request](https://github.com/salnikovss/middle.messenger.praktikum.yandex/pull/3)
 
 # YP Messenger - учебный проект мессенджера
 
