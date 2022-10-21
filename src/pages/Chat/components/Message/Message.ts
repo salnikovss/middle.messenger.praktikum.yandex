@@ -1,8 +1,7 @@
 import './Message.scss';
 
 import Component from 'core/Component';
-import { getTime } from 'utils/getTime';
-import nl2br from 'utils/nl2br';
+import getTime from 'utils/getTime';
 
 import { MessageProps } from './types';
 
@@ -12,22 +11,37 @@ export default class Message extends Component<MessageProps> {
   render() {
     //template=hbs
     return `
-      <div class='message message_type-{{item.type}} message_{{#if item.fromMe}}from-me{{else}}from-others{{/if}}'>
+      <div class='message message_type-{{item.type}} message_{{#if item.from_me}}from-me{{else}}from-others{{/if}}'>
         <div class='message__body'>
           {{#if item.image}}
-            <img src='{{item.image}}' alt='{{#if item.author}}{{item.author.name}}{{else}}твой аватар{{/if}}' />
+            <img src='{{item.image}}'
+              alt='{{#if item.user}}
+                {{#if item.user.display_name}}
+                  {{item.user.display_name}}
+                {{else}}
+                  {{item.user.first_name}} {{item.user.second_name}}
+                {{/if}}
+              {{/if}}' />
           {{else}}
-            {{#unless item.fromMe}}
-              {{#if item.author}}
-              <p class='message__author'>{{item.author.name}}</p>
+            {{#unless item.from_me}}
+              {{#if item.user}}
+              <p class='message__author'>
+                {{#if item.user.display_name}}
+                  {{item.user.display_name}}
+                {{else}}
+                  {{item.user.first_name}} {{item.user.second_name}}
+                {{/if}}
+              </p>
               {{/if}}
             {{/unless}}
-            ${nl2br(this.props.item.body || '', false)}
+            {{item.content}}
           {{/if}}
         </div>
         <div class='message__meta'>
-          <span class='message__time'>${getTime(this.props.item.dateTime)}</span>
-          {{#if item.status}}<span class='message__status message__status-{{item.status}}'></span>{{/if}}
+          <span class='message__time'>${getTime(this.props.item.time)}</span>
+          {{#if item.is_read}}
+             <span class='message__status message__status-read'></span>
+          {{/if}}
         </div>
       </div>
     `;

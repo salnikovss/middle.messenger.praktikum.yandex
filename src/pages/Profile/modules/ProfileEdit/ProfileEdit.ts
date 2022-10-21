@@ -1,31 +1,31 @@
 import '../../Profile.scss';
 
 import { InputType } from 'components/Input';
-import { routeConsts } from 'config/routes';
+import { ROUTE_PATHS } from 'config/routes';
 import Component from 'core/Component';
 import registerComponent from 'core/registerComponent';
 import Avatar from 'pages/Profile/components/Avatar';
 import ProfileFormRow from 'pages/Profile/components/ProfileFormRow';
+import { updateProfile } from 'services/user';
 import Form from 'utils/Form';
 import { predefinedRules } from 'utils/FormValidator';
+import withStore from 'utils/withStore';
+import withUser from 'utils/withUser';
 
-import { fakeUserData } from '../../../../utils/fakeData';
 import { ProfileEditProps } from './types';
 
 registerComponent(Avatar);
 registerComponent(ProfileFormRow);
-export default class ProfileEdit extends Component<ProfileEditProps> {
+
+const { email, login, first_name, second_name, display_name, phone } = predefinedRules;
+
+class ProfileEdit extends Component<ProfileEditProps> {
   static componentName = 'ProfileEdit';
-  public form: Form;
+  public form: Form = new Form({ email, login, first_name, second_name, display_name, phone });
 
-  constructor() {
-    super();
-
-    const { email, login, first_name, second_name, display_name, phone } = predefinedRules;
-    this.form = new Form({ email, login, first_name, second_name, display_name, phone });
-
-    this.setProps({
-      user: fakeUserData,
+  constructor(props: ProfileEditProps) {
+    super({
+      ...props,
       onEmailBlur: () => this.form.validate('email'),
       onLoginBlur: () => this.form.validate('login'),
       onFirstNameBlur: () => this.form.validate('first_name'),
@@ -33,13 +33,19 @@ export default class ProfileEdit extends Component<ProfileEditProps> {
       onDisplayNameBlur: () => this.form.validate('display_name'),
       onPhoneBlur: () => this.form.validate('phone'),
       events: {
-        submit: this.onSubmit.bind(this),
+        submit: (e: SubmitEvent) => this.onSubmit(e),
       },
     });
+    this.setProps({
+      formError: () => this.props.store?.getState().formError,
+    });
+
+    this._eventBus.on(Component.EVENTS.COMPONENT_DID_MOUNT, this.updateFormRefs.bind(this));
+    this._eventBus.on(Component.EVENTS.COMPONENT_DID_UPDATE, this.updateFormRefs.bind(this));
   }
 
-  componentDidMount(): void {
-    // Set form refs after compontent has been mounted
+  updateFormRefs(): void {
+    // Set form refs after compontent has been mounted or updated
     const {
       firstNameInput: first_name,
       secondNameInput: second_name,
@@ -55,29 +61,44 @@ export default class ProfileEdit extends Component<ProfileEditProps> {
     e.preventDefault();
     e.stopPropagation();
 
-    // eslint-disable-next-line no-console
-    console.log('Submitted data', this.form.getValues());
-
-    const validationResult = this.form.validate();
-    // eslint-disable-next-line no-console
-    console.log('Validation result', validationResult);
+    this.form.validate();
 
     if (!this.form.hasErrors) {
-      // eslint-disable-next-line no-console
-      console.log('Validation passed. Submitting form....');
+      const { email, first_name, login, phone, second_name, display_name } = this.form.getValues();
+      this.props.store.dispatch(updateProfile, {
+        email,
+        first_name,
+        login,
+        phone,
+        second_name,
+        display_name,
+      });
     }
   }
 
   render() {
+    if (!this.props.user) {
+      //template=hbs
+      return `
+        {{#BackButtonWrapper route='${ROUTE_PATHS.PROFILE}'}}
+        <div class='profile'>
+          Загрузка...
+        </div>
+        {{/BackButtonWrapper}}
+      `;
+    }
+
     //template=hbs
     return `
-      {{#BackButtonWrapper route='${routeConsts.CHAT}'}}
+      {{#BackButtonWrapper route='${ROUTE_PATHS.PROFILE}'}}
         <div class='profile'>
             <div class='profile__avatar'>
-                {{{Avatar}}}
+                {{{Avatar image=user.avatar editable=true}}}
             </div>
 
             <form class='data__rows-block profile__rows-block-details' method='post'>
+                {{{Error className='error_form' text=formError}}}
+
                 {{{ProfileFormRow label='Email' type='${InputType.EMAIL}' name='email' value=user.email
                       onBlur=onEmailBlur ref='emailInput'}}}
 
@@ -96,10 +117,14 @@ export default class ProfileEdit extends Component<ProfileEditProps> {
                 {{{ProfileFormRow label='Телефон' name='phone' value=user.phone
                       onBlur=onPhoneBlur ref='phoneInput'}}}
 
-                <div class='data__rows-row data__rows-row-button'>{{{Button body='Сохранить'}}}</div>
+                <div class='data__rows-row data__rows-row-button'>
+                  {{#Button}}Сохранить{{/Button}}
+                </div>
             </form>
         </div>
         {{/BackButtonWrapper}}
     `;
   }
 }
+
+export default withStore(withUser(ProfileEdit));

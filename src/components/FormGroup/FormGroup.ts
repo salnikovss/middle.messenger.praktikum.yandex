@@ -56,7 +56,7 @@ export default class FormGroup extends Component<FormGroupProps> {
               onFocus=onFocus
           }}}
         {{/if}}
-        {{{Error text=error ref='errorRef'}}}
+        {{{Error ref='errorRef'}}}
       </div>
     `;
   }

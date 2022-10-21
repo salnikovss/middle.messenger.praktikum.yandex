@@ -1,9 +1,10 @@
 import FormGroup from 'components/FormGroup';
 import ProfileFormRow from 'pages/Profile/components/ProfileFormRow';
 
+import FileInput from '../components/FileInput/FileInput';
 import FormValidator, { ValidationRules, ValidationValue } from './FormValidator';
 
-type RefTypes = ProfileFormRow | FormGroup;
+type RefTypes = ProfileFormRow | FormGroup | FileInput;
 
 export default class Form {
   private formValidator: FormValidator;

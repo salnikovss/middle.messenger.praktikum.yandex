@@ -8,6 +8,7 @@
     border-right: 1px solid var(--darkColor);
     display: flex;
     flex-direction: column;
+    max-width: 310px;
   }
 
   &__right-pane {
@@ -15,19 +16,24 @@
     background-color: var(--darkColor);
   }
 
-  &__profile-link {
+  &__top-links {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__top-link {
     padding: 0 10px;
     margin: 20px 0;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    width: 100%;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
+    font-weight: var(--baseFontWeight);
+    font-size: var(--baseFontSize);
     line-height: 12px;
-    color: #9898b0;
+    color: var(--chatListItemAltColor);
+  }
 
+  &__profile-link {
     &::after {
       content: "";
       background: url(../../../static/images/arrow.svg) 0 50%;

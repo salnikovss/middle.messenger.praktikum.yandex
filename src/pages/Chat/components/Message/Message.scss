@@ -4,9 +4,8 @@
   flex-shrink: 0;
   border-radius: 12px;
   overflow: hidden;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
+  font-weight: var(--baseFontWeight);
+  font-size: var(--baseFontSize);
   line-height: 15px;
   color: var(--lightColor);
   position: relative;
@@ -25,7 +24,7 @@
   }
 
   &__time {
-    font-weight: 500;
+    font-weight: var(--baseFontWeight);
     font-size: 10px;
     line-height: 1;
     color: #aaa;
@@ -65,7 +64,7 @@
   }
 
   &_type- {
-    &text {
+    &message {
       background: #4c546f;
       padding: 8px 12px 20px;
 
@@ -76,7 +75,7 @@
       }
     }
 
-    &image {
+    &file {
       .message {
         &__meta {
           padding: 2px 7px;

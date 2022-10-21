@@ -1,42 +1,48 @@
 import '../../Profile.scss';
 
 import { InputType } from 'components/Input';
-import { routeConsts } from 'config/routes';
+import { ROUTE_PATHS } from 'config/routes';
 import Component from 'core/Component';
 import registerComponent from 'core/registerComponent';
 import Avatar from 'pages/Profile/components/Avatar';
 import ProfileFormRow from 'pages/Profile/components/ProfileFormRow';
 import Form from 'utils/Form';
 import { predefinedRules } from 'utils/FormValidator';
+import withStore from 'utils/withStore';
+import withUser from 'utils/withUser';
 
-import { fakeUserData } from '../../../../utils/fakeData';
+import { updatePassword } from '../../../../services/user';
 import { PasswordChangeProps } from './types';
 
 registerComponent(Avatar);
 registerComponent(ProfileFormRow);
-export default class PasswordChange extends Component<PasswordChangeProps> {
+
+const { password: old_password, password: new_password, password: new_password2 } = predefinedRules;
+
+class PasswordChange extends Component<PasswordChangeProps> {
   static componentName = 'PasswordChange';
-  public form: Form;
+  public form: Form = new Form({ old_password, new_password, new_password2 });
 
-  constructor() {
-    super();
-
-    const { password: old_password, password: new_password, password: new_password2 } = predefinedRules;
-    this.form = new Form({ old_password, new_password, new_password2 });
-
-    this.setProps({
-      user: fakeUserData,
-      onOldPasswordBlur: () => this.form.validate('email'),
-      onNewPasswordBlur: () => this.form.validate('login'),
-      onNewPassword2Blur: () => this.form.validate('first_name'),
+  constructor(props: PasswordChangeProps) {
+    super({
+      ...props,
+      onOldPasswordBlur: () => this.form.validate('old_password'),
+      onNewPasswordBlur: () => this.form.validate('new_password'),
+      onNewPassword2Blur: () => this.form.validate('new_password2'),
       events: {
-        submit: this.onSubmit.bind(this),
+        submit: (e: SubmitEvent) => this.onSubmit(e),
       },
     });
+    this.setProps({
+      formError: () => this.props.store?.getState().formError,
+    });
+
+    this._eventBus.on(Component.EVENTS.COMPONENT_DID_MOUNT, this.updateFormRefs.bind(this));
+    this._eventBus.on(Component.EVENTS.COMPONENT_DID_UPDATE, this.updateFormRefs.bind(this));
   }
 
-  componentDidMount(): void {
-    // Set form refs after compontent has been mounted
+  updateFormRefs(): void {
+    // Set form refs after compontent has been mounted or updated
     const {
       oldPasswordInput: old_password,
       newPasswordInput: new_password,
@@ -49,27 +55,24 @@ export default class PasswordChange extends Component<PasswordChangeProps> {
     e.preventDefault();
     e.stopPropagation();
 
-    // eslint-disable-next-line no-console
-    console.log('Submitted data', this.form.getValues());
-
-    const validationResult = this.form.validate();
-    // eslint-disable-next-line no-console
-    console.log('Validation result', validationResult);
+    this.form.validate();
 
     if (!this.form.hasErrors) {
-      // eslint-disable-next-line no-console
-      console.log('Validation passed. Submitting form....');
+      const { old_password: oldPassword, new_password: newPassword } = this.form.getValues();
+      this.props.store.dispatch(updatePassword, { oldPassword, newPassword });
     }
   }
 
   render() {
     //template=hbs
     return `
-      {{#BackButtonWrapper route='${routeConsts.CHAT}'}}
+      {{#BackButtonWrapper route='${ROUTE_PATHS.PROFILE}'}}
         <div class='profile'>
-            <div class='profile__avatar'>{{{Avatar}}}</div>
+            <div class='profile__avatar'>{{{Avatar image=user.avatar}}}</div>
 
             <form class='data__rows-block profile__rows-block-details' method='post'>
+                {{{Error className='error_form' text=formError}}}
+
                 {{{ProfileFormRow label='Текущий пароль' type='${InputType.PASSWORD}' name='oldPassword'
                       placeholder='********************' onBlur=onOldPasswordBlur ref='oldPasswordInput'}}}
 
@@ -79,10 +82,14 @@ export default class PasswordChange extends Component<PasswordChangeProps> {
                 {{{ProfileFormRow label='Повторить пароль' type='${InputType.PASSWORD}' name='newPassword2'
                       placeholder='********************' onBlur=onNewPassword2Blur ref='newPassword2Input'}}}
 
-                <div class='data__rows-row data__rows-row-button'>{{{Button body='Сохранить'}}}</div>
+                <div class='data__rows-row data__rows-row-button'>
+                  {{#Button}}Сохранить{{/Button}}
+                </div>
             </form>
         </div>
         {{/BackButtonWrapper}}
     `;
   }
 }
+
+export default withStore(withUser(PasswordChange));

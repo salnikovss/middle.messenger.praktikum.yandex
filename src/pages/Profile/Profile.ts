@@ -1,31 +1,45 @@
 import './Profile.scss';
 
-import { routeConsts } from 'config/routes';
+import { ROUTE_PATHS } from 'config/routes';
 import Component from 'core/Component';
 import registerComponent from 'core/registerComponent';
+import { logout } from 'services/auth';
+import withStore from 'utils/withStore';
+import withUser from 'utils/withUser';
 
-import { fakeUserData } from '../../utils/fakeData';
 import Avatar from './components/Avatar';
 import ProfileDataRow from './components/ProfileDataRow';
 import { ProfileProps } from './types';
 
-export default class Profile extends Component<ProfileProps> {
+class Profile extends Component<ProfileProps> {
   static componentName = 'Profile';
 
-  constructor() {
+  constructor(props: ProfileProps) {
     registerComponent(Avatar);
     registerComponent(ProfileDataRow);
     super({
-      user: fakeUserData,
+      ...props,
+      onLogout: () => this.props.store.dispatch(logout),
     });
   }
 
   render() {
+    if (!this.props.user) {
+      //template=hbs
+      return `
+        {{#BackButtonWrapper route='${ROUTE_PATHS.CHAT}'}}
+        <div class='profile'>
+          Загрузка...
+        </div>
+        {{/BackButtonWrapper}}
+      `;
+    }
+
     //template=hbs
     return `
-      {{#BackButtonWrapper route='${routeConsts.CHAT}'}}
+      {{#BackButtonWrapper route='${ROUTE_PATHS.CHAT}'}}
         <div class='profile'>
-            <div class='profile__avatar'>{{{Avatar}}}</div>
+            <div class='profile__avatar'>{{{Avatar image=user.avatar}}}</div>
             <div class='profile__display_name'>{{user.display_name}}</div>
 
             <div class='data__rows-block profile__rows-block-details'>
@@ -39,15 +53,15 @@ export default class Profile extends Component<ProfileProps> {
 
             <div class='data__rows-block profile__rows-block-profile-nav'>
                 <div class='data__rows-row'>
-                    {{{Link text='Изменить данные' to='${routeConsts.PROFILE_EDIT}'
+                    {{{Link text='Изменить данные' to='${ROUTE_PATHS.PROFILE_EDIT}'
                         class='data__rows-row-link'}}}
                 </div>
                 <div class='data__rows-row'>
-                    {{{Link text='Сменить пароль' to='${routeConsts.PROFILE_PASSWORD_CHANGE}'
+                    {{{Link text='Сменить пароль' to='${ROUTE_PATHS.PROFILE_PASSWORD_CHANGE}'
                         class='data__rows-row-link'}}}
                 </div>
                 <div class='data__rows-row'>
-                    {{{Link text='Выйти' to='${routeConsts.LOGOUT}'
+                    {{{Link text='Выйти' onClick=onLogout
                         class='data__rows-row-link data__rows-row-link_color-red'}}}
                 </div>
             </div>
@@ -56,3 +70,5 @@ export default class Profile extends Component<ProfileProps> {
     `;
   }
 }
+
+export default withStore(withUser(Profile));

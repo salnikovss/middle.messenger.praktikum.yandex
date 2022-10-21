@@ -1,6 +1,6 @@
 import './ErrorPage.scss';
 
-import { routeConsts } from 'config/routes';
+import { ROUTE_PATHS } from 'config/routes';
 import Component from 'core/Component';
 
 import { ErrorPageProps } from './types';
@@ -14,6 +14,8 @@ export default class ErrorPage extends Component<ErrorPageProps> {
   static componentName = 'ErrorPage';
 
   constructor(props: ErrorPageProps) {
+    props.code = props.code ?? 404;
+
     super({
       ...props,
       text: errorCodesText[props.code] ?? '',
@@ -27,9 +29,21 @@ export default class ErrorPage extends Component<ErrorPageProps> {
         <div class='error-box__inner'>{{test}}
           <p class='error-box__code'>{{code}}</p>
           <p class='error-box__text'>{{text}}</p>
-          {{{Link text='Перейти на главную' class='error-box__link' to='${routeConsts.HOME}'}}}
+          {{{Link text='Перейти на главную' class='error-box__link' to='${ROUTE_PATHS.HOME}'}}}
         </div>
       </div>
     `;
+  }
+}
+
+export class ErrorPage404 extends ErrorPage {
+  constructor(props: ErrorPageProps) {
+    super({ ...props, code: 404 });
+  }
+}
+
+export class ErrorPage500 extends ErrorPage {
+  constructor(props: ErrorPageProps) {
+    super({ ...props, code: 500 });
   }
 }

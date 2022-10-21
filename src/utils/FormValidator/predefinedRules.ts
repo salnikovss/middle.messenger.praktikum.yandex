@@ -15,6 +15,8 @@ export const regexpPatterns = {
 };
 
 export const predefinedRules: ValidationRules = {
+  search_login: [v.required()],
+  chet_title: [v.required()],
   first_name: [
     v.required(),
     v.regexp({ regexp: regexpPatterns.firstLastName }, 'Имя должно содержать только буквы, без пробелов'),
@@ -47,4 +49,5 @@ export const predefinedRules: ValidationRules = {
     v.regexp({ regexp: regexpPatterns.phone }, 'Пароль должен может содержать знак + и состоять только из цифр'),
   ],
   message: [v.required()],
+  avatar: [v.required()],
 };

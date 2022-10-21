@@ -1,0 +1,10 @@
+.add-user-form {
+  &__form {
+    padding-left: var(--modalWindowPadding);
+    padding-right: var(--modalWindowPadding);
+  }
+
+  .found-users-list {
+    margin-top: 16px;
+  }
+}

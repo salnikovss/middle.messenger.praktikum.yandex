@@ -1,0 +1,53 @@
+.file-input {
+  &__filename {
+    display: none;
+    font-weight: var(--baseFontWeight);
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    color: var(--chatListItemAltColor);
+  }
+
+  &__placeholder {
+    position: relative;
+    overflow: hidden;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    input {
+      cursor: pointer;
+      position: absolute;
+      transform: scale(10);
+      transform-origin: center;
+      opacity: 0;
+    }
+  }
+
+  .error {
+    text-align: center;
+    margin: 5px auto 0;
+  }
+
+  &__placeholder-text {
+    display: block;
+    font-weight: var(--baseFontWeight);
+    font-size: var(--baseFontSize);
+    line-height: 16px;
+    text-align: center;
+    color: var(--secondaryColor);
+  }
+
+  &_filled {
+    .file-input {
+      &__filename {
+        display: block;
+      }
+
+      &__placeholder-text {
+        display: none;
+      }
+    }
+  }
+}

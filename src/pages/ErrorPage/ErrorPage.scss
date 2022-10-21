@@ -17,7 +17,7 @@
   }
 
   &__code {
-    font-weight: 500;
+    font-weight: var(--baseFontWeight);
     font-size: 40px;
     line-height: 40px;
     color: var(--lightColor);
@@ -25,7 +25,7 @@
   }
 
   &__text {
-    font-weight: 500;
+    font-weight: var(--baseFontWeight);
     font-size: 20px;
     line-height: 20px;
     color: var(--lightColor);
@@ -33,7 +33,7 @@
 
   &__link {
     margin-top: 66px;
-    font-weight: 500;
+    font-weight: var(--baseFontWeight);
     font-size: 11px;
     line-height: 11px;
     color: var(--secondaryColor);

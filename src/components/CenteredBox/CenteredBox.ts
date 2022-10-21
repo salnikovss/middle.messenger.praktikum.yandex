@@ -15,7 +15,9 @@ export default class CenteredBox extends Component<CenteredBoxProps> {
               {{#if title}}
                   <h1 class='centered-box__title'>{{title}}</h1>
               {{/if}}
-              <div class='centered-box__content' data-layout=1></div>
+              <div class='centered-box__content'>
+                <template data-slot=1></template>
+              </div>
           </div>
       </div>
     `;

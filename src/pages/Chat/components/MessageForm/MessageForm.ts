@@ -4,30 +4,30 @@ import FormGroup from 'components/FormGroup';
 import Component from 'core/Component';
 import Form from 'utils/Form';
 import { predefinedRules } from 'utils/FormValidator';
+import withStore from 'utils/withStore';
 
+import { sendMessage } from '../../../../services/messages';
+import { MessageType } from '../Message/types';
 import { ButtonStyle } from './../../../../components/Button/types';
+import { MessageFormProps } from './types';
 
-export default class MessageForm extends Component {
+class MessageForm extends Component<MessageFormProps> {
   static componentName = 'MessageForm';
-  public form: Form;
+  public form: Form = new Form({ message: predefinedRules.message });
 
-  constructor() {
-    super();
-
-    const { message } = predefinedRules;
-    this.form = new Form({ message });
-
-    this.setProps({
+  constructor(props: MessageFormProps) {
+    super({
+      ...props,
       onMessageBlur: () => this.form.validate('message'),
       events: {
-        submit: this.onSubmit.bind(this),
+        submit: (e: SubmitEvent) => this.onSubmit(e),
       },
     });
   }
 
   componentDidMount(): void {
     // Set form refs after compontent has been mounted
-    const { messageInput: message } = this.refs as Record<string, FormGroup>;
+    const { messageInput: message } = this.refs as unknown as Record<string, FormGroup>;
     this.form.setRefs({ message });
   }
 
@@ -35,16 +35,15 @@ export default class MessageForm extends Component {
     e.preventDefault();
     e.stopPropagation();
 
-    // eslint-disable-next-line no-console
-    console.log('Submitted data', this.form.getValues());
+    this.form.validate();
+    const chatId = this.props.store.getState().idParam;
 
-    const validationResult = this.form.validate();
-    // eslint-disable-next-line no-console
-    console.log('Validation result', validationResult);
-
-    if (!this.form.hasErrors) {
-      // eslint-disable-next-line no-console
-      console.log('Validation passed. Submitting form....');
+    if (!this.form.hasErrors && chatId) {
+      this.props.store.dispatch(sendMessage, {
+        chatId,
+        message: this.form.getValues().message,
+        messageType: MessageType.TEXT,
+      });
     }
   }
 
@@ -53,19 +52,24 @@ export default class MessageForm extends Component {
     return `
       <form class='message-form'>
         <div class='message-form__attachments-button'>
-            {{{Button body="<i class='icon message-form__attachments-button-icon'></i>" type='button' style='icon'}}}
+            {{#Button type='button' style='icon'}}
+                <i class='icon message-form__attachments-button-icon'></i>
+            {{/Button}}
         </div>
         <div class='message-form__input-container'>
             {{{FormGroup class='message-form__input' name='message'
-                placeholder='Сообщение...' textarea=true
+                placeholder='Сообщение...'
                 onBlur=onMessageBlur ref='messageInput'
             }}}
         </div>
         <div class='message-form__send-button'>
-            {{{Button body='<i class="icon message-form__send-button-icon"></i>'
-              style='${ButtonStyle.ICON}' classes='btn_primary'}}}
+            {{#Button style='${ButtonStyle.ICON}' className='btn_primary'}}
+              <i class="icon message-form__send-button-icon"></i>
+            {{/Button}}
         </div>
       </form>
     `;
   }
 }
+
+export default withStore(MessageForm);

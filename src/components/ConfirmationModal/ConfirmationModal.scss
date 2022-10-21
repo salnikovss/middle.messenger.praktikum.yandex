@@ -1,0 +1,11 @@
+.confirmation-modal {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 var(--modalWindowPadding);
+
+  &__btn {
+    + .confirmation-modal__btn {
+      margin-top: 15px;
+    }
+  }
+}

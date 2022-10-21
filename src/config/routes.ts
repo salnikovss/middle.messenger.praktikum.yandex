@@ -1,32 +1,72 @@
-import Chat from 'pages/Chat';
-import ErrorPage from 'pages/ErrorPage';
-import Profile from 'pages/Profile';
-import PasswordChange from 'pages/Profile/modules/PasswordChange';
-import ProfileEdit from 'pages/Profile/modules/ProfileEdit';
-import SignIn from 'pages/SignIn';
-import SignUp from 'pages/SignUp';
+import { Screens } from 'core/Router';
 
-export const routeConsts = {
+export const ROUTE_PATHS: Record<string, string> = {
   HOME: '/',
   LOGOUT: '/',
   PROFILE: '/profile',
-  PROFILE_EDIT: '/profile/edit',
+  PROFILE_EDIT: '/settings',
   PROFILE_PASSWORD_CHANGE: '/profile/password-change',
-  SIGNIN: '/signin',
-  SIGNUP: '/signup',
+  SIGNIN: '/sign-in',
+  SIGNUP: '/sign-up',
   ERROR404: '/404',
   ERROR500: '/500',
-  CHAT: '/chat',
+  CHAT: '/messenger',
 };
 
-export const routes = {
-  [routeConsts.HOME]: () => new Chat(),
-  [routeConsts.CHAT]: () => new Chat(),
-  [routeConsts.PROFILE]: () => new Profile(),
-  [routeConsts.PROFILE_EDIT]: () => new ProfileEdit(),
-  [routeConsts.PROFILE_PASSWORD_CHANGE]: () => new PasswordChange(),
-  [routeConsts.SIGNIN]: () => new SignIn(),
-  [routeConsts.SIGNUP]: () => new SignUp(),
-  [routeConsts.ERROR404]: () => new ErrorPage({ code: 404 }),
-  [routeConsts.ERROR500]: () => new ErrorPage({ code: 500 }),
-};
+export const ROUTES: RouteEntry[] = [
+  {
+    path: ROUTE_PATHS.HOME,
+    component: Screens.Chat,
+    shouldAuthorized: true,
+  },
+  {
+    path: ROUTE_PATHS.SIGNUP,
+    component: Screens.SignUp,
+    shouldAuthorized: false,
+  },
+  {
+    path: ROUTE_PATHS.SIGNIN,
+    component: Screens.SignIn,
+    shouldAuthorized: false,
+  },
+  {
+    path: ROUTE_PATHS.CHAT,
+    component: Screens.Chat,
+    shouldAuthorized: true,
+  },
+  {
+    path: ROUTE_PATHS.CHAT + '/:id',
+    component: Screens.Chat,
+    shouldAuthorized: true,
+  },
+  {
+    path: ROUTE_PATHS.PROFILE,
+    component: Screens.Profile,
+    shouldAuthorized: true,
+  },
+  {
+    path: ROUTE_PATHS.PROFILE_PASSWORD_CHANGE,
+    component: Screens.PasswordChange,
+    shouldAuthorized: true,
+  },
+  {
+    path: ROUTE_PATHS.PROFILE_EDIT,
+    component: Screens.ProfileEdit,
+    shouldAuthorized: true,
+  },
+  {
+    path: ROUTE_PATHS.ERROR404,
+    component: Screens.ErrorPage404,
+    shouldAuthorized: true,
+  },
+  {
+    path: ROUTE_PATHS.ERROR500,
+    component: Screens.ErrorPage500,
+    shouldAuthorized: true,
+  },
+  {
+    path: '*',
+    component: Screens.ErrorPage404,
+    shouldAuthorized: false,
+  },
+];

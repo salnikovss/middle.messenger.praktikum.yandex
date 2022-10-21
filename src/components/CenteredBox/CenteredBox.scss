@@ -5,7 +5,7 @@
   width: 100%;
   min-height: 100%;
   padding: 30px;
-  font-weight: 500;
+  font-weight: var(--baseFontWeight);
   font-size: 11px;
   line-height: 11px;
 
@@ -24,11 +24,11 @@
   }
 
   &__title {
-    font-weight: 500;
+    font-weight: var(--baseFontWeight);
     font-size: 20px;
     line-height: 20px;
     text-align: center;
     color: var(--lightColor);
-    margin-bottom: 30px;
+    margin: 0 0 30px;
   }
 }

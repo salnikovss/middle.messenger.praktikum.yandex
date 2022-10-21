@@ -4,6 +4,7 @@ export enum InputType {
   TEL = 'tel',
   NUMBER = 'number',
   EMAIL = 'email',
+  FILE = 'file',
 }
 
 export type InputProps = {
@@ -12,6 +13,7 @@ export type InputProps = {
   class?: string;
   value?: string;
   style?: string;
+  accept?: string;
   placeholder?: string;
   onInput?: (e: Event) => void;
   onBlur?: (e: FocusEvent) => void;

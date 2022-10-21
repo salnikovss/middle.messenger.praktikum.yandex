@@ -1,6 +1,8 @@
 import Handlebars from 'handlebars';
 import { nanoid } from 'nanoid';
 
+import cloneDeep from '../utils/cloneDeep';
+import isEqual from '../utils/isEqual';
 import EventBus, { IEventBus } from './EventBus';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -10,18 +12,31 @@ export type ComponentProps = {
   [key: string]: unknown;
   events?: ComponentEvents;
 };
+export type ComponentConstructable<T extends Record<string, unknown>> = {
+  new (props: T): Component<T>;
+  componentName?: string;
+};
 
-export default class Component<T extends ComponentProps = Record<string, unknown>> {
+interface Component<T> {
+  componentDidMount?(props: T): void;
+  componentWillUnmount?(): void;
+  render(): DocumentFragment | string;
+}
+
+abstract class Component<T extends ComponentProps = Record<string, unknown>> {
+  static componentName: string;
+
   static EVENTS = {
     INIT: 'init',
-    FLOW_CDM: 'flow:component-did-mount',
-    FLOW_CDU: 'flow:component-did-update',
-    FLOW_RENDER: 'flow:render',
+    COMPONENT_DID_MOUNT: 'component-did-mount',
+    COMPONENT_DID_UPDATE: 'component-did-update',
+    COMPONENT_WILL_UNMOUNT: 'component-will-unmount',
+    RENDER: 'render',
   };
 
   protected _element: Nullable<HTMLElement> = null;
   protected _eventBus: IEventBus;
-  protected readonly props: T;
+  public readonly props: T;
   public id = nanoid(6);
   public refs: Record<string, Component<T>> = {};
   protected children: Record<string, Component<T>> = {};
@@ -38,24 +53,37 @@ export default class Component<T extends ComponentProps = Record<string, unknown
     eventBus.emit(Component.EVENTS.INIT, this.props);
   }
 
+  private _checkInDom() {
+    const elementInDOM = document.body.contains(this._element);
+
+    if (elementInDOM) {
+      setTimeout(() => this._checkInDom(), 1000);
+      return;
+    }
+
+    this._eventBus.emit(Component.EVENTS.COMPONENT_WILL_UNMOUNT, this.props);
+  }
+
   private _registerEvents(eventBus: IEventBus) {
     eventBus.on(Component.EVENTS.INIT, this.init.bind(this));
-    eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
-    eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
-    eventBus.on(Component.EVENTS.FLOW_RENDER, this._render.bind(this));
+    eventBus.on(Component.EVENTS.COMPONENT_DID_UPDATE, this._componentDidUpdate.bind(this));
+    eventBus.on(Component.EVENTS.COMPONENT_DID_MOUNT, this._componentDidMount.bind(this));
+    eventBus.on(Component.EVENTS.COMPONENT_WILL_UNMOUNT, this._componentWillUnmount.bind(this));
+    eventBus.on(Component.EVENTS.RENDER, this._render.bind(this));
   }
 
   init() {
-    this._eventBus.emit(Component.EVENTS.FLOW_RENDER, this.props);
+    this._eventBus.emit(Component.EVENTS.RENDER, this.props);
   }
 
-  private _componentDidMount() {
-    this.componentDidMount();
+  private _componentDidMount(props: T) {
+    this._checkInDom();
+    this.componentDidMount && this.componentDidMount(props);
   }
 
-  // Can be redeclared
-  componentDidMount() {
-    return;
+  _componentWillUnmount() {
+    this._eventBus.destroy();
+    this.componentWillUnmount && this.componentWillUnmount();
   }
 
   private _componentDidUpdate(oldProps: T, newProps: T) {
@@ -63,15 +91,16 @@ export default class Component<T extends ComponentProps = Record<string, unknown
     if (!response) {
       return;
     }
+
+    this.children = {};
     this._render();
   }
 
   componentDidUpdate(oldProps: T, newProps: T): boolean {
-    return true;
-    return oldProps !== newProps;
+    return !isEqual(oldProps, newProps);
   }
 
-  setProps = (nextProps: Partial<ComponentProps>) => {
+  setProps = (nextProps: Partial<T>) => {
     if (!nextProps) {
       return;
     }
@@ -119,10 +148,10 @@ export default class Component<T extends ComponentProps = Record<string, unknown
       stub.replaceWith(content);
 
       // Paste content to layout
-      const layoutContent = content.querySelector('[data-layout="1"]');
+      const layoutContent = content.querySelector('[data-slot="1"]') as HTMLElement;
 
       if (layoutContent && stubChilds.length) {
-        layoutContent.append(...stubChilds);
+        layoutContent.replaceWith(...stubChilds);
       }
     });
 
@@ -145,17 +174,12 @@ export default class Component<T extends ComponentProps = Record<string, unknown
     }
   }
 
-  // Must be overridden by the user in the final component
-  render(): DocumentFragment | string {
-    return new DocumentFragment();
-  }
-
   getContent(): HTMLElement {
     // Hack to call CDM only after adding to DOM
     if (this.element?.parentNode?.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
       setTimeout(() => {
         if (this.element?.parentNode?.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) {
-          this._eventBus.emit(Component.EVENTS.FLOW_CDM);
+          this._eventBus.emit(Component.EVENTS.COMPONENT_DID_MOUNT);
         }
       }, 100);
     }
@@ -171,12 +195,17 @@ export default class Component<T extends ComponentProps = Record<string, unknown
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set: (target: Record<string, unknown>, prop: string, value) => {
-        const oldProps = { ...target };
-        if (typeof target === 'object') {
-          target[prop] = value;
+        let oldProps;
+        try {
+          oldProps = cloneDeep(target);
+        } catch (error) {
+          oldProps = { ...target };
         }
 
-        this._eventBus.emit(Component.EVENTS.FLOW_CDU, oldProps, target);
+        if (typeof target === 'object' && target[prop] !== value) {
+          target[prop] = value;
+          this._eventBus.emit(Component.EVENTS.COMPONENT_DID_UPDATE, oldProps, target);
+        }
         return true;
       },
       deleteProperty: () => {
@@ -184,18 +213,6 @@ export default class Component<T extends ComponentProps = Record<string, unknown
       },
     });
   }
-
-  show() {
-    const el = this.getContent();
-    if (el) {
-      el.style.display = 'block';
-    }
-  }
-
-  hide() {
-    const el = this.getContent();
-    if (el) {
-      el.style.display = 'none';
-    }
-  }
 }
+
+export default Component;

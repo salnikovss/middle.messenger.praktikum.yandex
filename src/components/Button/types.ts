@@ -1,19 +1,20 @@
 export enum ButtonType {
-  SUBMIT = 'SUBMIT',
-  BUTTON = 'BUTTON',
-  RESET = 'RESET',
+  SUBMIT = 'submit',
+  BUTTON = 'button',
+  RESET = 'reset',
 }
 
 export enum ButtonStyle {
   PRIMARY = 'primary',
+  DANGER = 'danger',
   ICON = 'icon',
+  UNSTYLED = 'unstyled',
 }
 
 export type ButtonProps = {
   type?: ButtonType;
-  body: string;
   style?: ButtonStyle;
-  classes?: string;
+  className?: string;
   onClick?: EventListener;
 };
 

@@ -1,11 +1,15 @@
+import { Store } from 'core';
+
 export type ProfileEditProps = {
-  user: UserModel;
+  store: Store<AppState>;
+  user: Nullable<UserModel>;
   onEmailBlur: (e: FocusEvent) => void;
   onLoginBlur: (e: FocusEvent) => void;
   onFirstNameBlur: (e: FocusEvent) => void;
   onSecondNameBlur: (e: FocusEvent) => void;
   onDisplayNameBlur: (e: FocusEvent) => void;
   onPhoneBlur: (e: FocusEvent) => void;
+  formError: () => Nullable<string>;
   events: {
     submit: (e: SubmitEvent) => void;
   };

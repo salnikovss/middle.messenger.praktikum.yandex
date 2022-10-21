@@ -1,4 +1,4 @@
-import './link.scss';
+import './Link.scss';
 
 import Component from 'core/Component';
 
@@ -7,13 +7,18 @@ import { LinkProps, LinkPropsWithEvents } from './types';
 export default class Link extends Component<LinkPropsWithEvents> {
   static componentName = 'Link';
 
-  constructor(props: LinkProps) {
+  constructor({ onClick, ...rest }: LinkProps) {
     super({
-      ...props,
+      ...rest,
       events: {
         click: (e: MouseEvent) => {
-          location.href = this.props.to;
           e.preventDefault();
+          if (typeof onClick === 'function') {
+            onClick(e);
+          } else {
+            window.router.go(this.props.to);
+          }
+          return false;
         },
       },
     });
@@ -21,6 +26,6 @@ export default class Link extends Component<LinkPropsWithEvents> {
 
   render() {
     //template=hbs
-    return `<a class="{{class}}" href="{{to}}">{{{text}}}</a>`;
+    return `<a class="{{class}}" href="{{#if to}}{{to}}{{else}}#{{/if}}">{{{text}}}</a>`;
   }
 }

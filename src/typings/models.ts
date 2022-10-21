@@ -1,35 +1,64 @@
-import { MessageAuthor, MessageStatus, MessageType } from 'pages/Chat/components/Message';
+import { MessageType } from 'pages/Chat/components/Message';
 
 declare global {
   //Chat
   export type ChatModel = {
-    id: string;
-    name: string;
-    alt: string;
-    lastMessageTime: string;
-    unreadMessages: number;
-    avatar: string | null;
+    id: number;
+    title: string;
+    avatar: string;
+    unread_count: number;
+    last_message?: {
+      user?: {
+        first_name: string;
+        second_name: string;
+        avatar: string;
+        email: string;
+        login: string;
+        phone: string;
+      };
+      time: string;
+      content: string;
+      from_me?: boolean;
+    };
+
+    socket?: WebSocket;
+    token?: string;
+    chatUsers: UserModel[];
+    messages: MessageModel[];
   };
 
   // User
   export type UserModel = {
-    display_name: Nullable<string>;
-    first_name: Nullable<string>;
-    second_name: Nullable<string>;
-    login: Nullable<string>;
-    email: Nullable<string>;
-    phone: Nullable<string>;
+    id: number;
+    display_name: string;
+    first_name: string;
+    second_name: string;
+    login: string;
+    email: string;
+    phone: string;
+    avatar: string;
+    role?: string;
   };
 
   // Message
   export type MessageModel = {
-    fromMe?: boolean;
-    author?: MessageAuthor;
-    dateTime: Date;
+    chat_id: number;
+    time: string;
     type: MessageType;
-    body?: string;
-    image?: string;
-    status?: MessageStatus;
+    user_id: number;
+    content: string;
+    from_me?: boolean;
+    is_read: boolean;
+    file?: {
+      id: number;
+      user_id: number;
+      path: string;
+      filename: string;
+      content_type: string;
+      content_size: number;
+      upload_date: string;
+    };
+    user?: UserModel;
   };
 }
 

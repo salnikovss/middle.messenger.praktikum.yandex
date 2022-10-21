@@ -3,19 +3,17 @@ type Listeners = {
 };
 
 export interface IEventBus {
-  _listeners: Listeners;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: string, callback: (...args: any) => void): void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(event: string, callback: (...args: any) => void): void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   emit(event: string, ...args: any): void;
+  destroy(): void;
 }
 
 class EventBus implements IEventBus {
-  _listeners: Listeners = {};
-
-  // constructor() {}
+  private _listeners: Listeners = {};
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: string, callback: (...args: any) => void): void {
@@ -44,6 +42,10 @@ class EventBus implements IEventBus {
     this._listeners[event].forEach((listener) => {
       listener.apply(listener, args);
     });
+  }
+
+  destroy() {
+    this._listeners = {};
   }
 }
 
