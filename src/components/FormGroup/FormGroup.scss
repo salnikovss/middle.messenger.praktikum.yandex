@@ -10,12 +10,6 @@
     color: var(--chatListItemAltColor);
     margin-bottom: 8px;
   }
-
-  &_has-error {
-    .input {
-      border-color: var(--dangerColor);
-    }
-  }
 }
 
 .message-form .form-group {
