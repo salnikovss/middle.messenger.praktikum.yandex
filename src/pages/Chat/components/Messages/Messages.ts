@@ -7,6 +7,7 @@ import Message from '../Message/Message';
 import { MessagesProps } from './types';
 
 registerComponent(Message);
+
 class Messages extends Component<MessagesProps> {
   static componentName = 'Messages';
 
@@ -50,4 +51,5 @@ class Messages extends Component<MessagesProps> {
     `;
   }
 }
+
 export default withStore(Messages);

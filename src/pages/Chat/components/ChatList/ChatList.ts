@@ -11,6 +11,7 @@ import { ChatListItemProps } from '../ChatListItem/types';
 import { ChatListProps } from './types';
 
 registerComponent(ChatListItem);
+
 class ChatList extends Component<ChatListProps> {
   static componentName = 'ChatList';
 
@@ -49,4 +50,5 @@ class ChatList extends Component<ChatListProps> {
     `;
   }
 }
+
 export default withStore(ChatList);

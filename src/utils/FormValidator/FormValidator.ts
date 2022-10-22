@@ -2,6 +2,7 @@ import { ValidationRules, ValidationValue } from './types';
 
 export default class FormValidator {
   private _hasErrors = false;
+
   constructor(private rules: ValidationRules) {}
 
   get hasErrors() {
