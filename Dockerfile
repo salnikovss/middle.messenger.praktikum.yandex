@@ -4,6 +4,7 @@ COPY ./ /var/www/
 
 RUN mkdir -p /var/www \
   && cd /var/www \
+  && npm install \
   && npm run build \
   && rm -rf src
 
