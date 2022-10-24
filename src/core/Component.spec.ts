@@ -9,17 +9,28 @@ class MyTestComponent extends Component<MyTestComponentProps> {
     //template=hbs
     return `
       <div class="my-text-component">
-        {{text}}
+        <div class="my-text-component__inner">
+          {{text}}
+        </div>
       </div>
     `;
   }
 }
 
-describe('Testing Component class', () => {
-  // const createInstance = (props: Record<string, unknown>) => new TestBlock(props);
+const getComponent = () => new MyTestComponent({ text: 'Test text' });
 
-  test('use jsdom in this test file', () => {
-    const component = new MyTestComponent({ text: 'Test text' });
-    expect(component).not.toBeNull();
+describe('Component class', () => {
+  test('Renders element', () => {
+    expect(getComponent().element).not.toBeNull();
+  });
+
+  test('Renders inner element', () => {
+    const componentInnerElement = getComponent().element?.querySelector('.my-text-component__inner');
+    expect(componentInnerElement).not.toBeNull();
+  });
+
+  test('Renders correct text', () => {
+    const componentInnerElement = getComponent().element?.querySelector('.my-text-component__inner');
+    expect(componentInnerElement?.textContent).toContain('Test text');
   });
 });

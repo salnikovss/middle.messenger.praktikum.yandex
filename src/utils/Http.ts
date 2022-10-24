@@ -57,7 +57,7 @@ export default class Http {
     const { method, data, headers = { 'Content-Type': 'application/json' }, timeout } = options;
 
     return new Promise((resolve, reject) => {
-      let xhrTimeout: number | undefined;
+      let xhrTimeout: ReturnType<typeof setTimeout> | undefined;
       const xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
 
