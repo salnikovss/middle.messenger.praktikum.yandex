@@ -1,4 +1,5 @@
 import { newServer } from 'mock-xmlhttprequest';
+
 import Http from './Http';
 
 describe('Http', () => {
