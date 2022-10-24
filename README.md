@@ -31,9 +31,13 @@ npm run start
 
 ```bash
 npm run lint
-npm run lint:fix
-npm run stylelint
-npm run stylelint:fix
+```
+
+## Тесты
+
+
+```bash
+npm run test
 ```
 
 # UI

@@ -26,14 +26,14 @@ class Chat extends Component<ChatProps> {
       ...props,
       onAddChatClick: (e) => {
         e.preventDefault();
-        this.refs.modalRef instanceof Modal && this.refs.modalRef.open();
+        this.refs.addChatModalRef instanceof Modal && this.refs.addChatModalRef.open();
       },
       onSearch: (searchTerm) => {
         // @ts-expect-error error because ChatList wrapped by withStore
         (this.refs.chatlistRef as ChatList).setProps({ filter: searchTerm });
       },
       closeAddChatModal: () => {
-        this.refs.modalRef instanceof Modal && this.refs.modalRef.close();
+        this.refs.addChatModalRef instanceof Modal && this.refs.addChatModalRef.close();
       },
     });
   }
