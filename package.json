@@ -22,7 +22,7 @@
     "lint:js-fix": "eslint src --fix",
     "lint:css": "npx stylelint '**/*.scss'",
     "lint:css-fix": "npx stylelint '**/*.scss' --fix",
-    "prepare": "husky install"
+    "prepare": "npx husky install"
   },
   "repository": {
     "type": "git",
