@@ -1,6 +1,4 @@
-import type { Config } from '@jest/types';
-
-const jestConfig: Config.InitialOptions = {
+const jestConfig = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   transformIgnorePatterns: [`/node_modules/(?!nanoid)`],
