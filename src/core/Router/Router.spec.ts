@@ -1,4 +1,5 @@
 import Component, { ComponentConstructable } from 'core/Component';
+
 import Router from './Router';
 
 enum Screens {
