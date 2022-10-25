@@ -13,7 +13,7 @@ import Modal from 'components/Modal/Modal';
 import Textarea from 'components/Textarea';
 import { ROUTES } from 'config/routes';
 import { registerComponent, Store } from 'core';
-import Router from 'core/Router';
+import Router, { initRouter } from 'core/Router';
 import { initApp } from 'services/initApp';
 import { defaultState } from 'store';
 import log from 'utils/log';
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     log('%cstore updated', 'background: #222; color: #bada55', nextState);
   });
 
-  router.init(ROUTES, store, '#app');
+  initRouter(ROUTES, router, store, '#app');
 
   store.dispatch(initApp);
 });
