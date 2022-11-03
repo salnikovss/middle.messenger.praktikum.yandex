@@ -19,7 +19,9 @@ export type ComponentConstructable<T extends Record<string, unknown>> = {
 
 interface Component<T> {
   componentDidMount?(props: T): void;
+
   componentWillUnmount?(): void;
+
   render(): DocumentFragment | string;
 }
 

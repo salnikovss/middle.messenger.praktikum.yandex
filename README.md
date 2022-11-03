@@ -31,9 +31,13 @@ npm run start
 
 ```bash
 npm run lint
-npm run lint:fix
-npm run stylelint
-npm run stylelint:fix
+```
+
+## Тесты
+
+
+```bash
+npm run test
 ```
 
 # UI
@@ -42,4 +46,33 @@ npm run stylelint:fix
 
 ## Netlify
 
+```bash
+git checkout deploy
+git merge main # или иная активная ветка
+git push
+```
+
 [Ссылка на сборку Netlify](https://subtle-kangaroo-2f4700.netlify.app)
+
+## Heroku
+
+### Первичная настройка:
+```bash
+heroku login
+heroku container:login
+heroku create yp-chat-app
+heroku container:push web
+```
+
+### Релиз
+```bash
+npm run docker:build
+npm run docker:tag
+npm run docker:push
+npm run heroku:release
+npm run heroku # открыть проект в браузере
+````
+
+
+
+[Ссылка на сборку Heroku](https://yp-chat-app.herokuapp.com/)

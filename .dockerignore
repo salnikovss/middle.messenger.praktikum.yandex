@@ -1,0 +1,4 @@
+**/*.spec.ts
+Dockerfile
+dist
+node_modules

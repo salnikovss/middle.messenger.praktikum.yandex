@@ -7,6 +7,5 @@ export default function buildPath(...args: string[]) {
         return part.trim().replace(/(^[/]*|[/]*$)/g, '');
       }
     })
-    .filter((x) => x.length)
     .join('/');
 }

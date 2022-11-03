@@ -9,5 +9,5 @@ export const defaultState: AppState = {
   user: null,
   chats: null,
   idParam: null,
-  foundUsers: null
+  foundUsers: null,
 };
